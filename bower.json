@@ -1,0 +1,10 @@
+{
+  "name": "praca_inz",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.7",
+    "angular-mm-foundation": "https://github.com/pineconellc/angular-foundation-bower.git",
+    "foundation": "~5.4.7",
+    "bourbon": "4.2.5"
+  }
+}
