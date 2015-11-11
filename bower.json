@@ -4,7 +4,9 @@
   "dependencies": {
     "angular": "1.4.7",
     "angular-mm-foundation": "https://github.com/pineconellc/angular-foundation-bower.git",
+    "angular-sanitize": "1.2.18",
     "foundation": "~5.4.7",
-    "bourbon": "4.2.5"
+    "bourbon": "4.2.5",
+    "EaselJS": "0.8.1"
   }
 }

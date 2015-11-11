@@ -1,3 +1,4 @@
-console.log('app.js');
-
-console.log('app.js');
+angular.module('app', [
+    'mm.foundation',
+    'ngSanitize'
+]);

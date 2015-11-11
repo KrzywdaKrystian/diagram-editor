@@ -16,10 +16,11 @@ module.exports = function(grunt) {
             js: {
                 src: [
                     'bower_components/angular/angular.min.js',
+                    'bower_components/EaselJS/lib/easeljs-NEXT.combined.js',
                     'bower_components/angular-sanitize/angular-sanitize.min.js',
                     'bower_components/angular-mm-foundation/mm-foundation-tpls.min.js',
-                    '<%= devPath %>js/logged/*.js',
-                    '<%= devPath %>js/logged/*/*.js'],
+                    '<%= devPath %>js/*.js',
+                    '<%= devPath %>js/*/*.js'],
                 dest: '<%= staticUnminified %>app.js'
             }
         },

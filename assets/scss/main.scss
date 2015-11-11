@@ -1,3 +1,51 @@
-body {
-  background: red;
-}
+@import "project-defaults";
+// import Foundation
+@import "settings";
+
+@import "foundation/components/clearing";
+@import "foundation/components/block-grid";
+// @import "foundation/components/breadcrumbs";
+// @import "foundation/components/button-groups";
+// @import "foundation/components/buttons";
+// @import "foundation/components/dropdown";
+// @import "foundation/components/dropdown-buttons";
+@import "foundation/components/flex-video";
+@import "foundation/components/forms";
+@import "foundation/components/grid";
+// @import "foundation/components/inline-lists";
+// @import "foundation/components/joyride";
+// @import "foundation/components/keystrokes";
+// @import "foundation/components/labels";
+// @import "foundation/components/magellan";
+// @import "foundation/components/orbit";
+// @import "foundation/components/pagination";
+// @import "foundation/components/panels";
+// @import "foundation/components/pricing-tables";
+// @import "foundation/components/progress-bars";
+@import "foundation/components/reveal";
+// @import "foundation/components/side-nav";
+// @import "foundation/components/split-buttons";
+// @import "foundation/components/sub-nav";
+// @import "foundation/components/switches";
+// @import "foundation/components/tables";
+@import "foundation/components/tabs";
+// @import "foundation/components/thumbs";
+// @import "foundation/components/tooltips";
+// @import "foundation/components/top-bar";
+@import "foundation/components/type";
+@import "foundation/components/offcanvas";
+@import "foundation/components/visibility";
+
+//Bourbon
+@import "../../bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
+
+// vars
+$xlarge: $xlarge-up;
+
+$header-small-height: rem-calc(60);
+$header-medium-height: $header-small-height;
+$header-large-height: rem-calc(80);
+
+$search-height: rem-calc(75);
+
+@import "functions";
