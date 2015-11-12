@@ -1,16 +1,22 @@
-angular.module('app').controller('MainController', function($scope) {
+angular.module('app').controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
+    $scope.fileForm = null;
 
     $scope.addElement = function(type) {
 
-        var element = new DE_Activation();
-        element.init();
+        try {
+            var element = new window[type+"Element"]();
+            element.init();
+        }
+        catch(err) {
+            alert(err);
+        }
 
     };
 
     $scope.saveDiagram = function (filename) {
-
+//pozmieniac
         data = diagramStructure;
 
         if (!filename) {
@@ -33,8 +39,4 @@ angular.module('app').controller('MainController', function($scope) {
         a.dispatchEvent(e);
     };
 
-    $scope.loadDiagram = function() {
-
-    }
-
-});
+}]);

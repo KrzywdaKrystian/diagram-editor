@@ -10,8 +10,8 @@ function Diagram(){
     this.checkDuplicate = function(id) {
         var self = this;
 
-        diagramStructure.forEach(function(entry, key) {
-            if(entry.id === id){
+        diagramStructure.forEach(function(element, key) {
+            if(element.id === id){
                 return id = self.checkDuplicate(self.makeId());
             }
         });
@@ -27,6 +27,23 @@ function Diagram(){
             id += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return id;
+    };
+
+    this.clearDiagram = function() {
+        stage.removeAllChildren();
+        stage.update();
+    };
+
+    this.loadDiagram = function(data){
+        data.forEach(function(el) {
+            try {
+                var element = new window[el.type+"Element"]();
+                element.init(el.x, el.y);
+            }
+            catch(err) {
+                alert(err);
+            }
+        });
     };
 
 }

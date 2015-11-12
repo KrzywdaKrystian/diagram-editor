@@ -13,9 +13,10 @@
     <aside>
         <header>Sequence Diagrams</header>
         <ul>
-            <li ng-click="addElement('activation')">Activation</li>
+            <li ng-click="addElement('Activation')">Activation</li>
         </ul>
         <a href="#" ng-click="saveDiagram()">ZAPISZ PLIK</a>
+        <input type="file" name="file" ng-model="fileForm" validfile>
     </aside>
     <div class="content-panel">
         <canvas id="board" width="1000" height="600"></canvas>

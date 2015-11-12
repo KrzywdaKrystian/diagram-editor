@@ -1,16 +1,16 @@
-function DE_Activation(){
+function ActivationElement(){
 
-    this.type = 'activation';
+    this.type = 'Activation';
     this.defaultX = 100;
     this.defaultY = 100;
 
-    this.init = function() {
+    this.init = function(x, y) {
         var id = new Diagram().generateID();
         diagramStructure.push({
             id: id,
             type: this.type,
-            x: this.defaultX,
-            y: this.defaultY
+            x: x ? x : this.defaultX,
+            y: y ? y : this.defaultY
         });
         var index = diagramStructure.length-1;
 
@@ -27,8 +27,8 @@ function DE_Activation(){
         label.y = -7;
 
         var dragger = new createjs.Container();
-        dragger.x = this.defaultX;
-        dragger.y = this.defaultY;
+        dragger.x = diagramStructure[index].x;
+        dragger.y = diagramStructure[index].y;
         dragger.addChild(circle, label);
         stage.addChild(dragger);
 

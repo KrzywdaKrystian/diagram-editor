@@ -12939,8 +12939,8 @@ angular.module('app', [
     this.checkDuplicate = function(id) {
         var self = this;
 
-        diagramStructure.forEach(function(entry, key) {
-            if(entry.id === id){
+        diagramStructure.forEach(function(element, key) {
+            if(element.id === id){
                 return id = self.checkDuplicate(self.makeId());
             }
         });
@@ -12958,19 +12958,42 @@ angular.module('app', [
         return id;
     };
 
-} angular.module('app').controller('MainController', function($scope) {
+    this.clearDiagram = function() {
+        stage.removeAllChildren();
+        stage.update();
+    };
+
+    this.loadDiagram = function(data){
+        data.forEach(function(el) {
+            try {
+                var element = new window[el.type+"Element"]();
+                element.init(el.x, el.y);
+            }
+            catch(err) {
+                alert(err);
+            }
+        });
+    };
+
+} angular.module('app').controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
+    $scope.fileForm = null;
 
     $scope.addElement = function(type) {
 
-        var element = new DE_Activation();
-        element.init();
+        try {
+            var element = new window[type+"Element"]();
+            element.init();
+        }
+        catch(err) {
+            alert(err);
+        }
 
     };
 
     $scope.saveDiagram = function (filename) {
-
+//pozmieniac
         data = diagramStructure;
 
         if (!filename) {
@@ -12993,24 +13016,20 @@ angular.module('app', [
         a.dispatchEvent(e);
     };
 
-    $scope.loadDiagram = function() {
+}]);
+ function ActivationElement(){
 
-    }
-
-});
- function DE_Activation(){
-
-    this.type = 'activation';
+    this.type = 'Activation';
     this.defaultX = 100;
     this.defaultY = 100;
 
-    this.init = function() {
+    this.init = function(x, y) {
         var id = new Diagram().generateID();
         diagramStructure.push({
             id: id,
             type: this.type,
-            x: this.defaultX,
-            y: this.defaultY
+            x: x ? x : this.defaultX,
+            y: y ? y : this.defaultY
         });
         var index = diagramStructure.length-1;
 
@@ -13027,8 +13046,8 @@ angular.module('app', [
         label.y = -7;
 
         var dragger = new createjs.Container();
-        dragger.x = this.defaultX;
-        dragger.y = this.defaultY;
+        dragger.x = diagramStructure[index].x;
+        dragger.y = diagramStructure[index].y;
         dragger.addChild(circle, label);
         stage.addChild(dragger);
 
@@ -13046,4 +13065,45 @@ angular.module('app', [
 
     };
 
-}
+} //pozmieniac
+angular.module('app').directive('validfile', function validFile($http) {
+
+    var validFormats = ['json'];
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            ctrl.$validators.validFile = function() {
+                elem.on('change', function (changeEvent) {
+
+                    var value = elem.val();
+                    var ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+
+                    if(!validFormats.indexOf(ext)){
+                        //api html5
+                        var reader = new FileReader();
+                        reader.onload = function (loadEvent) {
+
+                            $http.get(loadEvent.target.result).success(function(response) {
+                                return response.data;
+                            }).success(function (data) {
+                                diagramStructure = [];
+                                var diagram = new Diagram();
+                                diagram.clearDiagram();
+                                diagram.loadDiagram(data);
+                            }).error(function () {
+                                alert('Wystąpił błąd')
+                            });
+                        };
+                        reader.readAsDataURL(changeEvent.target.files[0]);
+
+
+                    }
+                    else{
+                        alert('Plik musi być w formacie JSON');
+                        elem.val(null);
+                    }
+                });
+            };
+        }
+    };
+});
