@@ -49,3 +49,8 @@ $header-large-height: rem-calc(80);
 $search-height: rem-calc(75);
 
 @import "functions";
+
+//custom
+@import "gui";
+@import "index";
+@import "aside";

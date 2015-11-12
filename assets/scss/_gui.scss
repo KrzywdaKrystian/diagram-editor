@@ -1,0 +1,5 @@
+body { font-family: Lato, Arial, Helvetica, Roboto, sans-serif; }
+.flex { @include display(flex); height: 100%;
+  aside { @include flex(1); max-width: 200px; width: 200px; background: $grey; }
+  .content-panel { @include flex(1); }
+}
