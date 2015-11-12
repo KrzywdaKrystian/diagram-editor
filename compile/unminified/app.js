@@ -12927,22 +12927,35 @@ angular.module('app', [
     'mm.foundation',
     'ngSanitize'
 ]);
- function elementID(){
+ function Diagram(){
 
     var self = this;
 
-    this.generate = function() {
-        return self.makeId();
+    this.generateID = function() {
+        var result = self.makeId();
+        return this.checkDuplicate(result);
+    };
+
+    this.checkDuplicate = function(id) {
+        var self = this;
+
+        diagramStructure.forEach(function(entry, key) {
+            if(entry.id === id){
+                return id = self.checkDuplicate(self.makeId());
+            }
+        });
+
+        return id;
     };
 
     this.makeId = function(){
-        var text = "";
+        var id = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         for( var i=0; i < 5; i++ )
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
+            id += possible.charAt(Math.floor(Math.random() * possible.length));
 
-        return text;
+        return id;
     };
 
 } angular.module('app').controller('MainController', function($scope) {
@@ -12956,7 +12969,7 @@ angular.module('app', [
 
     };
 
-    $scope.saveToPc = function (filename) {
+    $scope.saveDiagram = function (filename) {
 
         data = diagramStructure;
 
@@ -12980,6 +12993,10 @@ angular.module('app', [
         a.dispatchEvent(e);
     };
 
+    $scope.loadDiagram = function() {
+
+    }
+
 });
  function DE_Activation(){
 
@@ -12988,7 +13005,7 @@ angular.module('app', [
     this.defaultY = 100;
 
     this.init = function() {
-        var id = new elementID().generate();
+        var id = new Diagram().generateID();
         diagramStructure.push({
             id: id,
             type: this.type,
@@ -12996,7 +13013,6 @@ angular.module('app', [
             y: this.defaultY
         });
         var index = diagramStructure.length-1;
-        console.log(diagramStructure);
 
         stage.cursor = 'pointer';
         // this lets our drag continue to track the mouse even when it leaves the canvas:

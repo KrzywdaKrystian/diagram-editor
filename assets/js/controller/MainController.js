@@ -9,7 +9,7 @@ angular.module('app').controller('MainController', function($scope) {
 
     };
 
-    $scope.saveToPc = function (filename) {
+    $scope.saveDiagram = function (filename) {
 
         data = diagramStructure;
 
@@ -32,5 +32,9 @@ angular.module('app').controller('MainController', function($scope) {
             0, 0, 0, 0, 0, false, false, false, false, 0, null);
         a.dispatchEvent(e);
     };
+
+    $scope.loadDiagram = function() {
+
+    }
 
 });

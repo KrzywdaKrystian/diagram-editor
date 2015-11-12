@@ -5,7 +5,7 @@ function DE_Activation(){
     this.defaultY = 100;
 
     this.init = function() {
-        var id = new elementID().generate();
+        var id = new Diagram().generateID();
         diagramStructure.push({
             id: id,
             type: this.type,
@@ -13,7 +13,6 @@ function DE_Activation(){
             y: this.defaultY
         });
         var index = diagramStructure.length-1;
-        console.log(diagramStructure);
 
         stage.cursor = 'pointer';
         // this lets our drag continue to track the mouse even when it leaves the canvas:
