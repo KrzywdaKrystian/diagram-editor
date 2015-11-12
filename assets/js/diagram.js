@@ -30,6 +30,7 @@ function Diagram(){
     };
 
     this.clearDiagram = function() {
+        diagramStructure = [];
         stage.removeAllChildren();
         stage.update();
     };

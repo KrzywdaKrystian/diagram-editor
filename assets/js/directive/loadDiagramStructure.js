@@ -19,7 +19,6 @@ angular.module('app').directive('validfile', function validFile($http) {
                             $http.get(loadEvent.target.result).success(function(response) {
                                 return response.data;
                             }).success(function (data) {
-                                diagramStructure = [];
                                 var diagram = new Diagram();
                                 diagram.clearDiagram();
                                 diagram.loadDiagram(data);
