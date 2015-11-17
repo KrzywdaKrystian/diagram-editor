@@ -47,4 +47,19 @@ function Diagram(){
         });
     };
 
+    this.setResize = function(resize){
+        stage.canvas.width = window.innerWidth-217;
+        stage.canvas.height = window.innerHeight;
+        if(resize){
+            window.addEventListener('resize', function(){
+
+                stage.canvas.width = window.innerWidth-217;
+                stage.canvas.height = window.innerHeight;
+
+                self.clearDiagram();
+                self.loadDiagram(diagramStructure);
+            }, false);
+        }
+    }
+
 }

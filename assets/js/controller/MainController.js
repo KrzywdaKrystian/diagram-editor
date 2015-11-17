@@ -3,6 +3,10 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
     $scope.list = [];
     $scope.fileForm = null;
 
+    var diagram = new Diagram();
+    diagram.setResize(true);
+
+
     $scope.addElement = function(type) {
 
         try {

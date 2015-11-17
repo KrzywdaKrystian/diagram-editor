@@ -12959,6 +12959,7 @@ angular.module('app', [
     };
 
     this.clearDiagram = function() {
+        diagramStructure = [];
         stage.removeAllChildren();
         stage.update();
     };
@@ -12975,10 +12976,29 @@ angular.module('app', [
         });
     };
 
+    this.setResize = function(resize){
+        stage.canvas.width = window.innerWidth-217;
+        stage.canvas.height = window.innerHeight;
+        if(resize){
+            window.addEventListener('resize', function(){
+
+                stage.canvas.width = window.innerWidth-217;
+                stage.canvas.height = window.innerHeight;
+
+                self.clearDiagram();
+                self.loadDiagram(diagramStructure);
+            }, false);
+        }
+    }
+
 } angular.module('app').controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
     $scope.fileForm = null;
+
+    var diagram = new Diagram();
+    diagram.setResize(true);
+
 
     $scope.addElement = function(type) {
 
@@ -13086,7 +13106,6 @@ angular.module('app').directive('validfile', function validFile($http) {
                             $http.get(loadEvent.target.result).success(function(response) {
                                 return response.data;
                             }).success(function (data) {
-                                diagramStructure = [];
                                 var diagram = new Diagram();
                                 diagram.clearDiagram();
                                 diagram.loadDiagram(data);
