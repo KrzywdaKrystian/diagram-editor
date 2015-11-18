@@ -7,7 +7,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <title>Praca Inżynierska Krystian Krzywda 180228</title>
 </head>
-<body ng-app="app" ng-controller="MainController">
+<body ng-app="app" ng-controller="MainController" id="DiagramApp">
 
 <div class="flex">
     <aside>
@@ -19,7 +19,7 @@
         <input type="file" name="file" ng-model="fileForm" validfile>
     </aside>
     <div class="content-panel">
-        <canvas id="board" width="1000" height="600"></canvas>
+        <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;"></canvas>
     </div>
 </div>
 

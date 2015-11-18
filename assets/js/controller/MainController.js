@@ -6,7 +6,6 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
     var diagram = new Diagram();
     diagram.setResize(true);
 
-
     $scope.addElement = function(type) {
 
         try {
@@ -41,6 +40,11 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
         e.initMouseEvent('click', true, false, window,
             0, 0, 0, 0, 0, false, false, false, false, 0, null);
         a.dispatchEvent(e);
+    };
+
+
+    $scope.ClickOnCanvas = function(){
+
     };
 
 }]);

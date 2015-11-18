@@ -4,8 +4,11 @@ function ActivationElement(){
     this.defaultX = 100;
     this.defaultY = 100;
 
+    var self = this;
+
     this.init = function(x, y) {
         var id = new Diagram().generateID();
+
         diagramStructure.push({
             id: id,
             type: this.type,
@@ -14,25 +17,40 @@ function ActivationElement(){
         });
         var index = diagramStructure.length-1;
 
-        stage.cursor = 'pointer';
-        // this lets our drag continue to track the mouse even when it leaves the canvas:
-        // play with commenting this out to see the difference.
-        stage.mouseMoveOutside = true;
+        //Rysowanie elementu
+        var rect = new createjs.Shape();
+        rect.graphics.beginFill("red").drawRect(0, 0, 10, 200);
+        rect.x = 200;
+        rect.y = 200;
+        stage.addChild(rect);
 
-        var circle = new createjs.Shape();
-        circle.graphics.beginFill("red").drawCircle(0, 0, 50);
+        //Dodawanie eventów
+        /*document.getElementById("DiagramApp").onclick = function(){
+            self.panel.remove(rect);
 
-        var label = new createjs.Text(id, "bold 14px Arial", "#FFFFFF");
-        label.textAlign = "center";
-        label.y = -7;
+            if(!rect['_listeners'] || !rect['_listeners'].click){
+                rect.on("click", function(evt) {
+                    console.log('pojawia się panel');
+                    setTimeout(function(){
+                        self.panel.init(rect);
+                    },100);
+                });
+            }
+        };*/
 
-        var dragger = new createjs.Container();
-        dragger.x = diagramStructure[index].x;
-        dragger.y = diagramStructure[index].y;
-        dragger.addChild(circle, label);
-        stage.addChild(dragger);
+        rect.on("click", function(evt) {
+            HelpPanel.init(rect);
+        });
 
-        dragger.on("pressmove",function(evt) {
+
+        /*rect.on("mousedown",function(evt) {
+            if(self.panel.element)
+                self.panel.remove();
+            self.panel.init(rect);
+        });*/
+
+        rect.on("pressmove",function(evt) {
+            //self.panel.remove();
             // currentTarget will be the container that the event listener was added to:
             evt.currentTarget.x = evt.stageX;
             evt.currentTarget.y = evt.stageY;
