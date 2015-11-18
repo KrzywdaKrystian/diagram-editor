@@ -12973,24 +12973,6 @@ for(var b=0;b<h.length;b++)h[b].reset();c.index=0,c.height="",c.$apply()},this.b
         self.currentPanel = false;
         self.draw = false;
     }
-} function Interaction(){
-
-    this.drag = function(element, index){
-
-        element.on("pressmove",function(evt) {
-            evt.currentTarget.x = evt.stageX;
-            evt.currentTarget.y = evt.stageY;
-            diagramStructure[index].x = evt.currentTarget.x;
-            diagramStructure[index].y = evt.currentTarget.y;
-            stage.update();
-        });
-    };
-
-    this.editPanel = function(element) {
-        element.on("click", function(evt) {
-            editPanel.init(element);
-        });
-    }
 } var stage = new createjs.Stage("board");
 //config
 stage.mouseMoveOutside = true;
@@ -13070,6 +13052,24 @@ angular.module('app', [
         }
     }
 
+} function Interaction(){
+
+    this.drag = function(element, index){
+
+        element.on("pressmove",function(evt) {
+            evt.currentTarget.x = evt.stageX;
+            evt.currentTarget.y = evt.stageY;
+            diagramStructure[index].x = evt.currentTarget.x;
+            diagramStructure[index].y = evt.currentTarget.y;
+            stage.update();
+        });
+    };
+
+    this.editPanel = function(element) {
+        element.on("click", function(evt) {
+            editPanel.init(element, evt.currentTarget.x, evt.currentTarget.y);
+        });
+    }
 } angular.module('app').controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
