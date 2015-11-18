@@ -9,7 +9,7 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
     $scope.addElement = function(type) {
 
         try {
-            var element = new window[type+"Element"]();
+            var element = new window[type]();
             element.init();
         }
         catch(err) {

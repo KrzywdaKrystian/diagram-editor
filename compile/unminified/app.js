@@ -13046,9 +13046,8 @@ angular.module('app', [
     this.loadDiagram = function(data){
         data.forEach(function(el) {
             try {
-                var element = new window[el.type+"Element"]();
-                console.log(el.x+" "+el.y+" "+el.w+" "+el.h);
-                element.init(el.x, el.y, el.w, el.h);
+                var element = new window[el.type]();
+                element.init(el);
             }
             catch(err) {
                 alert(err);
@@ -13082,7 +13081,7 @@ angular.module('app', [
     $scope.addElement = function(type) {
 
         try {
-            var element = new window[type+"Element"]();
+            var element = new window[type]();
             element.init();
         }
         catch(err) {
@@ -13121,7 +13120,7 @@ angular.module('app', [
     };
 
 }]);
- function ActivationElement(){
+ function Activation(){
 
     this.type = 'Activation';
     this.defaultX = 100;
@@ -13131,17 +13130,23 @@ angular.module('app', [
 
     var self = this;
 
-    this.init = function(x, y, w, h) {
+    this.init = function(details) {
         var id = new Diagram().generateID();
+
+        if(details) {
+            diagramStructure.push(details);
+        }
+        else {
+            diagramStructure.push({
+                id: id,
+                type: this.type,
+                x: this.defaultX,
+                y: this.defaultY,
+                w: this.defaultW,
+                h: this.defaultH
+            });
+        }
         //Dodanie diagramu do tablicy z wszystkimi elementami
-        diagramStructure.push({
-            id: id,
-            type: this.type,
-            x: x ? x : this.defaultX,
-            y: y ? y : this.defaultY,
-            w: w ? w : this.defaultW,
-            h: h ? h : this.defaultH
-        });
         var index = diagramStructure.length-1;
 
         //Rysowanie elementu
@@ -13167,14 +13172,45 @@ angular.module('app', [
 
 } function Arrow(){
 
-    this.draw = false;
+    this.type = 'Arrow';
+    this.strokeStyle = 3;
+    this.strokeColor = 'black';
+    this.drawing = false;
+    this.detalis = {};
     var self = this;
+
+    this.init = function(details){
+        var line = null;
+        if(details) {
+            diagramStructure.push(details);
+
+            line = new createjs.Shape();
+            line.graphics.setStrokeStyle(self.strokeStyle);
+            line.graphics.beginStroke(self.strokeColor);
+            line.graphics.moveTo(details.xStart, details.yStart);
+            line.graphics.lineTo(details.xEnd, details.yEnd);
+            line.graphics.endStroke();
+            stage.addChild(line);
+            stage.update();
+        }
+        else {
+            diagramStructure.push({
+                id: id,
+                type: this.type,
+                x: this.defaultX,
+                y: this.defaultY,
+                w: this.defaultW,
+                h: this.defaultH
+            });
+        }
+    };
 
     this.start = function(x, y) {
         var prev = null;
         var line = null;
+
         var listenerMousMmove = stage.on("stagemousemove", function(evt) {
-            self.draw = true;
+            self.drawing = true;
             if(prev){
                 if(line) {
                     line.removeAllEventListeners();
@@ -13182,23 +13218,40 @@ angular.module('app', [
                     stage.update();
                 }
             }
-            if(self.draw){
+            if(self.drawing){
                 line = new createjs.Shape();
-                line.graphics.setStrokeStyle(3);
-                line.graphics.beginStroke('black');
+                line.graphics.setStrokeStyle(self.strokeStyle);
+                line.graphics.beginStroke(self.strokeColor);
                 line.graphics.moveTo(x, y);
                 line.graphics.lineTo(evt.stageX, evt.stageY);
                 line.graphics.endStroke();
                 stage.addChild(line);
                 stage.update();
+                self.detalis = {
+                    xStart: x,
+                    yStart: y,
+                    xEnd: evt.stageX,
+                    yEnd: evt.stageY
+                };
                 prev = true;
             }
             //console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
         });
 
         stage.on('click', function(evt){
-            if(self.draw)
+            if(self.drawing){
                 stage.off("stagemousemove", listenerMousMmove);
+                var id = new Diagram().generateID();
+                diagramStructure.push({
+                    id: id,
+                    type: self.type,
+                    xStart: self.detalis.xStart,
+                    yStart: self.detalis.yStart,
+                    xEnd: self.detalis.xEnd,
+                    yEnd: self.detalis.yEnd
+                });
+
+            }
             console.log('klik na stage');
         });
 

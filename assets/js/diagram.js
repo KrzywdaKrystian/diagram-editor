@@ -38,9 +38,8 @@ function Diagram(){
     this.loadDiagram = function(data){
         data.forEach(function(el) {
             try {
-                var element = new window[el.type+"Element"]();
-                console.log(el.x+" "+el.y+" "+el.w+" "+el.h);
-                element.init(el.x, el.y, el.w, el.h);
+                var element = new window[el.type]();
+                element.init(el);
             }
             catch(err) {
                 alert(err);

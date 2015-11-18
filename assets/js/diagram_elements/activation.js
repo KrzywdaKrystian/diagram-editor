@@ -1,4 +1,4 @@
-function ActivationElement(){
+function Activation(){
 
     this.type = 'Activation';
     this.defaultX = 100;
@@ -8,17 +8,23 @@ function ActivationElement(){
 
     var self = this;
 
-    this.init = function(x, y, w, h) {
+    this.init = function(details) {
         var id = new Diagram().generateID();
+
+        if(details) {
+            diagramStructure.push(details);
+        }
+        else {
+            diagramStructure.push({
+                id: id,
+                type: this.type,
+                x: this.defaultX,
+                y: this.defaultY,
+                w: this.defaultW,
+                h: this.defaultH
+            });
+        }
         //Dodanie diagramu do tablicy z wszystkimi elementami
-        diagramStructure.push({
-            id: id,
-            type: this.type,
-            x: x ? x : this.defaultX,
-            y: y ? y : this.defaultY,
-            w: w ? w : this.defaultW,
-            h: h ? h : this.defaultH
-        });
         var index = diagramStructure.length-1;
 
         //Rysowanie elementu
