@@ -3,65 +3,43 @@ function ActivationElement(){
     this.type = 'Activation';
     this.defaultX = 100;
     this.defaultY = 100;
+    this.defaultW = 10;
+    this.defaultH = 200;
 
     var self = this;
 
-    this.init = function(x, y) {
+    this.init = function(x, y, w, h) {
         var id = new Diagram().generateID();
-
+        //Dodanie diagramu do tablicy z wszystkimi elementami
         diagramStructure.push({
             id: id,
             type: this.type,
             x: x ? x : this.defaultX,
-            y: y ? y : this.defaultY
+            y: y ? y : this.defaultY,
+            w: w ? w : this.defaultW,
+            h: h ? h : this.defaultH
         });
         var index = diagramStructure.length-1;
 
         //Rysowanie elementu
         var rect = new createjs.Shape();
-        rect.graphics.beginFill("red").drawRect(0, 0, 10, 200);
-        rect.x = 200;
-        rect.y = 200;
+        rect.name = id;
+        rect.diagramElementType = 'solid';
+        rect.graphics.beginFill("red").drawRect(0, 0, diagramStructure[index].w, diagramStructure[index].h);
+        rect.x = diagramStructure[index].x;
+        rect.y = diagramStructure[index].y;
         stage.addChild(rect);
 
-        //Dodawanie eventów
-        /*document.getElementById("DiagramApp").onclick = function(){
-            self.panel.remove(rect);
-
-            if(!rect['_listeners'] || !rect['_listeners'].click){
-                rect.on("click", function(evt) {
-                    console.log('pojawia się panel');
-                    setTimeout(function(){
-                        self.panel.init(rect);
-                    },100);
-                });
-            }
-        };*/
-
-        rect.on("click", function(evt) {
-            HelpPanel.init(rect);
-        });
-
-
-        /*rect.on("mousedown",function(evt) {
-            if(self.panel.element)
-                self.panel.remove();
-            self.panel.init(rect);
-        });*/
-
-        rect.on("pressmove",function(evt) {
-            //self.panel.remove();
-            // currentTarget will be the container that the event listener was added to:
-            evt.currentTarget.x = evt.stageX;
-            evt.currentTarget.y = evt.stageY;
-            // make sure to redraw the stage to show the change:
-            diagramStructure[index].x = evt.currentTarget.x;
-            diagramStructure[index].y = evt.currentTarget.y;
-            stage.update();
-        });
+        //Dodanie interakcji do elementu
+        this.addInteractionToElement(rect, index);
 
         stage.update();
 
+    };
+
+    this.addInteractionToElement = function(rect, index){
+        interaction.editPanel(rect);
+        interaction.drag(rect, index);
     };
 
 }

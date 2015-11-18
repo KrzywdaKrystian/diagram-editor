@@ -39,7 +39,8 @@ function Diagram(){
         data.forEach(function(el) {
             try {
                 var element = new window[el.type+"Element"]();
-                element.init(el.x, el.y);
+                console.log(el.x+" "+el.y+" "+el.w+" "+el.h);
+                element.init(el.x, el.y, el.w, el.h);
             }
             catch(err) {
                 alert(err);

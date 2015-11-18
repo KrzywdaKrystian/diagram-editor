@@ -1,4 +1,4 @@
-function Panel(){
+function EditPanel(){
 
     this.type = 'Panel';
     this.panel = null;
@@ -12,7 +12,6 @@ function Panel(){
     this.init = function(element){
         self.draw = true;
 
-        console.log(self.currentPanel);
         //Jeśli jest już panel wyswietlony to kasujemy go i tworzymy nowy
         if(self.panel && !self.currentPanel) {
             self.remove();
@@ -24,8 +23,13 @@ function Panel(){
             self.panel.graphics.beginFill("blue").drawRect(element.x+10, element.y, 50, 100);
 
             self.panel.on("click", function(evt) {
+                console.log(element);
+                console.log(element.graphics.command);
+                var DrawArrow = new Arrow();
+                DrawArrow.start(element.x + element.graphics.command.w/2, element.y + element.graphics.command.h/2);
+
                 self.currentPanel = true;
-                console.log('click na panel');
+
             });
 
             stage.addChild(self.panel);
