@@ -7,45 +7,63 @@ function Activation(){
     this.defaultH = 200;
 
     var self = this;
+    var element = null;
 
     this.init = function(details) {
-        var id = new Diagram().generateID();
-
-        if(details) {
-            diagramStructure.push(details);
-        }
-        else {
-            diagramStructure.push({
-                id: id,
-                type: this.type,
-                x: this.defaultX,
-                y: this.defaultY,
-                w: this.defaultW,
-                h: this.defaultH
-            });
-        }
-        //Dodanie diagramu do tablicy z wszystkimi elementami
-        var index = diagramStructure.length-1;
 
         //Rysowanie elementu
         var rect = new createjs.Shape();
-        rect.name = id;
-        rect.diagramElementType = 'solid';
-        rect.graphics.beginFill("red").drawRect(0, 0, diagramStructure[index].w, diagramStructure[index].h);
-        rect.x = diagramStructure[index].x;
-        rect.y = diagramStructure[index].y;
-        stage.addChild(rect);
+        rect.x = 20;
+        rect.y = 50;
+        rect.w = 50;
+        rect.h = 50;
+        rect.graphics.beginFill("red").setStrokeStyle(0).beginStroke("rgba(0,0,0,0)").drawRect(0, 0, rect.w, rect.h);
+
+        //shape - Does not currently support automatic bounds calculations. Use setBounds() to manually define bounds. - Dlatego dodaje te metody
+        rect.getX = function(){
+            return element.x;
+        };
+
+        rect.getY = function(){
+            return element.y;
+        };
+
+        rect.getWidth = function(){
+            return element.w;
+        };
+
+        rect.getHeight = function(){
+            return element.h;
+        };
+
+        element = rect;
 
         //Dodanie interakcji do elementu
-        this.addInteractionToElement(rect, index);
+        element.alpha = 1;
+        element.on("mouseover", handleInteraction);
+        element.on("mouseout", handleInteraction);
 
+        this.addInteractionToElement(element);
+        stage.addChild(element);
         stage.update();
+        //potrzebne
+        createjs.Ticker.addEventListener("tick", stage);
+
+        console.log(stage.children);
 
     };
 
-    this.addInteractionToElement = function(rect, index){
+    this.addInteractionToElement = function(rect){
         interaction.editPanel(rect);
-        interaction.drag(rect, index);
+        interaction.drag(rect);
     };
+
+
+    function handleInteraction(event) {
+        event.target.alpha = (event.type == "mouseout") ? 1 : 0.5;
+    }
+
+
+
 
 }

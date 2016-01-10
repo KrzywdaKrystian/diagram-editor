@@ -3,17 +3,16 @@ function Interaction(){
     this.drag = function(element, index){
 
         element.on("pressmove",function(evt) {
-            evt.currentTarget.x = evt.stageX;
-            evt.currentTarget.y = evt.stageY;
-            diagramStructure[index].x = evt.currentTarget.x;
-            diagramStructure[index].y = evt.currentTarget.y;
+            evt.currentTarget.x = evt.stageX-element.getWidth()/2;
+            evt.currentTarget.y = evt.stageY-element.getHeight()/2;
             stage.update();
         });
     };
 
     this.editPanel = function(element) {
-        element.on("click", function(evt) {
-            editPanel.init(element, evt.currentTarget.x, evt.currentTarget.y);
+        element.on("dblclick", function(evt) {
+            console.log('dblclick');
+            editpanel = true;
         });
     }
 }

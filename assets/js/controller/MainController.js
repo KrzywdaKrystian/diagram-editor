@@ -19,8 +19,9 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
     };
 
     $scope.saveDiagram = function (filename) {
-//pozmieniac
-        data = diagramStructure;
+        //pozmieniac
+        console.log(stage.children);
+        /*data = diagramStructure;
 
         if (!filename) {
             filename = 'download.json';
@@ -39,7 +40,7 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
         a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
         e.initMouseEvent('click', true, false, window,
             0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        a.dispatchEvent(e);
+        a.dispatchEvent(e);*/
     };
 
 
