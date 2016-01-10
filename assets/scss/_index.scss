@@ -1,4 +1,19 @@
 .content-panel { position: relative;
   canvas { background: url('/example/images/board_bg.png');}
-  #edit-panel { position: absolute; top: 0; left: 0; z-index: 100;  width: 50px; height: 120px; background: black; color: #fff;}
+  #edit-panel { position: absolute; top: 0; left: 0; z-index: 100;
+    .panel-content { position: relative;
+      &:before { content: " "; position: absolute; left: -4px; top: 0;
+        width: 0; height: 0; border-style: solid; border-width: 8px 10px 8px 0; border-color: transparent #414141 transparent transparent; }
+      ul { background: #414141; color: #fff; margin: 0 0 0 6px; list-style: none; padding: 5px 5px 0 5px;
+        li {
+          i { width: 24px; height: 24px; background-size: cover; display: inline-block; cursor: pointer;
+            &.add-line { background-image: url('/example/images/draw_line.png'); }
+            &.resize { background-image: url('/example/images/resize.png'); }
+            &.delete { background-image: url('/example/images/delete.png'); }
+            &:hover { opacity: .6; }
+          }
+        }
+      }
+    }
+  }
 }

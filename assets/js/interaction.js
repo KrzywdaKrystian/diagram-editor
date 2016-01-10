@@ -16,10 +16,7 @@ function Interaction(){
             $scope.$apply(function() {
                 $scope.showEditPanel = {
                     visible: true,
-                    x: element.getX(),
-                    y: element.getY(),
-                    w: element.getWidth(),
-                    h: element.getHeight()
+                    element: element
                 }
             });
         });

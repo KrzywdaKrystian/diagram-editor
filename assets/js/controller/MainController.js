@@ -1,4 +1,4 @@
-angular.module('app').controller('MainController', ['$scope', function($scope) {
+app.controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
     $scope.fileForm = null;
@@ -9,8 +9,8 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
         console.log(newValue);
         if(newValue) {
             $scope.style = {
-                top: $scope.showEditPanel.y+'px',
-                left: $scope.showEditPanel.x+$scope.showEditPanel.w+'px'
+                top: $scope.showEditPanel.element.getY()+'px',
+                left: $scope.showEditPanel.element.getX()+$scope.showEditPanel.element.getWidth()+'px'
             }
         }
     });

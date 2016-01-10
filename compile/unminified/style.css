@@ -3143,11 +3143,39 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 100;
-    width: 50px;
-    height: 120px;
-    background: black;
-    color: #fff; }
+    z-index: 100; }
+    .content-panel #edit-panel .panel-content {
+      position: relative; }
+      .content-panel #edit-panel .panel-content:before {
+        content: " ";
+        position: absolute;
+        left: -4px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 10px 8px 0;
+        border-color: transparent #414141 transparent transparent; }
+      .content-panel #edit-panel .panel-content ul {
+        background: #414141;
+        color: #fff;
+        margin: 0 0 0 6px;
+        list-style: none;
+        padding: 5px 5px 0 5px; }
+        .content-panel #edit-panel .panel-content ul li i {
+          width: 24px;
+          height: 24px;
+          background-size: cover;
+          display: inline-block;
+          cursor: pointer; }
+          .content-panel #edit-panel .panel-content ul li i.add-line {
+            background-image: url('/example/images/draw_line.png'); }
+          .content-panel #edit-panel .panel-content ul li i.resize {
+            background-image: url('/example/images/resize.png'); }
+          .content-panel #edit-panel .panel-content ul li i.delete {
+            background-image: url('/example/images/delete.png'); }
+          .content-panel #edit-panel .panel-content ul li i:hover {
+            opacity: .6; }
 
 aside header {
   width: 200px;

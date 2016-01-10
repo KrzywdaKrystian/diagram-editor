@@ -6,7 +6,7 @@ stage.enableMouseOver(10);
 //variables
 var interaction = new Interaction();
 
-angular.module('app', [
+var app = angular.module('app', [
     'mm.foundation',
     'ngSanitize'
 ]);
