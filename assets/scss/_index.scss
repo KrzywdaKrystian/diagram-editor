@@ -1,3 +1,4 @@
-.content-panel {
+.content-panel { position: relative;
   canvas { background: url('/example/images/board_bg.png');}
+  #edit-panel { position: absolute; top: 0; left: 0; z-index: 100;  width: 50px; height: 120px; background: black; color: #fff;}
 }

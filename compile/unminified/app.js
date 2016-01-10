@@ -12977,7 +12977,6 @@ for(var b=0;b<h.length;b++)h[b].reset();c.index=0,c.height="",c.$apply()},this.b
 //config
 stage.mouseMoveOutside = true;
 stage.enableMouseOver(10);
-var editpanel = false;
 
 //variables
 var interaction = new Interaction();
@@ -13063,14 +13062,39 @@ angular.module('app', [
 
     this.editPanel = function(element) {
         element.on("dblclick", function(evt) {
-            console.log('dblclick');
-            editpanel = true;
+            var appElement = document.querySelector('[ng-app=app]');
+            var $scope = angular.element(appElement).scope();
+            $scope.$apply(function() {
+                $scope.showEditPanel = {
+                    visible: true,
+                    x: element.getX(),
+                    y: element.getY(),
+                    w: element.getWidth(),
+                    h: element.getHeight()
+                }
+            });
         });
     }
 } angular.module('app').controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
     $scope.fileForm = null;
+    $scope.showEditPanel = {};
+    $scope.style = {};
+
+    $scope.$watch('showEditPanel.visible', function(newValue, oldValue) {
+        console.log(newValue);
+        if(newValue) {
+            $scope.style = {
+                top: $scope.showEditPanel.y+'px',
+                left: $scope.showEditPanel.x+$scope.showEditPanel.w+'px'
+            }
+        }
+    });
+
+    stage.on("stagemousedown", function(evt) {
+        $scope.showEditPanel.visible = false;
+    });
 
     var diagram = new Diagram();
     diagram.setResize(true);

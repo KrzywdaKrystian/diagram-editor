@@ -11,8 +11,17 @@ function Interaction(){
 
     this.editPanel = function(element) {
         element.on("dblclick", function(evt) {
-            console.log('dblclick');
-            editpanel = true;
+            var appElement = document.querySelector('[ng-app=app]');
+            var $scope = angular.element(appElement).scope();
+            $scope.$apply(function() {
+                $scope.showEditPanel = {
+                    visible: true,
+                    x: element.getX(),
+                    y: element.getY(),
+                    w: element.getWidth(),
+                    h: element.getHeight()
+                }
+            });
         });
     }
 }

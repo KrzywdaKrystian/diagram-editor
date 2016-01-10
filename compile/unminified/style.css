@@ -3135,8 +3135,19 @@ body {
     -ms-flex: 1;
     flex: 1; }
 
-.content-panel canvas {
-  background: url('/example/images/board_bg.png'); }
+.content-panel {
+  position: relative; }
+  .content-panel canvas {
+    background: url('/example/images/board_bg.png'); }
+  .content-panel #edit-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 50px;
+    height: 120px;
+    background: black;
+    color: #fff; }
 
 aside header {
   width: 200px;

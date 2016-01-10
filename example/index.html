@@ -16,11 +16,15 @@
             <li ng-click="addElement('Activation')">Activation</li>
             <li ng-click="addElement('Arrow')">Arrow</li>
         </ul>
+        {{ showEditPanel }}
         <a href="#" ng-click="saveDiagram()">ZAPISZ PLIK</a>
         <input type="file" name="file" ng-model="fileForm" validfile>
     </aside>
     <div class="content-panel">
         <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;"></canvas>
+        <div id="edit-panel"
+             ng-class="{true: 'show', false: 'hide'}[showEditPanel.visible == true]"
+             ng-style="style">123</div>
     </div>
 </div>
 

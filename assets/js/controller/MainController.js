@@ -2,6 +2,22 @@ angular.module('app').controller('MainController', ['$scope', function($scope) {
 
     $scope.list = [];
     $scope.fileForm = null;
+    $scope.showEditPanel = {};
+    $scope.style = {};
+
+    $scope.$watch('showEditPanel.visible', function(newValue, oldValue) {
+        console.log(newValue);
+        if(newValue) {
+            $scope.style = {
+                top: $scope.showEditPanel.y+'px',
+                left: $scope.showEditPanel.x+$scope.showEditPanel.w+'px'
+            }
+        }
+    });
+
+    stage.on("stagemousedown", function(evt) {
+        $scope.showEditPanel.visible = false;
+    });
 
     var diagram = new Diagram();
     diagram.setResize(true);
