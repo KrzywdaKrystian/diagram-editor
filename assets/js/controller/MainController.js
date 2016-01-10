@@ -4,6 +4,7 @@ app.controller('MainController', ['$scope', function($scope) {
     $scope.fileForm = null;
     $scope.showEditPanel = {};
     $scope.style = {};
+    $scope.color = '#000000';
 
     $scope.$watch('showEditPanel.visible', function(newValue, oldValue) {
         console.log(newValue);
@@ -32,6 +33,10 @@ app.controller('MainController', ['$scope', function($scope) {
             alert(err);
         }
 
+    };
+
+    $scope.loadDiagram = function () {
+        document.getElementById('load-diagram').click();
     };
 
     $scope.saveDiagram = function (filename) {

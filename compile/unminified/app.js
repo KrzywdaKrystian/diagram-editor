@@ -13018,7 +13018,13 @@ var app = angular.module('app', [
                 }
             });
         });
-    }
+    };
+
+    this.getColor = function(){
+        var appElement = document.querySelector('[ng-app=app]');
+        var $scope = angular.element(appElement).scope();
+        return $scope.color;
+    };
 } app.controller('EditPanelController', ['$scope', function($scope) {
 
     $scope.addLine = function(){
@@ -13040,6 +13046,7 @@ var app = angular.module('app', [
     $scope.fileForm = null;
     $scope.showEditPanel = {};
     $scope.style = {};
+    $scope.color = '#000000';
 
     $scope.$watch('showEditPanel.visible', function(newValue, oldValue) {
         console.log(newValue);
@@ -13068,6 +13075,10 @@ var app = angular.module('app', [
             alert(err);
         }
 
+    };
+
+    $scope.loadDiagram = function () {
+        document.getElementById('load-diagram').click();
     };
 
     $scope.saveDiagram = function (filename) {
@@ -13101,7 +13112,7 @@ var app = angular.module('app', [
     };
 
 }]);
- function Activation(){
+ function Square(){
 
     this.type = 'Activation';
     this.defaultX = 100;
@@ -13120,7 +13131,8 @@ var app = angular.module('app', [
         rect.y = 50;
         rect.w = 50;
         rect.h = 50;
-        rect.graphics.beginFill("red").setStrokeStyle(0).beginStroke("rgba(0,0,0,0)").drawRect(0, 0, rect.w, rect.h);
+        var color = new Interaction().getColor();
+        rect.graphics.beginFill(color).setStrokeStyle(0).beginStroke("rgba(0,0,0,0)").drawRect(0, 0, rect.w, rect.h);
 
         //shape - Does not currently support automatic bounds calculations. Use setBounds() to manually define bounds. - Dlatego dodaje te metody
         rect.getX = function(){

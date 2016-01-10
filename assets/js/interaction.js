@@ -20,5 +20,11 @@ function Interaction(){
                 }
             });
         });
-    }
+    };
+
+    this.getColor = function(){
+        var appElement = document.querySelector('[ng-app=app]');
+        var $scope = angular.element(appElement).scope();
+        return $scope.color;
+    };
 }

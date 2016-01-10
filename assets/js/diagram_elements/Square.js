@@ -1,4 +1,4 @@
-function Activation(){
+function Square(){
 
     this.type = 'Activation';
     this.defaultX = 100;
@@ -17,7 +17,8 @@ function Activation(){
         rect.y = 50;
         rect.w = 50;
         rect.h = 50;
-        rect.graphics.beginFill("red").setStrokeStyle(0).beginStroke("rgba(0,0,0,0)").drawRect(0, 0, rect.w, rect.h);
+        var color = new Interaction().getColor();
+        rect.graphics.beginFill(color).setStrokeStyle(0).beginStroke("rgba(0,0,0,0)").drawRect(0, 0, rect.w, rect.h);
 
         //shape - Does not currently support automatic bounds calculations. Use setBounds() to manually define bounds. - Dlatego dodaje te metody
         rect.getX = function(){

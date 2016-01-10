@@ -3123,8 +3123,8 @@ body {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    max-width: 200px;
-    width: 200px;
+    max-width: 120px;
+    width: 120px;
     background: #ececec; }
   .flex .content-panel {
     -webkit-box-flex: 1;
@@ -3176,14 +3176,85 @@ body {
             background-image: url('/example/images/delete.png'); }
           .content-panel #edit-panel .panel-content ul li i:hover {
             opacity: .6; }
+  .content-panel .file-manger {
+    position: absolute;
+    bottom: 20px;
+    right: 20px; }
+    .content-panel .file-manger .open-file {
+      float: left;
+      width: 55px;
+      height: 45px;
+      background: url('/example/images/open.png') no-repeat;
+      -webkit-transition: opacity .3s;
+      -moz-transition: opacity .3s;
+      transition: opacity .3s;
+      cursor: pointer;
+      margin-right: 10px; }
+      .content-panel .file-manger .open-file:hover {
+        opacity: 0.85; }
+    .content-panel .file-manger .save-file {
+      float: left;
+      width: 55px;
+      height: 45px;
+      background: url('/example/images/save.png') no-repeat;
+      -webkit-transition: opacity .3s;
+      -moz-transition: opacity .3s;
+      transition: opacity .3s;
+      cursor: pointer; }
+      .content-panel .file-manger .save-file:hover {
+        opacity: 0.85; }
 
 aside header {
-  width: 200px;
+  width: 120px;
   background: #536270;
   padding: 5px;
   font-size: 15px;
   color: #ffffff; }
-aside ul li {
-  cursor: pointer; }
+aside ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0; }
+  aside ul li {
+    cursor: pointer;
+    float: left;
+    width: 50%;
+    height: 0;
+    padding-bottom: 40%;
+    border-bottom: 1px solid #8ba9bd;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s; }
+    aside ul li:nth-child(odd) {
+      border-right: 1px solid #8ba9bd; }
+    aside ul li i {
+      display: inline-block;
+      margin: 12px 18px; }
+      aside ul li i.square {
+        width: 24px;
+        height: 24px;
+        background: #414141; }
+      aside ul li i.triangle {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 12px 24px 12px;
+        border-color: transparent transparent #414141; }
+      aside ul li i.circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 24px;
+        background: #414141; }
+      aside ul li i.text {
+        width: 24px;
+        height: 24px;
+        background: url('/example/images/text.png'); }
+    aside ul li:hover {
+      background: #8ba9bd; }
+aside #load-diagram {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden; }
 
 /*# sourceMappingURL=style.css.map */

@@ -11,13 +11,15 @@
 
 <div class="flex">
     <aside>
-        <header>Sequence Diagrams</header>
+        <header>Diagrams</header>
         <ul>
-            <li ng-click="addElement('Activation')">Activation</li>
-            <li ng-click="addElement('Arrow')">Arrow</li>
+            <li ng-click="addElement('Square')"><i class="square"></i></li>
+            <li ng-click="addElement('Square')"><i class="triangle"></i></li>
+            <li ng-click="addElement('Square')"><i class="circle"></i></li>
+            <li ng-click="addElement('Square')"><i class="text"></i></li>
         </ul>
-        <a href="#" ng-click="saveDiagram()">ZAPISZ PLIK</a>
-        <input type="file" name="file" ng-model="fileForm" validfile>
+        <input id="color" type="color" ng-model="color"/>
+        <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
     </aside>
     <div class="content-panel">
         <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;"></canvas>
@@ -39,6 +41,10 @@
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="file-manger">
+            <div class="open-file" ng-click="loadDiagram()"></div>
+            <div class="save-file" ng-click="saveDiagram()"></div>
         </div>
     </div>
 </div>
