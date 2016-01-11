@@ -3123,8 +3123,8 @@ body {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    max-width: 120px;
-    width: 120px;
+    max-width: 160px;
+    width: 160px;
     background: #ececec; }
   .flex .content-panel {
     -webkit-box-flex: 1;
@@ -3269,7 +3269,7 @@ body {
         opacity: 0.85; }
 
 aside header {
-  width: 120px;
+  width: 160px;
   background: #536270;
   padding: 5px;
   font-size: 15px;
@@ -3293,7 +3293,7 @@ aside ul {
       border-right: 1px solid #8ba9bd; }
     aside ul li i {
       display: inline-block;
-      margin: 12px 18px; }
+      margin: 20px 28px; }
       aside ul li i.square {
         width: 24px;
         height: 24px;
@@ -3313,8 +3313,40 @@ aside ul {
         width: 24px;
         height: 24px;
         background: url('/example/images/text.png'); }
-    aside ul li:hover {
-      background: #8ba9bd; }
+  aside ul.elements li:hover {
+    background: #8ba9bd; }
+  aside ul.edit::after {
+    clear: both;
+    content: "";
+    display: table; }
+  aside ul.edit li {
+    font-size: 10px;
+    text-align: center;
+    padding: 5px 0;
+    height: auto; }
+    aside ul.edit li input[type="text"] {
+      display: inline-block;
+      width: 50%;
+      margin-bottom: 0; }
+aside .alpha {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 10px; }
+  aside .alpha .bar {
+    width: 90%;
+    height: 2px;
+    background: #414141;
+    position: relative;
+    margin: 5px; }
+    aside .alpha .bar .value {
+      left: 100%;
+      top: -3px;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 4px;
+      border: 2px solid #414141;
+      position: absolute; }
 aside #load-diagram {
   opacity: 0;
   width: 0;

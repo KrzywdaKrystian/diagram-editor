@@ -12998,12 +12998,32 @@ var app = angular.module('app', [
 
 } function Interaction(){
 
-    this.drag = function(element, index){
-
+    this.drag = function(element){
         element.on("pressmove",function(evt) {
             evt.currentTarget.x = evt.stageX-element.getWidth()/2;
             evt.currentTarget.y = evt.stageY-element.getHeight()/2;
             stage.update();
+        });
+    };
+
+    this.edit = function(element) {
+        element.on("click", function(evt) {
+            var appElement = document.querySelector('[ng-app=app]');
+            var $scope = angular.element(appElement).scope();
+            $scope.$apply(function() {
+                $scope.showEditPanel = {
+                    visible: true,
+                    element: element
+                }
+            });
+            var edit = {
+                alpha: element.alpha,
+                x: element.x,
+                y: element.y,
+                w: element.getWidth(),
+                h: element.getHeight()
+            };
+            console.log(element);
         });
     };
 
@@ -13146,10 +13166,10 @@ var app = angular.module('app', [
             $('#resize-panel').addClass('draggable').parents().on('mousemove', function(e) {
 
 
-                if(e.pageX-120 > 0 && $rootScope.resizeing) {
+                if(e.pageX-160 > 0 && $rootScope.resizeing) {
                     if(direction === 'w' && startX-e.pageX+startWidth > 20) {
                         width = startX-e.pageX+startWidth;
-                        left = e.pageX-120;
+                        left = e.pageX-160;
                         $('.draggable').css({
                             width: width+'px',
                             left: left
@@ -13159,10 +13179,10 @@ var app = angular.module('app', [
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
                         width = e.pageX-startX+startWidth;
-                        left = startX-startWidth-120;
+                        left = startX-startWidth-160;
                         $('.draggable').css({
                             width: e.pageX-startX+startWidth,
-                            left: startX-startWidth-120
+                            left: startX-startWidth-160
                         });
                         $scope.showEditPanel.element.graphics.command.w = width;
                         $scope.showEditPanel.element.x = left;
@@ -13256,6 +13276,7 @@ var app = angular.module('app', [
     };
 
     this.addInteractionToElement = function(rect){
+        interaction.edit(rect);
         interaction.editPanel(rect);
         interaction.drag(rect);
     };

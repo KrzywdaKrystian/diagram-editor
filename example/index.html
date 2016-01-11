@@ -12,15 +12,30 @@
 <div class="flex">
     <aside>
         <header>Diagrams</header>
-        <ul>
+        <ul class="elements">
             <li ng-click="addElement('Square')"><i class="square"></i></li>
             <li ng-click="addElement('Square')"><i class="triangle"></i></li>
             <li ng-click="addElement('Square')"><i class="circle"></i></li>
             <li ng-click="addElement('Square')"><i class="text"></i></li>
         </ul>
         <input id="color" type="color" ng-model="color"/>
-        {{ resizeMode }}
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
+
+        <div>
+            <header>Edytuj</header>
+            <ul class="edit">
+                <li>X: <input type="text"/> px</li>
+                <li>Y: <input type="text"/> px</li>
+                <li>W: <input type="text"/> px</li>
+                <li>H: <input type="text"/> px</li>
+            </ul>
+            <div class="alpha">Alpha
+                <div class="bar">
+                    <div class="value"></div>
+                </div>
+            </div>
+            <input id="editcolor" type="color" ng-model="color"/>
+        </div>
     </aside>
     <div class="content-panel">
         <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;"></canvas>

@@ -1,15 +1,29 @@
 aside {
-  header { width: 120px; background: $greyDark; padding: 5px; font-size: 15px; color: $white; }
-  ul{ list-style: none; width: 100%; margin: 0; padding: 0;
+  header { width: 160px; background: $greyDark; padding: 5px; font-size: 15px; color: $white; }
+  ul { list-style: none; width: 100%; margin: 0; padding: 0;
     li { cursor: pointer; float: left; width: 50%; height: 0; padding-bottom: 40%; border-bottom: 1px solid $grey2; @include transition(all .3s);
       &:nth-child(odd) { border-right: 1px solid $grey2; }
-      i { display: inline-block; margin: 12px 18px;
+      i { display: inline-block; margin: 20px 28px;
         &.square { width: 24px; height: 24px; background: $dark; }
         &.triangle { width: 0; height: 0; border-style: solid; border-width: 0 12px 24px 12px; border-color: transparent transparent $dark; }
         &.circle { width: 24px; height: 24px; border-radius: 24px; background: $dark; }
         &.text { width: 24px; height: 24px; background: url('/example/images/text.png'); }
       }
-      &:hover { background: $grey2; }
+    }
+    &.elements {
+      li {
+        &:hover { background: $grey2; }
+      }
+    }
+    &.edit { @include clearfix();
+      li { font-size: 10px; text-align: center; padding: 5px 0; height: auto;
+        input[type="text"] { display: inline-block; width: 50%; margin-bottom: 0; }
+      }
+    }
+  }
+  .alpha { font-size: 10px; text-align: center; margin-top: 10px;
+    .bar { width: 90%; height: 2px; background: $dark; position: relative; margin: 5px;
+      .value { left: 100%; top: -3px; width: 8px; height: 8px; background: #fff; border-radius: 4px; border: 2px solid $dark; position: absolute; }
     }
   }
   #load-diagram { opacity: 0; width: 0; height: 0; overflow: hidden; }

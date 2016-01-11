@@ -24,10 +24,10 @@ app.controller('ResizeController', function($scope, $rootScope) {
             $('#resize-panel').addClass('draggable').parents().on('mousemove', function(e) {
 
 
-                if(e.pageX-120 > 0 && $rootScope.resizeing) {
+                if(e.pageX-160 > 0 && $rootScope.resizeing) {
                     if(direction === 'w' && startX-e.pageX+startWidth > 20) {
                         width = startX-e.pageX+startWidth;
-                        left = e.pageX-120;
+                        left = e.pageX-160;
                         $('.draggable').css({
                             width: width+'px',
                             left: left
@@ -37,10 +37,10 @@ app.controller('ResizeController', function($scope, $rootScope) {
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
                         width = e.pageX-startX+startWidth;
-                        left = startX-startWidth-120;
+                        left = startX-startWidth-160;
                         $('.draggable').css({
                             width: e.pageX-startX+startWidth,
-                            left: startX-startWidth-120
+                            left: startX-startWidth-160
                         });
                         $scope.showEditPanel.element.graphics.command.w = width;
                         $scope.showEditPanel.element.x = left;

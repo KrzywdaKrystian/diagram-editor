@@ -55,6 +55,7 @@ function Square(){
     };
 
     this.addInteractionToElement = function(rect){
+        interaction.edit(rect);
         interaction.editPanel(rect);
         interaction.drag(rect);
     };
