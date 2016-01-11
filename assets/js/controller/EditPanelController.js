@@ -1,11 +1,18 @@
-app.controller('EditPanelController', ['$scope', function($scope) {
+app.controller('EditPanelController', function($scope, $rootScope) {
 
     $scope.addLine = function(){
         console.log('addLine');
     };
 
     $scope.resizeElement = function(){
-        console.log('resize');
+        $scope.showEditPanel.visible = false;
+        $rootScope.resizeMode = true;
+        $rootScope.styleResizePanel = {
+            left: $scope.showEditPanel.element.x+'px',
+            top: $scope.showEditPanel.element.y+'px',
+            width: $scope.showEditPanel.element.getWidth()+'px',
+            height: $scope.showEditPanel.element.getHeight()+'px'
+        };
     };
 
     $scope.deleteElement = function(){
@@ -13,4 +20,4 @@ app.controller('EditPanelController', ['$scope', function($scope) {
         stage.removeChild($scope.showEditPanel.element);
     };
 
-}]);
+});

@@ -19,6 +19,7 @@
             <li ng-click="addElement('Square')"><i class="text"></i></li>
         </ul>
         <input id="color" type="color" ng-model="color"/>
+        {{ resizeMode }}
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
     </aside>
     <div class="content-panel">
@@ -26,7 +27,7 @@
         <div id="edit-panel"
              ng-controller="EditPanelController"
              ng-class="{true: 'show', false: 'hide'}[showEditPanel.visible == true]"
-             ng-style="style">
+             ng-style="styleEditPanel">
 
             <div class="panel-content">
                 <ul>
@@ -46,9 +47,28 @@
             <div class="open-file" ng-click="loadDiagram()"></div>
             <div class="save-file" ng-click="saveDiagram()"></div>
         </div>
+        <div id="resize-panel"
+             ng-controller="ResizeController"
+             ng-style="styleResizePanel"
+             ng-class="{true: 'show', false: 'hide'}[resizeMode == true]">
+            <div class="resize">
+                <!--<div class="dot top-left" ng-mousedown="Resize($event, 'nw')"></div>-->
+                <div class="dot top-center" ng-mousedown="Resize($event, 'n')"></div>
+                <!--<div class="dot top-right" ng-mousedown="Resize($event, 'ne')"></div>-->
+
+                <div class="dot middle-left" ng-mousedown="Resize($event, 'w')"></div>
+                <div class="dot middle-right" ng-mousedown="Resize($event, 'e')"></div>
+
+                <!--<div class="dot bottom-right" ng-mousedown="Resize($event, 'se')"></div>-->
+                <div class="dot bottom-center" ng-mousedown="Resize($event, 's')"></div>
+                <!--<div class="dot bottom-left" ng-mousedown="Resize($event, 'sw')"></div>-->
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="../compile/unminified/app.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 </body>
 </html>

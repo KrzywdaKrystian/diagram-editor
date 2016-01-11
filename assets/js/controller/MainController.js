@@ -1,15 +1,15 @@
-app.controller('MainController', ['$scope', function($scope) {
+app.controller('MainController', function($scope, $rootScope) {
 
     $scope.list = [];
     $scope.fileForm = null;
     $scope.showEditPanel = {};
-    $scope.style = {};
+    $scope.styleEditPanel = {};
     $scope.color = '#000000';
 
     $scope.$watch('showEditPanel.visible', function(newValue, oldValue) {
         console.log(newValue);
         if(newValue) {
-            $scope.style = {
+            $scope.styleEditPanel = {
                 top: $scope.showEditPanel.element.getY()+'px',
                 left: $scope.showEditPanel.element.getX()+$scope.showEditPanel.element.getWidth()+'px'
             }
@@ -18,6 +18,7 @@ app.controller('MainController', ['$scope', function($scope) {
 
     stage.on("stagemousedown", function(evt) {
         $scope.showEditPanel.visible = false;
+        $rootScope.resizeMode = false;
     });
 
     var diagram = new Diagram();
@@ -69,4 +70,4 @@ app.controller('MainController', ['$scope', function($scope) {
 
     };
 
-}]);
+});

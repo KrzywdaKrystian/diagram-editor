@@ -16,6 +16,30 @@
       }
     }
   }
+  #resize-panel { border: 1px dashed $greyDark; position: absolute; z-index: 200; width: 200px; height: 200px; top: 20px; left: 50%;
+    .resize { position: relative; height: 100%;
+      .dot { position: absolute; width: 5px; height: 5px; background: $dark;
+        &.top-left { top: 0; left: 0; margin: -3px 0 0 -3px; cursor: nw-resize; }
+        &.top-center { top: 0; left: 50%; margin: -3px 0 0 -3px; cursor: n-resize;}
+        &.top-right { top: 0; left: 100%; margin: -3px 0 0 -2px; cursor: ne-resize;}
+
+        &.middle-left { bottom: 50%; left: 0;  margin: -3px 0 0 -3px; cursor: w-resize;}
+        &.middle-right { bottom: 50%; left: 100%; margin: -3px 0 0 -2px; cursor: e-resize;}
+
+        &.bottom-left { bottom: 0; left: 0;  margin: 0 0 -3px -3px; cursor: sw-resize; }
+        &.bottom-center { bottom: 0; left: 50%; margin: 0 0 -3px -2px; cursor: s-resize; }
+        &.bottom-right { bottom: 0; left: 100%; margin: 0 0 -3px -2px; cursor: se-resize; }
+      }
+    }
+    /*&.dragging {
+      -webkit-box-shadow: 0 2px 8px rgba(25,194,243,1);
+      -moz-box-shadow: 0 2px 8px rgba(25,194,243,1);
+      box-shadow: 0 2px 8px rgba(25,194,243,1);
+      .resize {
+        .dot { cursor: auto!important; }
+      }
+    }*/
+  }
   .file-manger { position: absolute; bottom: 20px; right: 20px;
     .open-file { float: left; width: 55px; height: 45px; background: url('/example/images/open.png') no-repeat; @include transition(opacity .3s); cursor: pointer; margin-right: 10px;
       &:hover { opacity: 0.85; }

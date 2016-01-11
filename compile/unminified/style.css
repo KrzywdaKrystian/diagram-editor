@@ -3176,6 +3176,70 @@ body {
             background-image: url('/example/images/delete.png'); }
           .content-panel #edit-panel .panel-content ul li i:hover {
             opacity: .6; }
+  .content-panel #resize-panel {
+    border: 1px dashed #536270;
+    position: absolute;
+    z-index: 200;
+    width: 200px;
+    height: 200px;
+    top: 20px;
+    left: 50%;
+    /*&.dragging {
+      -webkit-box-shadow: 0 2px 8px rgba(25,194,243,1);
+      -moz-box-shadow: 0 2px 8px rgba(25,194,243,1);
+      box-shadow: 0 2px 8px rgba(25,194,243,1);
+      .resize {
+        .dot { cursor: auto!important; }
+      }
+    }*/ }
+    .content-panel #resize-panel .resize {
+      position: relative;
+      height: 100%; }
+      .content-panel #resize-panel .resize .dot {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: #414141; }
+        .content-panel #resize-panel .resize .dot.top-left {
+          top: 0;
+          left: 0;
+          margin: -3px 0 0 -3px;
+          cursor: nw-resize; }
+        .content-panel #resize-panel .resize .dot.top-center {
+          top: 0;
+          left: 50%;
+          margin: -3px 0 0 -3px;
+          cursor: n-resize; }
+        .content-panel #resize-panel .resize .dot.top-right {
+          top: 0;
+          left: 100%;
+          margin: -3px 0 0 -2px;
+          cursor: ne-resize; }
+        .content-panel #resize-panel .resize .dot.middle-left {
+          bottom: 50%;
+          left: 0;
+          margin: -3px 0 0 -3px;
+          cursor: w-resize; }
+        .content-panel #resize-panel .resize .dot.middle-right {
+          bottom: 50%;
+          left: 100%;
+          margin: -3px 0 0 -2px;
+          cursor: e-resize; }
+        .content-panel #resize-panel .resize .dot.bottom-left {
+          bottom: 0;
+          left: 0;
+          margin: 0 0 -3px -3px;
+          cursor: sw-resize; }
+        .content-panel #resize-panel .resize .dot.bottom-center {
+          bottom: 0;
+          left: 50%;
+          margin: 0 0 -3px -2px;
+          cursor: s-resize; }
+        .content-panel #resize-panel .resize .dot.bottom-right {
+          bottom: 0;
+          left: 100%;
+          margin: 0 0 -3px -2px;
+          cursor: se-resize; }
   .content-panel .file-manger {
     position: absolute;
     bottom: 20px;

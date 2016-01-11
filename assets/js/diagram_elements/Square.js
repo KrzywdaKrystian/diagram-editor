@@ -30,11 +30,11 @@ function Square(){
         };
 
         rect.getWidth = function(){
-            return element.w;
+            return element.graphics.command.w;
         };
 
         rect.getHeight = function(){
-            return element.h;
+            return element.graphics.command.h;
         };
 
         element = rect;
