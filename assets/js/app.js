@@ -1,12 +1,13 @@
-var stage = new createjs.Stage("board");
-//config
-stage.mouseMoveOutside = true;
-stage.enableMouseOver(10);
-
-//variables
-var interaction = new Interaction();
-
+/**
+ * TODO
+ * 1. diagram.js - generyczne Tworzenie elementów w addElement
+ * 2. EditPanel - obsługa
+ * 3. EditPanel - jako dyrektywa
+ * 4. ResizeMode - jako dyrektywa
+ */
 var app = angular.module('app', [
     'mm.foundation',
     'ngSanitize'
-]);
+]).run(function(Board) {
+    Board.create();
+});

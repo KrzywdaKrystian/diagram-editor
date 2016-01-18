@@ -1,23 +1,16 @@
-function Interaction(){
+app.service('Interaction', function(Board) {
 
     this.drag = function(element){
         element.on("pressmove",function(evt) {
             evt.currentTarget.x = evt.stageX-element.getWidth()/2;
             evt.currentTarget.y = evt.stageY-element.getHeight()/2;
-            stage.update();
+            Board.update();
         });
     };
 
     this.edit = function(element) {
         element.on("click", function(evt) {
-            var appElement = document.querySelector('[ng-app=app]');
-            var $scope = angular.element(appElement).scope();
-            $scope.$apply(function() {
-                $scope.showEditPanel = {
-                    visible: true,
-                    element: element
-                }
-            });
+
             var edit = {
                 alpha: element.alpha,
                 x: element.x,
@@ -47,4 +40,5 @@ function Interaction(){
         var $scope = angular.element(appElement).scope();
         return $scope.color;
     };
-}
+
+});

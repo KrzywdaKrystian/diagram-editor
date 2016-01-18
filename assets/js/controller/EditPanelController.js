@@ -20,4 +20,13 @@ app.controller('EditPanelController', function($scope, $rootScope) {
         stage.removeChild($scope.showEditPanel.element);
     };
 
+    $scope.$watch('showEditPanel.visible', function(newValue) {
+        if(newValue) {
+            $scope.styleEditPanel = {
+                top: $scope.showEditPanel.element.getY()+'px',
+                left: $scope.showEditPanel.element.getX()+$scope.showEditPanel.element.getWidth()+'px'
+            }
+        }
+    });
+
 });
