@@ -1,4 +1,4 @@
-app.service('Diagram', function(Board, Square, Circle) {
+app.service('Diagram', function(Board, $injector) {
 
     this.setResize = function(resize, stage){
         stage.canvas.width = window.innerWidth-217;
@@ -19,17 +19,10 @@ app.service('Diagram', function(Board, Square, Circle) {
 
     this.addElement = function (type) {
         try {
-            if(type === 'Square')
-                Board.addElement(Square());
-            else if(type === 'Circle')
-                Board.addElement(Circle());
-             /*var element = new window[type]();
-             element.init();*/
+            Board.addElement($injector.get(type)());
         }
         catch(err) {
             alert(err);
         }
-
-
     };
 });

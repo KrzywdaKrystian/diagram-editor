@@ -1,5 +1,4 @@
 /**
- * TODO diagram.js - generyczne Tworzenie elementów w addElement
  * TODO EditPanel - obsługa
  * TODO EditPanel - jako dyrektywa
  * TODO ResizeMode - jako dyrektywa
