@@ -1,4 +1,4 @@
-app.controller('EditPanelController', function($scope, $rootScope) {
+app.controller('EditPanelController', function($scope, $rootScope, Board) {
 
     $scope.addLine = function(){
         console.log('addLine');
@@ -17,7 +17,7 @@ app.controller('EditPanelController', function($scope, $rootScope) {
 
     $scope.deleteElement = function(){
         $scope.showEditPanel.visible = false;
-        stage.removeChild($scope.showEditPanel.element);
+        Board.removeElement($scope.showEditPanel.element);
     };
 
     $scope.$watch('showEditPanel.visible', function(newValue) {

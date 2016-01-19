@@ -1,4 +1,4 @@
-app.controller('ResizeController', function($scope, $rootScope) {
+app.controller('ResizeController', function($scope, $rootScope, Board) {
     var direction = null;
     var startX = null;
     var startY = null;
@@ -25,6 +25,7 @@ app.controller('ResizeController', function($scope, $rootScope) {
 
 
                 if(e.pageX-160 > 0 && $rootScope.resizeing) {
+                    console.log('resizeing '+$rootScope.resizeing);
                     if(direction === 'w' && startX-e.pageX+startWidth > 20) {
                         width = startX-e.pageX+startWidth;
                         left = e.pageX-160;
@@ -65,15 +66,14 @@ app.controller('ResizeController', function($scope, $rootScope) {
                         $scope.showEditPanel.element.graphics.command.h = height;
                         $scope.showEditPanel.element.y = top;
                     }
+                    Board.update();
                 }
-                $('.draggable').on('mouseup', function() {
-                    $(this).removeClass('draggable');
-                    $rootScope.resizeing = false;
-                });
             });
             e.preventDefault();
         }).on('mouseup', function() {
             $('.draggable').removeClass('draggable');
+            $('draggable').parents().unbind( "mousemove" );
+            direction = null;
         });
     });
 

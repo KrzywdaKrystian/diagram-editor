@@ -2,11 +2,9 @@ app.factory('Circle', function(Board, Interaction) {
 
     return function() {
         var circle = new createjs.Shape();
-        circle.x = 100;
-        circle.y = 100;
-        circle.w = 50;
-        circle.h = 50;
-        circle.graphics.beginFill("red").drawCircle(0, 0, 25);
+        circle.x = 50;
+        circle.y = 50;
+        circle.graphics.beginFill(Interaction.getColor()).drawCircle(25, 25, 25);
 
         circle.getX = function(){
             return circle.x;
@@ -17,15 +15,19 @@ app.factory('Circle', function(Board, Interaction) {
         };
 
         circle.getWidth = function(){
-            return 1;
+            return circle.graphics.command.radius*2;
         };
 
         circle.getHeight = function(){
-            return 1;
+            return circle.graphics.command.radius*2;
         };
 
         Interaction.drag(circle);
         Interaction.editPanel(circle);
+
+        circle = new createjs.Text("Hello World", "20px Arial", "#000000");
+        circle.textBaseline = "alphabetic";
+        console.log(circle);
 
         return circle;
     }

@@ -24,7 +24,12 @@ app.service('Board', function() {
 
     this.addElement = function(element) {
         this.board.addChild(element);
-        this.board.update();
+        this.update();
+    };
+
+    this.removeElement = function(element) {
+        this.board.removeChild(element);
+        this.update();
     };
 
 });

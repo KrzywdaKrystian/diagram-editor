@@ -13,10 +13,12 @@
     <aside>
         <header>Diagrams</header>
         <ul class="elements">
-            <li ng-click="addElement('Square')"><i class="square"></i></li>
-            <li ng-click="addElement('Square')"><i class="triangle"></i></li>
+            <li ng-click="addElement('Rect')"><i class="rect"></i></li>
+            <li ng-click="addElement('RoundRect')"><i class="round-rect"></i></li>
+            <li ng-click="addElement('Ellipse')"><i class="ellipse"></i></li>
             <li ng-click="addElement('Circle')"><i class="circle"></i></li>
-            <li ng-click="addElement('Square')"><i class="text"></i></li>
+            <li ng-click="addElement('Triangle')"><i class="triangle"></i></li>
+            <li ng-click="addElement('Text')"><i class="text"></i></li>
         </ul>
         <input id="color" type="color" ng-model="color"/>
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>

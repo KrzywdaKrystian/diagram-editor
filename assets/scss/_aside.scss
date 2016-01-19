@@ -1,12 +1,14 @@
 aside {
   header { width: 160px; background: $greyDark; padding: 5px; font-size: 15px; color: $white; }
   ul { list-style: none; width: 100%; margin: 0; padding: 0;
-    li { cursor: pointer; float: left; width: 50%; height: 0; padding-bottom: 40%; border-bottom: 1px solid $grey2; @include transition(all .3s);
+    li { cursor: pointer; float: left; width: 50%; height: 0; padding-bottom: 40%; border-bottom: 1px solid $grey2; @include transition(all .3s); position: relative;
       &:nth-child(odd) { border-right: 1px solid $grey2; }
       i { display: inline-block; margin: 20px 28px;
-        &.square { width: 24px; height: 24px; background: $dark; }
+        &.rect { width: 24px; height: 24px; background: $dark; }
+        &.round-rect { width: 24px; height: 24px; background: $dark; border-radius: 6px; }
         &.triangle { width: 0; height: 0; border-style: solid; border-width: 0 12px 24px 12px; border-color: transparent transparent $dark; }
         &.circle { width: 24px; height: 24px; border-radius: 24px; background: $dark; }
+        &.ellipse { width: 24px; height: 18px; border-radius: 12px / 9px; background: $dark; margin: 23px 28px; }
         &.text { width: 24px; height: 24px; background: url('/example/images/text.png'); }
       }
     }

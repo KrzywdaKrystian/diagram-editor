@@ -3288,16 +3288,22 @@ aside ul {
     border-bottom: 1px solid #8ba9bd;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
-    transition: all .3s; }
+    transition: all .3s;
+    position: relative; }
     aside ul li:nth-child(odd) {
       border-right: 1px solid #8ba9bd; }
     aside ul li i {
       display: inline-block;
       margin: 20px 28px; }
-      aside ul li i.square {
+      aside ul li i.rect {
         width: 24px;
         height: 24px;
         background: #414141; }
+      aside ul li i.round-rect {
+        width: 24px;
+        height: 24px;
+        background: #414141;
+        border-radius: 6px; }
       aside ul li i.triangle {
         width: 0;
         height: 0;
@@ -3309,6 +3315,12 @@ aside ul {
         height: 24px;
         border-radius: 24px;
         background: #414141; }
+      aside ul li i.ellipse {
+        width: 24px;
+        height: 18px;
+        border-radius: 12px/9px;
+        background: #414141;
+        margin: 23px 28px; }
       aside ul li i.text {
         width: 24px;
         height: 24px;

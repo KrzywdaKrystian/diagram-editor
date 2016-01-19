@@ -12931,7 +12931,7 @@ var app = angular.module('app', [
 ]).run(function(Board) {
     Board.create();
 });
- app.controller('EditPanelController', function($scope, $rootScope) {
+ app.controller('EditPanelController', function($scope, $rootScope, Board) {
 
     $scope.addLine = function(){
         console.log('addLine');
@@ -12950,7 +12950,7 @@ var app = angular.module('app', [
 
     $scope.deleteElement = function(){
         $scope.showEditPanel.visible = false;
-        stage.removeChild($scope.showEditPanel.element);
+        Board.removeElement($scope.showEditPanel.element);
     };
 
     $scope.$watch('showEditPanel.visible', function(newValue) {
@@ -12991,7 +12991,7 @@ var app = angular.module('app', [
     };
 
 });
- app.controller('ResizeController', function($scope, $rootScope) {
+ app.controller('ResizeController', function($scope, $rootScope, Board) {
     var direction = null;
     var startX = null;
     var startY = null;
@@ -13018,6 +13018,7 @@ var app = angular.module('app', [
 
 
                 if(e.pageX-160 > 0 && $rootScope.resizeing) {
+                    console.log('resizeing '+$rootScope.resizeing);
                     if(direction === 'w' && startX-e.pageX+startWidth > 20) {
                         width = startX-e.pageX+startWidth;
                         left = e.pageX-160;
@@ -13058,15 +13059,14 @@ var app = angular.module('app', [
                         $scope.showEditPanel.element.graphics.command.h = height;
                         $scope.showEditPanel.element.y = top;
                     }
+                    Board.update();
                 }
-                $('.draggable').on('mouseup', function() {
-                    $(this).removeClass('draggable');
-                    $rootScope.resizeing = false;
-                });
             });
             e.preventDefault();
         }).on('mouseup', function() {
             $('.draggable').removeClass('draggable');
+            $('draggable').parents().unbind( "mousemove" );
+            direction = null;
         });
     });
 
@@ -13196,15 +13196,49 @@ angular.module('app').directive('validfile', function validFile($http) {
             };
         }
     };
+}); app.factory('Actor', function(Board, Interaction) {
+
+    return function() {
+        var actor = new createjs.Shape();
+        actor.x = 100;
+        actor.y = 100;
+        actor.w = 50;
+        actor.h = 50;
+
+        actor.graphics.setStrokeStyle(3);
+        actor.graphics.beginStroke(color);
+        actor.graphics.moveTo(0, 0);
+        actor.graphics.lineTo(200, 200);
+        actor.graphics.endStroke();
+
+        actor.getX = function(){
+            return actor.x;
+        };
+
+        actor.getY = function(){
+            return actor.y;
+        };
+
+        actor.getWidth = function(){
+            return 1;
+        };
+
+        actor.getHeight = function(){
+            return 1;
+        };
+
+        Interaction.drag(actor);
+        Interaction.editPanel(actor);
+
+        return actor;
+    }
 }); app.factory('Circle', function(Board, Interaction) {
 
     return function() {
         var circle = new createjs.Shape();
-        circle.x = 100;
-        circle.y = 100;
-        circle.w = 50;
-        circle.h = 50;
-        circle.graphics.beginFill("red").drawCircle(0, 0, 25);
+        circle.x = 50;
+        circle.y = 50;
+        circle.graphics.beginFill(Interaction.getColor()).drawCircle(25, 25, 25);
 
         circle.getX = function(){
             return circle.x;
@@ -13215,28 +13249,58 @@ angular.module('app').directive('validfile', function validFile($http) {
         };
 
         circle.getWidth = function(){
-            return 1;
+            return circle.graphics.command.radius*2;
         };
 
         circle.getHeight = function(){
-            return 1;
+            return circle.graphics.command.radius*2;
         };
 
         Interaction.drag(circle);
         Interaction.editPanel(circle);
 
+        circle = new createjs.Text("Hello World", "20px Arial", "#000000");
+        circle.textBaseline = "alphabetic";
+        console.log(circle);
+
         return circle;
     }
-}); app.factory('Square', function(Board, Interaction) {
+}); app.factory('Ellipse', function(Board, Interaction) {
+
+    return function() {
+        var ellipse = new createjs.Shape();
+        ellipse.x = 50;
+        ellipse.y = 50;
+        ellipse.graphics.beginFill(Interaction.getColor()).drawEllipse(0, 0, 50, 25);
+
+        ellipse.getX = function(){
+            return ellipse.x;
+        };
+
+        ellipse.getY = function(){
+            return ellipse.y;
+        };
+
+        ellipse.getWidth = function(){
+            return ellipse.graphics.command.w;
+        };
+
+        ellipse.getHeight = function(){
+            return ellipse.graphics.command.h;
+        };
+
+        Interaction.drag(ellipse);
+        Interaction.editPanel(ellipse);
+
+        return ellipse;
+    }
+}); app.factory('Rect', function(Board, Interaction) {
 
     return function() {
         var rect = new createjs.Shape();
-        rect.x = 100;
-        rect.y = 100;
-        rect.w = 50;
-        rect.h = 50;
-        var color = Interaction.getColor();
-        rect.graphics.beginFill(color).setStrokeStyle(0).beginStroke("rgba(0,0,0,0)").drawRect(0, 0, rect.w, rect.h);
+        rect.x = 50;
+        rect.y = 50;
+        rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, 50, 50);
 
         rect.getX = function(){
             return rect.x;
@@ -13259,6 +13323,118 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         return rect;
     }
+}); app.factory('RoundRect', function(Board, Interaction) {
+
+    return function() {
+        var roundRect = new createjs.Shape();
+        roundRect.x = 50;
+        roundRect.y = 50;
+        roundRect.graphics.beginFill(Interaction.getColor()).drawRoundRect(0, 0, 50, 50, 15, 15, 15, 15);
+
+        roundRect.getX = function(){
+            return roundRect.x;
+        };
+
+        roundRect.getY = function(){
+            return roundRect.y;
+        };
+
+        roundRect.getWidth = function(){
+            return roundRect.graphics.command.w;
+        };
+
+        roundRect.getHeight = function(){
+            return roundRect.graphics.command.h;
+        };
+
+        Interaction.drag(roundRect);
+        Interaction.editPanel(roundRect);
+
+        return roundRect;
+    }
+}); app.controller('TextModalController', function ($scope, $modalInstance) {
+
+    $scope.ok = function (text) {
+        $modalInstance.close(text);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+}).factory('Text', function($modal, Board, Interaction){
+
+    var text = null;
+
+    return function() {
+
+        var modalInstance = $modal.open({
+            template: '<p>Text:</p>' +
+            '<input type="text" ng-model="text" id="text"/>' +
+            '<button class="button success" ng-click="ok(text)">Dodaj</button>' +
+            '<button class="button secondary" ng-click="cancel()">Anuluj</button>',
+            controller: 'TextModalController'
+        });
+
+        modalInstance.result.then(function (result) {
+            var container = new createjs.Container();
+
+            var text = new createjs.Text(result, "20px Arial", "#000000");
+            text.textBaseline = "alphabetic";
+
+            container.addChild(text);
+            container.x = 50;
+            container.y = 50;
+            Board.addElement(container);
+
+            createjs.Ticker.on("tick", handleTick);
+            function handleTick(event) {
+                event.remove();
+            }
+
+        });
+
+    };
+
+}); app.factory("Triangle", function(Board, Interaction) {
+
+    return function() {
+        var triangle = new createjs.Shape();
+        triangle.x = 50;
+        triangle.y = 50;
+        triangle.s = 50;
+        triangle.h = 50;
+
+        var s = triangle.s,
+            h = triangle.h,
+            x = triangle.x/2,
+            y = 0;
+
+        triangle.graphics.beginFill(Interaction.getColor());
+        triangle.graphics.moveTo(x,y).lineTo(x+s/2,y+h).lineTo(x-s/2,y+h).closePath();
+
+        triangle.getX = function(){
+            return triangle.x;
+        };
+
+        triangle.getY = function(){
+            return triangle.y;
+        };
+
+        triangle.getWidth = function(){
+            return triangle.s;
+        };
+
+        triangle.getHeight = function(){
+            return triangle.h;
+        };
+
+        Interaction.drag(triangle);
+        Interaction.editPanel(triangle);
+
+        return triangle;
+    };
+
 }); app.service('Board', function() {
 
     this.board = null;
@@ -13285,7 +13461,12 @@ angular.module('app').directive('validfile', function validFile($http) {
 
     this.addElement = function(element) {
         this.board.addChild(element);
-        this.board.update();
+        this.update();
+    };
+
+    this.removeElement = function(element) {
+        this.board.removeChild(element);
+        this.update();
     };
 
 }); app.service('Diagram', function(Board, $injector) {
