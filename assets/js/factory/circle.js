@@ -25,10 +25,6 @@ app.factory('Circle', function(Board, Interaction) {
         Interaction.drag(circle);
         Interaction.editPanel(circle);
 
-        circle = new createjs.Text("Hello World", "20px Arial", "#000000");
-        circle.textBaseline = "alphabetic";
-        console.log(circle);
-
         return circle;
     }
 });
