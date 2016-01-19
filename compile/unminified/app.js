@@ -13227,6 +13227,14 @@ angular.module('app').directive('validfile', function validFile($http) {
             return 1;
         };
 
+        actor.getWidth = function(){
+            return 1;
+        };
+
+        actor.getHeight = function(){
+            return 1;
+        };
+
         Interaction.drag(actor);
         Interaction.editPanel(actor);
 
@@ -13256,6 +13264,14 @@ angular.module('app').directive('validfile', function validFile($http) {
             return circle.graphics.command.radius;
         };
 
+        circle.getWidth = function(){
+            return circle.graphics.command.radius*2;
+        };
+
+        circle.getHeight = function(){
+            return circle.graphics.command.radius*2;
+        };
+
         Interaction.drag(circle);
         Interaction.editPanel(circle);
 
@@ -13283,6 +13299,14 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         ellipse.getCenterY = function(){
             return ellipse.graphics.command.h/2;
+        };
+
+        ellipse.getWidth = function(){
+            return ellipse.graphics.command.w;
+        };
+
+        ellipse.getHeight = function(){
+            return ellipse.graphics.command.h;
         };
 
         Interaction.drag(ellipse);
@@ -13327,6 +13351,14 @@ angular.module('app').directive('validfile', function validFile($http) {
             return rect.graphics.command.h/2;
         };
 
+        rect.getWidth = function(){
+            return rect.graphics.command.w;
+        };
+
+        rect.getHeight = function(){
+            return rect.graphics.command.h;
+        };
+
         Interaction.drag(rect);
         Interaction.editPanel(rect);
 
@@ -13354,6 +13386,14 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         roundRect.getCenterY = function(){
             return roundRect.graphics.command.h/2;
+        };
+
+        roundRect.getWidth = function(){
+            return roundRect.graphics.command.w;
+        };
+
+        roundRect.getHeight = function(){
+            return roundRect.graphics.command.h;
         };
 
         Interaction.drag(roundRect);
@@ -13411,6 +13451,14 @@ angular.module('app').directive('validfile', function validFile($http) {
                 return 1;
             };
 
+            container.getWidth = function(){
+                return 1;
+            };
+
+            container.getHeight = function(){
+                return 1;
+            };
+
             Interaction.drag(container);
 
             Board.addElement(container);
@@ -13455,6 +13503,14 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         triangle.getCenterY = function(){
             return triangle.h/2;
+        };
+
+        triangle.getWidth = function(){
+            return triangle.s;
+        };
+
+        triangle.getHeight = function(){
+            return triangle.h;
         };
 
         Interaction.drag(triangle);

@@ -22,6 +22,14 @@ app.factory('Circle', function(Board, Interaction) {
             return circle.graphics.command.radius;
         };
 
+        circle.getWidth = function(){
+            return circle.graphics.command.radius*2;
+        };
+
+        circle.getHeight = function(){
+            return circle.graphics.command.radius*2;
+        };
+
         Interaction.drag(circle);
         Interaction.editPanel(circle);
 

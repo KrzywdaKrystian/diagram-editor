@@ -31,6 +31,14 @@ app.factory("Triangle", function(Board, Interaction) {
             return triangle.h/2;
         };
 
+        triangle.getWidth = function(){
+            return triangle.s;
+        };
+
+        triangle.getHeight = function(){
+            return triangle.h;
+        };
+
         Interaction.drag(triangle);
         Interaction.editPanel(triangle);
 

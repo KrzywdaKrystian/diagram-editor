@@ -22,6 +22,14 @@ app.factory('Ellipse', function(Board, Interaction) {
             return ellipse.graphics.command.h/2;
         };
 
+        ellipse.getWidth = function(){
+            return ellipse.graphics.command.w;
+        };
+
+        ellipse.getHeight = function(){
+            return ellipse.graphics.command.h;
+        };
+
         Interaction.drag(ellipse);
         Interaction.editPanel(ellipse);
 

@@ -29,6 +29,14 @@ app.factory('Actor', function(Board, Interaction) {
             return 1;
         };
 
+        actor.getWidth = function(){
+            return 1;
+        };
+
+        actor.getHeight = function(){
+            return 1;
+        };
+
         Interaction.drag(actor);
         Interaction.editPanel(actor);
 

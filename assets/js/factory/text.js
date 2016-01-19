@@ -48,6 +48,14 @@ app.controller('TextModalController', function ($scope, $modalInstance) {
                 return 1;
             };
 
+            container.getWidth = function(){
+                return 1;
+            };
+
+            container.getHeight = function(){
+                return 1;
+            };
+
             Interaction.drag(container);
 
             Board.addElement(container);

@@ -35,6 +35,14 @@ app.factory('Rect', function(Board, Interaction) {
             return rect.graphics.command.h/2;
         };
 
+        rect.getWidth = function(){
+            return rect.graphics.command.w;
+        };
+
+        rect.getHeight = function(){
+            return rect.graphics.command.h;
+        };
+
         Interaction.drag(rect);
         Interaction.editPanel(rect);
 

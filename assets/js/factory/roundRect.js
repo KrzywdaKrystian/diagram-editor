@@ -22,6 +22,14 @@ app.factory('RoundRect', function(Board, Interaction) {
             return roundRect.graphics.command.h/2;
         };
 
+        roundRect.getWidth = function(){
+            return roundRect.graphics.command.w;
+        };
+
+        roundRect.getHeight = function(){
+            return roundRect.graphics.command.h;
+        };
+
         Interaction.drag(roundRect);
         Interaction.editPanel(roundRect);
 
