@@ -2,8 +2,8 @@ app.service('Interaction', function(Board) {
 
     this.drag = function(element){
         element.on("pressmove",function(evt) {
-            evt.currentTarget.x = evt.stageX-element.getWidth()/2;
-            evt.currentTarget.y = evt.stageY-element.getHeight()/2;
+            evt.currentTarget.x = evt.stageX-element.getCenterX();
+            evt.currentTarget.y = evt.stageY-element.getCenterY();
             Board.update();
         });
     };
@@ -18,7 +18,6 @@ app.service('Interaction', function(Board) {
                 w: element.getWidth(),
                 h: element.getHeight()
             };
-            console.log(element);
         });
     };
 

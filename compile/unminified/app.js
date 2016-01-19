@@ -13219,11 +13219,11 @@ angular.module('app').directive('validfile', function validFile($http) {
             return actor.y;
         };
 
-        actor.getWidth = function(){
+        actor.getCenterX = function(){
             return 1;
         };
 
-        actor.getHeight = function(){
+        actor.getCenterY = function(){
             return 1;
         };
 
@@ -13248,20 +13248,16 @@ angular.module('app').directive('validfile', function validFile($http) {
             return circle.y;
         };
 
-        circle.getWidth = function(){
-            return circle.graphics.command.radius*2;
+        circle.getCenterX = function(){
+            return circle.graphics.command.radius;
         };
 
-        circle.getHeight = function(){
-            return circle.graphics.command.radius*2;
+        circle.getCenterY = function(){
+            return circle.graphics.command.radius;
         };
 
         Interaction.drag(circle);
         Interaction.editPanel(circle);
-
-        circle = new createjs.Text("Hello World", "20px Arial", "#000000");
-        circle.textBaseline = "alphabetic";
-        console.log(circle);
 
         return circle;
     }
@@ -13281,12 +13277,12 @@ angular.module('app').directive('validfile', function validFile($http) {
             return ellipse.y;
         };
 
-        ellipse.getWidth = function(){
-            return ellipse.graphics.command.w;
+        ellipse.getCenterX = function(){
+            return ellipse.graphics.command.w/2;
         };
 
-        ellipse.getHeight = function(){
-            return ellipse.graphics.command.h;
+        ellipse.getCenterY = function(){
+            return ellipse.graphics.command.h/2;
         };
 
         Interaction.drag(ellipse);
@@ -13296,11 +13292,24 @@ angular.module('app').directive('validfile', function validFile($http) {
     }
 }); app.factory('Rect', function(Board, Interaction) {
 
-    return function() {
+    var self = this;
+
+    this.drawRect = function (x, y, w, h) {
         var rect = new createjs.Shape();
-        rect.x = 50;
-        rect.y = 50;
-        rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, 50, 50);
+        rect.x = x;
+        rect.y = y;
+        rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, w, h);
+        return rect
+    };
+
+    return function() {
+
+        var rect = null;
+        rect = self.drawRect(50, 50, 50, 50);
+
+        rect.redraw = function(x, y, w, h) {
+            self.drawRect(x, y, w, h);
+        };
 
         rect.getX = function(){
             return rect.x;
@@ -13310,12 +13319,12 @@ angular.module('app').directive('validfile', function validFile($http) {
             return rect.y;
         };
 
-        rect.getWidth = function(){
-            return rect.graphics.command.w;
+        rect.getCenterX = function(){
+            return rect.graphics.command.w/2;
         };
 
-        rect.getHeight = function(){
-            return rect.graphics.command.h;
+        rect.getCenterY = function(){
+            return rect.graphics.command.h/2;
         };
 
         Interaction.drag(rect);
@@ -13339,12 +13348,12 @@ angular.module('app').directive('validfile', function validFile($http) {
             return roundRect.y;
         };
 
-        roundRect.getWidth = function(){
-            return roundRect.graphics.command.w;
+        roundRect.getCenterX = function(){
+            return roundRect.graphics.command.w/2;
         };
 
-        roundRect.getHeight = function(){
-            return roundRect.graphics.command.h;
+        roundRect.getCenterY = function(){
+            return roundRect.graphics.command.h/2;
         };
 
         Interaction.drag(roundRect);
@@ -13385,6 +13394,25 @@ angular.module('app').directive('validfile', function validFile($http) {
             container.addChild(text);
             container.x = 50;
             container.y = 50;
+
+            container.getX = function(){
+                return circle.x;
+            };
+
+            container.getY = function(){
+                return circle.y;
+            };
+
+            container.getCenterX = function(){
+                return 1;
+            };
+
+            container.getCenterY = function(){
+                return 1;
+            };
+
+            Interaction.drag(container);
+
             Board.addElement(container);
 
             createjs.Ticker.on("tick", handleTick);
@@ -13421,12 +13449,12 @@ angular.module('app').directive('validfile', function validFile($http) {
             return triangle.y;
         };
 
-        triangle.getWidth = function(){
-            return triangle.s;
+        triangle.getCenterX = function(){
+            return triangle.s/2;
         };
 
-        triangle.getHeight = function(){
-            return triangle.h;
+        triangle.getCenterY = function(){
+            return triangle.h/2;
         };
 
         Interaction.drag(triangle);
@@ -13500,8 +13528,8 @@ angular.module('app').directive('validfile', function validFile($http) {
 
     this.drag = function(element){
         element.on("pressmove",function(evt) {
-            evt.currentTarget.x = evt.stageX-element.getWidth()/2;
-            evt.currentTarget.y = evt.stageY-element.getHeight()/2;
+            evt.currentTarget.x = evt.stageX-element.getCenterX();
+            evt.currentTarget.y = evt.stageY-element.getCenterY();
             Board.update();
         });
     };
@@ -13516,7 +13544,6 @@ angular.module('app').directive('validfile', function validFile($http) {
                 w: element.getWidth(),
                 h: element.getHeight()
             };
-            console.log(element);
         });
     };
 

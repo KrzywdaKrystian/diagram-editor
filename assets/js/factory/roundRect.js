@@ -14,12 +14,12 @@ app.factory('RoundRect', function(Board, Interaction) {
             return roundRect.y;
         };
 
-        roundRect.getWidth = function(){
-            return roundRect.graphics.command.w;
+        roundRect.getCenterX = function(){
+            return roundRect.graphics.command.w/2;
         };
 
-        roundRect.getHeight = function(){
-            return roundRect.graphics.command.h;
+        roundRect.getCenterY = function(){
+            return roundRect.graphics.command.h/2;
         };
 
         Interaction.drag(roundRect);

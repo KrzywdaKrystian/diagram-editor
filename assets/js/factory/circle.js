@@ -14,12 +14,12 @@ app.factory('Circle', function(Board, Interaction) {
             return circle.y;
         };
 
-        circle.getWidth = function(){
-            return circle.graphics.command.radius*2;
+        circle.getCenterX = function(){
+            return circle.graphics.command.radius;
         };
 
-        circle.getHeight = function(){
-            return circle.graphics.command.radius*2;
+        circle.getCenterY = function(){
+            return circle.graphics.command.radius;
         };
 
         Interaction.drag(circle);

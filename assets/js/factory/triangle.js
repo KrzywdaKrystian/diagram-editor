@@ -23,12 +23,12 @@ app.factory("Triangle", function(Board, Interaction) {
             return triangle.y;
         };
 
-        triangle.getWidth = function(){
-            return triangle.s;
+        triangle.getCenterX = function(){
+            return triangle.s/2;
         };
 
-        triangle.getHeight = function(){
-            return triangle.h;
+        triangle.getCenterY = function(){
+            return triangle.h/2;
         };
 
         Interaction.drag(triangle);

@@ -21,11 +21,11 @@ app.factory('Actor', function(Board, Interaction) {
             return actor.y;
         };
 
-        actor.getWidth = function(){
+        actor.getCenterX = function(){
             return 1;
         };
 
-        actor.getHeight = function(){
+        actor.getCenterY = function(){
             return 1;
         };
 

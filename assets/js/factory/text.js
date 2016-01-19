@@ -31,6 +31,25 @@ app.controller('TextModalController', function ($scope, $modalInstance) {
             container.addChild(text);
             container.x = 50;
             container.y = 50;
+
+            container.getX = function(){
+                return circle.x;
+            };
+
+            container.getY = function(){
+                return circle.y;
+            };
+
+            container.getCenterX = function(){
+                return 1;
+            };
+
+            container.getCenterY = function(){
+                return 1;
+            };
+
+            Interaction.drag(container);
+
             Board.addElement(container);
 
             createjs.Ticker.on("tick", handleTick);
