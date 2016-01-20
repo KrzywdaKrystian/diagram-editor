@@ -3335,6 +3335,10 @@ aside ul {
         width: 24px;
         height: 24px;
         background: url('/example/images/line.png'); }
+      aside ul li i.destroy {
+        width: 24px;
+        height: 24px;
+        background: url('/example/images/destroy.png'); }
     aside ul li span {
       text-align: center;
       display: block;

@@ -12,6 +12,7 @@ aside {
         &.text { width: 24px; height: 24px; background: url('/example/images/text.png'); }
         &.actor { width: 24px; height: 24px; background: url('/example/images/actor.png'); }
         &.line { width: 24px; height: 24px; background: url('/example/images/line.png'); }
+        &.destroy { width: 24px; height: 24px; background: url('/example/images/destroy.png'); }
       }
       span { text-align: center; display: block; font-size: 9px; line-height: 12px; margin-top: -2px; }
       &.lines { position: relative;

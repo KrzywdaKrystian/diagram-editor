@@ -10,7 +10,7 @@ app.factory('Actor', function(Board, Interaction) {
         actor.x = x;
         actor.y = y;
         actor.w = w;
-        h = w
+        h = w;
         actor.h = h;
 
         var stroke = h/25;
