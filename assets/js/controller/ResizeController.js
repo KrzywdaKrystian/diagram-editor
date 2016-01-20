@@ -32,15 +32,15 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             width: width+'px',
                             left: left
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             height = width;
                             $('.draggable').css({
                                 height: height+'px'
                             });
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, height);
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
@@ -50,15 +50,15 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             width: width+'px',
                             left: left
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             height = width;
                             $('.draggable').css({
                                 height: height+'px'
                             });
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, height);
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
                     else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
@@ -68,15 +68,15 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             height: height,
                             top: top
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             width = height;
                             $('.draggable').css({
                                 width: width+'px'
                             });
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, width, height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, $scope.editPanelObj.element.getWidth(), height);
                         }
                     }
                     else if(direction === 's' && e.pageY-startY+startHeight > 20) {
@@ -86,15 +86,15 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             height: height,
                             top: top
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             width = height;
                             $('.draggable').css({
                                 width: width+'px'
                             });
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, width, height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, $scope.editPanelObj.element.getWidth(), height);
                         }
                     }
                     Board.update();

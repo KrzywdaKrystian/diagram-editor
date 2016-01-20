@@ -7,6 +7,8 @@ app.factory('Rect', function(Board, Interaction) {
             rect.graphics.clear();
         rect.x = x;
         rect.y = y;
+        rect.w = w;
+        rect.h = h;
         rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, w, h);
         return rect
     };
@@ -16,7 +18,9 @@ app.factory('Rect', function(Board, Interaction) {
         rect = self.drawRect(50, 50, 50, 50, rect);
 
         rect.redraw = function(x, y, w, h) {
-            rect = self.drawRect(x, y, w, h, rect);
+            console.log('redraw');
+            rect = self.drawRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), rect);
+            Board.update();
         };
 
         rect.getX = function(){
@@ -44,6 +48,7 @@ app.factory('Rect', function(Board, Interaction) {
         };
 
         Interaction.drag(rect);
+        Interaction.edit(rect);
         Interaction.editPanel(rect);
 
         return rect;

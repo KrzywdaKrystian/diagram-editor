@@ -12938,26 +12938,26 @@ var app = angular.module('app', [
     };
 
     $scope.resizeElement = function(){
-        $scope.showEditPanel.visible = false;
+        $scope.editPanelObj.visible = false;
         $rootScope.resizeMode = true;
         $rootScope.styleResizePanel = {
-            left: $scope.showEditPanel.element.x+'px',
-            top: $scope.showEditPanel.element.y+'px',
-            width: $scope.showEditPanel.element.getWidth()+'px',
-            height: $scope.showEditPanel.element.getHeight()+'px'
+            left: $scope.editPanelObj.element.x+'px',
+            top: $scope.editPanelObj.element.y+'px',
+            width: $scope.editPanelObj.element.getWidth()+'px',
+            height: $scope.editPanelObj.element.getHeight()+'px'
         };
     };
 
     $scope.deleteElement = function(){
-        $scope.showEditPanel.visible = false;
-        Board.removeElement($scope.showEditPanel.element);
+        $scope.editPanelObj.visible = false;
+        Board.removeElement($scope.editPanelObj.element);
     };
 
-    $scope.$watch('showEditPanel.visible', function(newValue) {
+    $scope.$watch('editPanelObj.visible', function(newValue) {
         if(newValue) {
             $scope.styleEditPanel = {
-                top: $scope.showEditPanel.element.getY()+'px',
-                left: $scope.showEditPanel.element.getX()+$scope.showEditPanel.element.getWidth()+'px'
+                top: $scope.editPanelObj.element.getY()+'px',
+                left: $scope.editPanelObj.element.getX()+$scope.editPanelObj.element.getWidth()+'px'
             }
         }
     });
@@ -12967,14 +12967,23 @@ var app = angular.module('app', [
     var board = Board.getBoard();
 
     board.on("stagemousedown", function(evt) {
-        $scope.showEditPanel.visible = false;
+        $scope.editPanelObj.visible = false;
+        $scope.editElementObj.visible = false;
+        $scope.editElementObj.properties = {};
         $rootScope.resizeMode = false;
     });
+
+
+    $scope.changeX = function(x) {
+        console.log($scope.editPanelObj);
+        //$rootScope.editPanelObj.element.redraw(x, $rootScope.editElementObj.properties.y, $rootScope.editElementObj.properties.w, $rootScope.editElementObj.properties.h);
+    };
 
     Diagram.setResize(true, board);
 
     $scope.fileForm = null;
-    $scope.showEditPanel = {};
+    $scope.editPanelObj = {};
+    $scope.editElementObj = {};
     $scope.styleEditPanel = {};
     $scope.color = '#000000';
 
@@ -13025,15 +13034,15 @@ var app = angular.module('app', [
                             width: width+'px',
                             left: left
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             height = width;
                             $('.draggable').css({
                                 height: height+'px'
                             });
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, height);
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
@@ -13043,15 +13052,15 @@ var app = angular.module('app', [
                             width: width+'px',
                             left: left
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             height = width;
                             $('.draggable').css({
                                 height: height+'px'
                             });
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, height);
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                            $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
                     else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
@@ -13061,15 +13070,15 @@ var app = angular.module('app', [
                             height: height,
                             top: top
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             width = height;
                             $('.draggable').css({
                                 width: width+'px'
                             });
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, width, height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, $scope.editPanelObj.element.getWidth(), height);
                         }
                     }
                     else if(direction === 's' && e.pageY-startY+startHeight > 20) {
@@ -13079,15 +13088,15 @@ var app = angular.module('app', [
                             height: height,
                             top: top
                         });
-                        if($scope.showEditPanel.element.symmetrically) {
+                        if($scope.editPanelObj.element.symmetrically) {
                             width = height;
                             $('.draggable').css({
                                 width: width+'px'
                             });
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, width, height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, width, height);
                         }
                         else {
-                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                            $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, $scope.editPanelObj.element.getWidth(), height);
                         }
                     }
                     Board.update();
@@ -13405,6 +13414,8 @@ angular.module('app').directive('validfile', function validFile($http) {
             rect.graphics.clear();
         rect.x = x;
         rect.y = y;
+        rect.w = w;
+        rect.h = h;
         rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, w, h);
         return rect
     };
@@ -13414,7 +13425,9 @@ angular.module('app').directive('validfile', function validFile($http) {
         rect = self.drawRect(50, 50, 50, 50, rect);
 
         rect.redraw = function(x, y, w, h) {
-            rect = self.drawRect(x, y, w, h, rect);
+            console.log('redraw');
+            rect = self.drawRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), rect);
+            Board.update();
         };
 
         rect.getX = function(){
@@ -13442,6 +13455,7 @@ angular.module('app').directive('validfile', function validFile($http) {
         };
 
         Interaction.drag(rect);
+        Interaction.edit(rect);
         Interaction.editPanel(rect);
 
         return rect;
@@ -13711,14 +13725,28 @@ angular.module('app').directive('validfile', function validFile($http) {
 
     this.edit = function(element) {
         element.on("click", function(evt) {
+            var edit = {};
 
-            var edit = {
-                alpha: element.alpha,
-                x: element.x,
-                y: element.y,
-                w: element.getWidth(),
-                h: element.getHeight()
-            };
+            if(element.alpha)
+                edit.alpha = element.alpha;
+            if(element.x)
+                edit.x = element.x;
+            if(element.y)
+                edit.y = element.y;
+            if(element.w)
+                edit.w = element.getWidth();
+            if(element.h)
+                edit.h = element.getHeight();
+
+            var appElement = document.querySelector('[ng-app=app]');
+            var $scope = angular.element(appElement).scope();
+            $scope.$apply(function() {
+                $scope.editElementObj = {
+                    visible: true,
+                    properties: edit,
+                    element: element
+                };
+            });
         });
     };
 
@@ -13727,7 +13755,7 @@ angular.module('app').directive('validfile', function validFile($http) {
             var appElement = document.querySelector('[ng-app=app]');
             var $scope = angular.element(appElement).scope();
             $scope.$apply(function() {
-                $scope.showEditPanel = {
+                $scope.editPanelObj = {
                     visible: true,
                     element: element
                 }

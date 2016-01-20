@@ -10,14 +10,28 @@ app.service('Interaction', function(Board) {
 
     this.edit = function(element) {
         element.on("click", function(evt) {
+            var edit = {};
 
-            var edit = {
-                alpha: element.alpha,
-                x: element.x,
-                y: element.y,
-                w: element.getWidth(),
-                h: element.getHeight()
-            };
+            if(element.alpha)
+                edit.alpha = element.alpha;
+            if(element.x)
+                edit.x = element.x;
+            if(element.y)
+                edit.y = element.y;
+            if(element.w)
+                edit.w = element.getWidth();
+            if(element.h)
+                edit.h = element.getHeight();
+
+            var appElement = document.querySelector('[ng-app=app]');
+            var $scope = angular.element(appElement).scope();
+            $scope.$apply(function() {
+                $scope.editElementObj = {
+                    visible: true,
+                    properties: edit,
+                    element: element
+                };
+            });
         });
     };
 
@@ -26,7 +40,7 @@ app.service('Interaction', function(Board) {
             var appElement = document.querySelector('[ng-app=app]');
             var $scope = angular.element(appElement).scope();
             $scope.$apply(function() {
-                $scope.showEditPanel = {
+                $scope.editPanelObj = {
                     visible: true,
                     element: element
                 }

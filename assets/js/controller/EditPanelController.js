@@ -5,26 +5,26 @@ app.controller('EditPanelController', function($scope, $rootScope, Board) {
     };
 
     $scope.resizeElement = function(){
-        $scope.showEditPanel.visible = false;
+        $scope.editPanelObj.visible = false;
         $rootScope.resizeMode = true;
         $rootScope.styleResizePanel = {
-            left: $scope.showEditPanel.element.x+'px',
-            top: $scope.showEditPanel.element.y+'px',
-            width: $scope.showEditPanel.element.getWidth()+'px',
-            height: $scope.showEditPanel.element.getHeight()+'px'
+            left: $scope.editPanelObj.element.x+'px',
+            top: $scope.editPanelObj.element.y+'px',
+            width: $scope.editPanelObj.element.getWidth()+'px',
+            height: $scope.editPanelObj.element.getHeight()+'px'
         };
     };
 
     $scope.deleteElement = function(){
-        $scope.showEditPanel.visible = false;
-        Board.removeElement($scope.showEditPanel.element);
+        $scope.editPanelObj.visible = false;
+        Board.removeElement($scope.editPanelObj.element);
     };
 
-    $scope.$watch('showEditPanel.visible', function(newValue) {
+    $scope.$watch('editPanelObj.visible', function(newValue) {
         if(newValue) {
             $scope.styleEditPanel = {
-                top: $scope.showEditPanel.element.getY()+'px',
-                left: $scope.showEditPanel.element.getX()+$scope.showEditPanel.element.getWidth()+'px'
+                top: $scope.editPanelObj.element.getY()+'px',
+                left: $scope.editPanelObj.element.getX()+$scope.editPanelObj.element.getWidth()+'px'
             }
         }
     });

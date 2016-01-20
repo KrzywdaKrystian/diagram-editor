@@ -23,14 +23,30 @@
         </ul>
         <input id="color" type="color" ng-model="color"/>
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
-
-        <div>
+        <div
+             ng-show="editElementObj.visible">
             <header>Edytuj</header>
             <ul class="edit">
-                <li>X: <input type="text"/> px</li>
-                <li>Y: <input type="text"/> px</li>
-                <li>W: <input type="text"/> px</li>
-                <li>H: <input type="text"/> px</li>
+                <li ng-show="editElementObj.properties.x || editElementObj.properties.x == ''">
+                    X: <input type="text"
+                              ng-model="editElementObj.properties.x"
+                              ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h)"/> px
+                </li>
+                <li ng-show="editElementObj.properties.y || editElementObj.properties.y == ''">
+                    Y: <input type="text"
+                              ng-model="editElementObj.properties.y"
+                              ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h)"/> px
+                </li>
+                <li ng-show="editElementObj.properties.w || editElementObj.properties.w == ''">
+                    W: <input type="text"
+                              ng-model="editElementObj.properties.w"
+                              ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h)"/> px
+                </li>
+                <li ng-show="editElementObj.properties.h || editElementObj.properties.h == ''">
+                    H: <input type="text"
+                              ng-model="editElementObj.properties.h"
+                              ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h)"/> px
+                </li>
             </ul>
             <div class="alpha">Alpha
                 <div class="bar">
@@ -44,7 +60,7 @@
         <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;"></canvas>
         <div id="edit-panel"
              ng-controller="EditPanelController"
-             ng-class="{true: 'show', false: 'hide'}[showEditPanel.visible == true]"
+             ng-class="{true: 'show', false: 'hide'}[editPanelObj.visible == true]"
              ng-style="styleEditPanel">
 
             <div class="panel-content">
@@ -73,10 +89,8 @@
                 <!--<div class="dot top-left" ng-mousedown="Resize($event, 'nw')"></div>-->
                 <div class="dot top-center" ng-mousedown="Resize($event, 'n')"></div>
                 <!--<div class="dot top-right" ng-mousedown="Resize($event, 'ne')"></div>-->
-
                 <div class="dot middle-left" ng-mousedown="Resize($event, 'w')"></div>
                 <div class="dot middle-right" ng-mousedown="Resize($event, 'e')"></div>
-
                 <!--<div class="dot bottom-right" ng-mousedown="Resize($event, 'se')"></div>-->
                 <div class="dot bottom-center" ng-mousedown="Resize($event, 's')"></div>
                 <!--<div class="dot bottom-left" ng-mousedown="Resize($event, 'sw')"></div>-->
