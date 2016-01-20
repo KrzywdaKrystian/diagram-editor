@@ -3325,6 +3325,10 @@ aside ul {
         width: 24px;
         height: 24px;
         background: url('/example/images/text.png'); }
+      aside ul li i.actor {
+        width: 24px;
+        height: 24px;
+        background: url('/example/images/actor.png'); }
   aside ul.elements li:hover {
     background: #8ba9bd; }
   aside ul.edit::after {
