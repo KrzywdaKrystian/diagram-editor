@@ -13009,10 +13009,10 @@ var app = angular.module('app', [
             startWidth = $('#resize-panel').width();
             startHeight = $('#resize-panel').height();
             $rootScope.resizeing = true;
-            var width = null;
-            var height = null;
-            var left = null;
-            var top = null;
+            var width = startWidth;
+            var height = startHeight;
+            var left = startX;
+            var top = startY;
 
             $('#resize-panel').addClass('draggable').parents().on('mousemove', function(e) {
 
@@ -13026,8 +13026,7 @@ var app = angular.module('app', [
                             width: width+'px',
                             left: left
                         });
-                        $scope.showEditPanel.element.graphics.command.w = width;
-                        $scope.showEditPanel.element.x = left;
+                        $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
                         width = e.pageX-startX+startWidth;
@@ -13036,8 +13035,7 @@ var app = angular.module('app', [
                             width: e.pageX-startX+startWidth,
                             left: startX-startWidth-160
                         });
-                        $scope.showEditPanel.element.graphics.command.w = width;
-                        $scope.showEditPanel.element.x = left;
+                        $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
                     }
                     else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
                         height = startY-e.pageY+startHeight;
@@ -13046,8 +13044,7 @@ var app = angular.module('app', [
                             height: startY-e.pageY+startHeight,
                             top: e.pageY
                         });
-                        $scope.showEditPanel.element.graphics.command.h = height;
-                        $scope.showEditPanel.element.y = top;
+                        $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
                     }
                     else if(direction === 's' && e.pageY-startY+startHeight > 20) {
                         height = e.pageY-startY+startHeight;
@@ -13056,8 +13053,7 @@ var app = angular.module('app', [
                             height: e.pageY-startY+startHeight,
                             top: startY-startHeight
                         });
-                        $scope.showEditPanel.element.graphics.command.h = height;
-                        $scope.showEditPanel.element.y = top;
+                        $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
                     }
                     Board.update();
                 }
@@ -13318,8 +13314,9 @@ angular.module('app').directive('validfile', function validFile($http) {
 
     var self = this;
 
-    this.drawRect = function (x, y, w, h) {
-        var rect = new createjs.Shape();
+    this.drawRect = function (x, y, w, h, rect) {
+        if(rect.graphics)
+            rect.graphics.clear();
         rect.x = x;
         rect.y = y;
         rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, w, h);
@@ -13327,12 +13324,11 @@ angular.module('app').directive('validfile', function validFile($http) {
     };
 
     return function() {
-
-        var rect = null;
-        rect = self.drawRect(50, 50, 50, 50);
+        var rect = new createjs.Shape();
+        rect = self.drawRect(50, 50, 50, 50, rect);
 
         rect.redraw = function(x, y, w, h) {
-            self.drawRect(x, y, w, h);
+            rect = self.drawRect(x, y, w, h, rect);
         };
 
         rect.getX = function(){
@@ -13488,6 +13484,18 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         triangle.graphics.beginFill(Interaction.getColor());
         triangle.graphics.moveTo(x,y).lineTo(x+s/2,y+h).lineTo(x-s/2,y+h).closePath();
+
+        triangle.redraw = function(left, top, width, height) {
+            triangle.x = left;
+            triangle.y = top;
+            var s = width,
+                h = height,
+                x = left/2,
+                y = 0;
+            triangle.graphics.clear();
+            triangle.graphics.beginFill('red');
+            triangle.graphics.moveTo(x,y).lineTo(x+s/2,y+h).lineTo(x-s/2,y+h).closePath();
+        };
 
         triangle.getX = function(){
             return triangle.x;

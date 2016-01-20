@@ -15,6 +15,18 @@ app.factory("Triangle", function(Board, Interaction) {
         triangle.graphics.beginFill(Interaction.getColor());
         triangle.graphics.moveTo(x,y).lineTo(x+s/2,y+h).lineTo(x-s/2,y+h).closePath();
 
+        triangle.redraw = function(left, top, width, height) {
+            triangle.x = left;
+            triangle.y = top;
+            var s = width,
+                h = height,
+                x = left/2,
+                y = 0;
+            triangle.graphics.clear();
+            triangle.graphics.beginFill('red');
+            triangle.graphics.moveTo(x,y).lineTo(x+s/2,y+h).lineTo(x-s/2,y+h).closePath();
+        };
+
         triangle.getX = function(){
             return triangle.x;
         };

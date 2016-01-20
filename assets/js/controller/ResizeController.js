@@ -16,10 +16,10 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
             startWidth = $('#resize-panel').width();
             startHeight = $('#resize-panel').height();
             $rootScope.resizeing = true;
-            var width = null;
-            var height = null;
-            var left = null;
-            var top = null;
+            var width = startWidth;
+            var height = startHeight;
+            var left = startX;
+            var top = startY;
 
             $('#resize-panel').addClass('draggable').parents().on('mousemove', function(e) {
 
@@ -33,8 +33,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             width: width+'px',
                             left: left
                         });
-                        $scope.showEditPanel.element.graphics.command.w = width;
-                        $scope.showEditPanel.element.x = left;
+                        $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
                         width = e.pageX-startX+startWidth;
@@ -43,8 +42,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             width: e.pageX-startX+startWidth,
                             left: startX-startWidth-160
                         });
-                        $scope.showEditPanel.element.graphics.command.w = width;
-                        $scope.showEditPanel.element.x = left;
+                        $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
                     }
                     else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
                         height = startY-e.pageY+startHeight;
@@ -53,8 +51,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             height: startY-e.pageY+startHeight,
                             top: e.pageY
                         });
-                        $scope.showEditPanel.element.graphics.command.h = height;
-                        $scope.showEditPanel.element.y = top;
+                        $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
                     }
                     else if(direction === 's' && e.pageY-startY+startHeight > 20) {
                         height = e.pageY-startY+startHeight;
@@ -63,8 +60,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             height: e.pageY-startY+startHeight,
                             top: startY-startHeight
                         });
-                        $scope.showEditPanel.element.graphics.command.h = height;
-                        $scope.showEditPanel.element.y = top;
+                        $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
                     }
                     Board.update();
                 }

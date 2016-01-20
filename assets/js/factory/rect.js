@@ -2,8 +2,9 @@ app.factory('Rect', function(Board, Interaction) {
 
     var self = this;
 
-    this.drawRect = function (x, y, w, h) {
-        var rect = new createjs.Shape();
+    this.drawRect = function (x, y, w, h, rect) {
+        if(rect.graphics)
+            rect.graphics.clear();
         rect.x = x;
         rect.y = y;
         rect.graphics.beginFill(Interaction.getColor()).drawRect(0, 0, w, h);
@@ -11,12 +12,11 @@ app.factory('Rect', function(Board, Interaction) {
     };
 
     return function() {
-
-        var rect = null;
-        rect = self.drawRect(50, 50, 50, 50);
+        var rect = new createjs.Shape();
+        rect = self.drawRect(50, 50, 50, 50, rect);
 
         rect.redraw = function(x, y, w, h) {
-            self.drawRect(x, y, w, h);
+            rect = self.drawRect(x, y, w, h, rect);
         };
 
         rect.getX = function(){
