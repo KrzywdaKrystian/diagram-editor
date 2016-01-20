@@ -13025,34 +13025,70 @@ var app = angular.module('app', [
                             width: width+'px',
                             left: left
                         });
-                        $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                        if($scope.showEditPanel.element.symmetrically) {
+                            height = width;
+                            $('.draggable').css({
+                                height: height+'px'
+                            });
+                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, height);
+                        }
+                        else {
+                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                        }
                     }
                     else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
                         width = e.pageX-startX+startWidth;
                         left = startX-startWidth-160;
                         $('.draggable').css({
-                            width: e.pageX-startX+startWidth,
-                            left: startX-startWidth-160
+                            width: width+'px',
+                            left: left
                         });
-                        $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                        if($scope.showEditPanel.element.symmetrically) {
+                            height = width;
+                            $('.draggable').css({
+                                height: height+'px'
+                            });
+                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, height);
+                        }
+                        else {
+                            $scope.showEditPanel.element.redraw(left, $scope.showEditPanel.element.y, width, $scope.showEditPanel.element.getHeight());
+                        }
                     }
                     else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
                         height = startY-e.pageY+startHeight;
                         top = e.pageY;
                         $('.draggable').css({
-                            height: startY-e.pageY+startHeight,
-                            top: e.pageY
+                            height: height,
+                            top: top
                         });
-                        $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                        if($scope.showEditPanel.element.symmetrically) {
+                            width = height;
+                            $('.draggable').css({
+                                width: width+'px'
+                            });
+                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, width, height);
+                        }
+                        else {
+                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                        }
                     }
                     else if(direction === 's' && e.pageY-startY+startHeight > 20) {
                         height = e.pageY-startY+startHeight;
                         top = startY-startHeight;
                         $('.draggable').css({
-                            height: e.pageY-startY+startHeight,
-                            top: startY-startHeight
+                            height: height,
+                            top: top
                         });
-                        $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                        if($scope.showEditPanel.element.symmetrically) {
+                            width = height;
+                            $('.draggable').css({
+                                width: width+'px'
+                            });
+                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, width, height);
+                        }
+                        else {
+                            $scope.showEditPanel.element.redraw($scope.showEditPanel.element.x, top, $scope.showEditPanel.element.getWidth(), height);
+                        }
                     }
                     Board.update();
                 }
@@ -13238,11 +13274,25 @@ angular.module('app').directive('validfile', function validFile($http) {
     }
 }); app.factory('Circle', function(Board, Interaction) {
 
+    var self = this;
+
+    this.drawCircle = function (x, y, w, h, circle) {
+        if(circle.graphics)
+            circle.graphics.clear();
+        circle.x = x;
+        circle.y = y;
+        circle.graphics.beginFill(Interaction.getColor()).drawCircle(w/2, w/2, w/2);
+        return circle
+    };
+
     return function() {
         var circle = new createjs.Shape();
-        circle.x = 50;
-        circle.y = 50;
-        circle.graphics.beginFill(Interaction.getColor()).drawCircle(25, 25, 25);
+        circle = self.drawCircle(50, 50, 50, 50, circle);
+        circle.redraw = function(x, y, w, h) {
+            circle = self.drawCircle(x, y, w, h, circle);
+        };
+
+        circle.symmetrically = true;
 
         circle.getX = function(){
             return circle.x;

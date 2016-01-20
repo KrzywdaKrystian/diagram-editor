@@ -1,10 +1,24 @@
 app.factory('Circle', function(Board, Interaction) {
 
+    var self = this;
+
+    this.drawCircle = function (x, y, w, h, circle) {
+        if(circle.graphics)
+            circle.graphics.clear();
+        circle.x = x;
+        circle.y = y;
+        circle.graphics.beginFill(Interaction.getColor()).drawCircle(w/2, w/2, w/2);
+        return circle
+    };
+
     return function() {
         var circle = new createjs.Shape();
-        circle.x = 50;
-        circle.y = 50;
-        circle.graphics.beginFill(Interaction.getColor()).drawCircle(25, 25, 25);
+        circle = self.drawCircle(50, 50, 50, 50, circle);
+        circle.redraw = function(x, y, w, h) {
+            circle = self.drawCircle(x, y, w, h, circle);
+        };
+
+        circle.symmetrically = true;
 
         circle.getX = function(){
             return circle.x;
