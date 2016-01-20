@@ -22,6 +22,8 @@ app.service('Interaction', function(Board) {
                 edit.w = element.getWidth();
             if(element.h)
                 edit.h = element.getHeight();
+            if(element.graphics._fill)
+                edit.color = element.graphics._fill;
 
             var appElement = document.querySelector('[ng-app=app]');
             var $scope = angular.element(appElement).scope();

@@ -53,7 +53,9 @@
                     <div class="value"></div>
                 </div>
             </div>
-            <input id="editcolor" type="color" ng-model="color"/>
+            <input id="editcolor" type="color"
+                   ng-model="editElementObj.properties.color.style"
+                   ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h, editElementObj.properties.color.style)"/>
         </div>
     </aside>
     <div class="content-panel">
