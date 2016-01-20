@@ -25,7 +25,6 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
 
 
                 if(e.pageX-160 > 0 && $rootScope.resizeing) {
-                    console.log('resizeing '+$rootScope.resizeing);
                     if(direction === 'w' && startX-e.pageX+startWidth > 20) {
                         width = startX-e.pageX+startWidth;
                         left = e.pageX-160;
@@ -67,6 +66,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
             });
             e.preventDefault();
         }).on('mouseup', function() {
+            $rootScope.resizeing = false;
             $('.draggable').removeClass('draggable');
             $('draggable').parents().unbind( "mousemove" );
             direction = null;

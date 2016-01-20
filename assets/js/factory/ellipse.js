@@ -1,10 +1,23 @@
 app.factory('Ellipse', function(Board, Interaction) {
 
+    var self = this;
+
+    this.drawEllipse = function (x, y, w, h, ellipse) {
+        if(ellipse.graphics)
+            ellipse.graphics.clear();
+        ellipse.x = x;
+        ellipse.y = y;
+        ellipse.graphics.beginFill(Interaction.getColor()).drawEllipse(0, 0, w, h);
+        return ellipse;
+    };
+
     return function() {
         var ellipse = new createjs.Shape();
-        ellipse.x = 50;
-        ellipse.y = 50;
-        ellipse.graphics.beginFill(Interaction.getColor()).drawEllipse(0, 0, 50, 25);
+        ellipse = self.drawEllipse(50, 50, 50, 25, ellipse);
+
+        ellipse.redraw = function(x, y, w, h) {
+            ellipse = self.drawEllipse(x, y, w, h, ellipse);
+        };
 
         ellipse.getX = function(){
             return ellipse.x;
