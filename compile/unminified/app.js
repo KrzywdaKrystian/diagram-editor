@@ -12967,6 +12967,7 @@ var app = angular.module('app', [
 }); app.controller('MainController', function($scope, $rootScope, Diagram, Board) {
 
     var board = Board.getBoard();
+    $scope.alpha = 0;
 
     board.on("stagemousedown", function(evt) {
         $scope.editPanelObj.visible = false;
@@ -12975,11 +12976,12 @@ var app = angular.module('app', [
         $rootScope.resizeMode = false;
     });
 
-
-    $scope.changeX = function(x) {
-        console.log($scope.editPanelObj);
-        //$rootScope.editPanelObj.element.redraw(x, $rootScope.editElementObj.properties.y, $rootScope.editElementObj.properties.w, $rootScope.editElementObj.properties.h);
-    };
+    $scope.$watch('editElementObj.properties.alpha', function(newValue) {
+        if(newValue) {
+            $scope.editElementObj.element.setAlpha(newValue);
+            $scope.alpha = newValue;
+        }
+    });
 
     Diagram.setResize(true, board);
 
@@ -13199,7 +13201,66 @@ var app = angular.module('app', [
         });
 
     };
-} //pozmieniac
+} app.directive('alphaBar', function(){
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            bindModel: '=ngModel',
+            id: '@',
+            defaultValue: '@'
+        },
+        template: '<div class="alpha-bar">'+
+                    '<div class="value" data-drag-bar></div>' +
+                    '<input type="hidden" ng-model="bindModel"/>'+
+                  '</div>',
+        link: function (scope, el) {
+            var dataDragBar = el.find('div');
+            var dragging = false;
+            var parent = {
+                width: null,
+                offset: null
+            };
+
+            scope.$watch('id', function(newValue) {
+                if(newValue) {
+                    dataDragBar.css({
+                        left: (parseFloat(scope.defaultValue)*100)+'%'
+                    });
+                }
+            });
+
+            $('[data-drag-bar]').mousedown(function(){
+                dragging = $(this);
+                parent.width = $(this).parent().width();
+                parent.offset = $(this).parent().offset();
+            });
+            $(document).mouseup(function(e){
+                dragging = false;
+                parent = {
+                    width: null,
+                    offset: null
+                };
+            }).mousemove(function(e){
+                if(dragging) {
+                    var left;
+                    if(e.pageX < parent.offset.left)
+                        left = 0;
+                    else if (e.pageX > parent.offset.left + parent.width)
+                        left = parent.width;
+                    else
+                        left = e.pageX-parent.offset.left;
+                    dragging.css({
+                        left: left+'px'
+                    });
+                    scope.$apply(function() {
+                        scope.bindModel = parseFloat(left/parent.width).toFixed(2);
+                    });
+                }
+            })
+        }
+    };
+}); //pozmieniac
 angular.module('app').directive('validfile', function validFile($http) {
 
     var validFormats = ['json'];
@@ -13361,21 +13422,25 @@ angular.module('app').directive('validfile', function validFile($http) {
 
     var self = this;
 
-    this.drawEllipse = function (x, y, w, h, ellipse) {
-        if(ellipse.graphics)
+    this.drawEllipse = function (x, y, w, h, color, ellipse) {
+        if(ellipse.graphics){
             ellipse.graphics.clear();
+        }
         ellipse.x = x;
         ellipse.y = y;
-        ellipse.graphics.beginFill(Interaction.getColor()).drawEllipse(0, 0, w, h);
+        ellipse.w = w;
+        ellipse.h = h;
+        ellipse.graphics.beginFill(color).drawEllipse(0, 0, w, h);
         return ellipse;
     };
 
     return function() {
         var ellipse = new createjs.Shape();
-        ellipse = self.drawEllipse(50, 50, 50, 25, ellipse);
+        ellipse = self.drawEllipse(50, 50, 50, 25, Interaction.getColor(), ellipse);
 
-        ellipse.redraw = function(x, y, w, h) {
-            ellipse = self.drawEllipse(x, y, w, h, ellipse);
+        ellipse.redraw = function(x, y, w, h, color) {
+            ellipse = self.drawEllipse(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : ellipse.graphics._fill.style, ellipse);
+            Board.update();
         };
 
         ellipse.getX = function(){
@@ -13402,7 +13467,13 @@ angular.module('app').directive('validfile', function validFile($http) {
             return ellipse.graphics.command.h;
         };
 
+        ellipse.setAlpha = function(x){
+            ellipse.alpha = x;
+            Board.update();
+        };
+
         Interaction.drag(ellipse);
+        Interaction.edit(ellipse);
         Interaction.editPanel(ellipse);
 
         return ellipse;
@@ -13454,6 +13525,11 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         rect.getHeight = function(){
             return rect.graphics.command.h;
+        };
+
+        rect.setAlpha = function(x){
+            rect.alpha = x;
+            Board.update();
         };
 
         Interaction.drag(rect);

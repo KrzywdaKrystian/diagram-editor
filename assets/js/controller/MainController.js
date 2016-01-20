@@ -1,6 +1,7 @@
 app.controller('MainController', function($scope, $rootScope, Diagram, Board) {
 
     var board = Board.getBoard();
+    $scope.alpha = 0;
 
     board.on("stagemousedown", function(evt) {
         $scope.editPanelObj.visible = false;
@@ -9,11 +10,12 @@ app.controller('MainController', function($scope, $rootScope, Diagram, Board) {
         $rootScope.resizeMode = false;
     });
 
-
-    $scope.changeX = function(x) {
-        console.log($scope.editPanelObj);
-        //$rootScope.editPanelObj.element.redraw(x, $rootScope.editElementObj.properties.y, $rootScope.editElementObj.properties.w, $rootScope.editElementObj.properties.h);
-    };
+    $scope.$watch('editElementObj.properties.alpha', function(newValue) {
+        if(newValue) {
+            $scope.editElementObj.element.setAlpha(newValue);
+            $scope.alpha = newValue;
+        }
+    });
 
     Diagram.setResize(true, board);
 

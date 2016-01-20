@@ -47,6 +47,11 @@ app.factory('Rect', function(Board, Interaction) {
             return rect.graphics.command.h;
         };
 
+        rect.setAlpha = function(x){
+            rect.alpha = x;
+            Board.update();
+        };
+
         Interaction.drag(rect);
         Interaction.edit(rect);
         Interaction.editPanel(rect);

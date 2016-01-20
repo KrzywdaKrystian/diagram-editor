@@ -48,10 +48,11 @@
                               ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h)"/> px
                 </li>
             </ul>
-            <div class="alpha">Alpha
-                <div class="bar">
-                    <div class="value"></div>
-                </div>
+            <div class="alpha">Alpha {{ editElementObj.properties.alpha }} {{ alpha }}
+                <alpha-bar ng-model="editElementObj.properties.alpha" default-value="{{ alpha }}" id="{{ editElementObj.element.id }}"></alpha-bar>
+                <input type="hidden"
+                       ng-model="alpha"
+                       ng-change="editElementObj.element.setAlpha(editElementObj.properties.alpha)">
             </div>
             <input id="editcolor" type="color"
                    ng-model="editElementObj.properties.color.style"

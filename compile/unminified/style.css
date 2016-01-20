@@ -3348,21 +3348,22 @@ aside .alpha {
   font-size: 10px;
   text-align: center;
   margin-top: 10px; }
-  aside .alpha .bar {
+  aside .alpha .alpha-bar {
     width: 90%;
     height: 2px;
     background: #414141;
     position: relative;
     margin: 5px; }
-    aside .alpha .bar .value {
-      left: 100%;
+    aside .alpha .alpha-bar .value {
+      left: 50%;
       top: -3px;
       width: 8px;
       height: 8px;
       background: #fff;
       border-radius: 4px;
       border: 2px solid #414141;
-      position: absolute; }
+      position: absolute;
+      cursor: pointer; }
 aside #load-diagram {
   opacity: 0;
   width: 0;
