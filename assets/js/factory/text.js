@@ -1,71 +1,75 @@
-app.controller('TextModalController', function ($scope, $modalInstance) {
+app.factory('Text', function($modal, Board, Interaction){
 
-    $scope.ok = function (text) {
-        $modalInstance.close(text);
+    var self = this;
+
+    this.drawText = function (x, y, w, h, color, text) {
+        text.x = x;
+        text.y = y;
+        text.color = color;
+        text.textBaseline = "alphabetic";
+        return text
     };
 
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+    this.prompt = function(textElement) {
+        return window.prompt("Text:","");
     };
-
-}).factory('Text', function($modal, Board, Interaction){
-
-    var text = null;
 
     return function() {
+        var text = new createjs.Text(window.prompt("Text:",""), "20px Arial", "#000000");
+        text = self.drawText(50, 50, null, null, Interaction.getColor(), text);
 
-        var modalInstance = $modal.open({
-            template: '<p>Text:</p>' +
-            '<input type="text" ng-model="text" id="text"/>' +
-            '<button class="button success" ng-click="ok(text)">Dodaj</button>' +
-            '<button class="button secondary" ng-click="cancel()">Anuluj</button>',
-            controller: 'TextModalController'
+        text.redraw = function(x, y, w, h, color) {
+            text = self.drawText(x, y, null, null, color ? color : text.color, text);
+            Board.update();
+        };
+
+        text.getX = function(){
+            return text.x;
+        };
+
+        text.getY = function(){
+            return text.y;
+        };
+
+        text.getCenterX = function(){
+            return 1;
+        };
+
+        text.getCenterY = function(){
+            return 1;
+        };
+
+        text.getWidth = function(){
+            return 1;
+        };
+
+        text.getHeight = function(){
+            return 1;
+        };
+
+        text.editText = function(text) {
+            text.text = self.prompt(text);
+            Board.update();
+        };
+
+        text.setFontSize = function(fontSize) {
+            text.font = fontSize;
+            Board.update();
+        };
+
+        text.setAlpha = function(x){
+            text.alpha = x;
+            Board.update();
+        };
+
+        text.on("dblclick", function(evt) {
+            text.text = window.prompt("Text:",text.text);
+            Board.update();
         });
 
-        modalInstance.result.then(function (result) {
-            var container = new createjs.Container();
-
-            var text = new createjs.Text(result, "20px Arial", "#000000");
-            text.textBaseline = "alphabetic";
-
-            container.addChild(text);
-            container.x = 50;
-            container.y = 50;
-
-            container.getX = function(){
-                return circle.x;
-            };
-
-            container.getY = function(){
-                return circle.y;
-            };
-
-            container.getCenterX = function(){
-                return 1;
-            };
-
-            container.getCenterY = function(){
-                return 1;
-            };
-
-            container.getWidth = function(){
-                return 1;
-            };
-
-            container.getHeight = function(){
-                return 1;
-            };
-
-            Interaction.drag(container);
-
-            Board.addElement(container);
-
-            createjs.Ticker.on("tick", handleTick);
-            function handleTick(event) {
-                event.remove();
-            }
-
-        });
+        Interaction.drag(text);
+        Interaction.edit(text);
+        Board.addElement(text);
 
     };
 

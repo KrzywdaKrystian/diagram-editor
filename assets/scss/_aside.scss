@@ -3,15 +3,16 @@ aside {
   ul { list-style: none; width: 100%; margin: 0; padding: 0;
     li { cursor: pointer; float: left; width: 50%; height: 0; padding-bottom: 40%; border-bottom: 1px solid $grey2; @include transition(all .3s); position: relative;
       &:nth-child(odd) { border-right: 1px solid $grey2; }
-      i { display: inline-block; margin: 20px 28px;
+      i { display: inline-block; margin: 20px 28px 0;
         &.rect { width: 24px; height: 24px; background: $dark; }
         &.round-rect { width: 24px; height: 24px; background: $dark; border-radius: 6px; }
         &.triangle { width: 0; height: 0; border-style: solid; border-width: 0 12px 24px 12px; border-color: transparent transparent $dark; }
         &.circle { width: 24px; height: 24px; border-radius: 24px; background: $dark; }
-        &.ellipse { width: 24px; height: 18px; border-radius: 12px / 9px; background: $dark; margin: 23px 28px; }
+        &.ellipse { width: 24px; height: 18px; border-radius: 12px / 9px; background: $dark; margin: 23px 28px 0; }
         &.text { width: 24px; height: 24px; background: url('/example/images/text.png'); }
         &.actor { width: 24px; height: 24px; background: url('/example/images/actor.png'); }
       }
+      span { text-align: center; display: block; font-size: 9px; line-height: 12px; margin-top: -2px; }
     }
     &.elements {
       li {
@@ -24,7 +25,7 @@ aside {
       }
     }
   }
-  .alpha { font-size: 10px; text-align: center; margin-top: 10px;
+  .alpha { font-size: 10px; text-align: center; margin-top: 10px; margin-bottom: 15px;
     .alpha-bar { width: 90%; height: 2px; background: $dark; position: relative; margin: 5px;
       .value { left: 50%; top: -3px; width: 8px; height: 8px; background: #fff; border-radius: 4px; border: 2px solid $dark; position: absolute; cursor: pointer; }
     }

@@ -11,6 +11,7 @@ app.service('Interaction', function(Board) {
     this.edit = function(element) {
         element.on("click", function(evt) {
             var edit = {};
+            console.log('edit');
 
             if(element.alpha)
                 edit.alpha = element.alpha;
@@ -27,8 +28,11 @@ app.service('Interaction', function(Board) {
             if(element.h && !element.symmetrically)
                 edit.h = element.getHeight();
 
-            if(element.graphics._fill)
+            if(element.graphics && element.graphics._fill)
                 edit.color = element.graphics._fill;
+
+            else if(element.color)
+                edit.color = element.color;
 
             if(element.graphics && element.graphics.command && element.graphics.command.radiusTL)
                 edit.radiusTL = element.graphics.command.radiusTL;
@@ -42,11 +46,8 @@ app.service('Interaction', function(Board) {
             if(element.graphics && element.graphics.command && element.graphics.command.radiusBL)
                 edit.radiusBL = element.graphics.command.radiusBL;
 
-
-            /*radiusTL = roundRect.graphics.command.radiusTL;
-            radiusTR = roundRect.graphics.command.radiusTR;
-            radiusBR = roundRect.graphics.command.radiusBR;
-            radiusBL = roundRect.graphics.command.radiusBL;*/
+            if(element.font)
+                edit.font = element.font;
 
             var appElement = document.querySelector('[ng-app=app]');
             var $scope = angular.element(appElement).scope();

@@ -13,19 +13,40 @@
     <aside>
         <header>Diagrams</header>
         <ul class="elements">
-            <li ng-click="addElement('Rect')"><i class="rect"></i></li>
-            <li ng-click="addElement('RoundRect')"><i class="round-rect"></i></li>
-            <li ng-click="addElement('Ellipse')"><i class="ellipse"></i></li>
-            <li ng-click="addElement('Circle')"><i class="circle"></i></li>
-            <li ng-click="addElement('Triangle')"><i class="triangle"></i></li>
-            <li ng-click="addElement('Actor')"><i class="actor"></i></li>
-            <li ng-click="addElement('Text')"><i class="text"></i></li>
+            <li ng-click="addElement('Rect')">
+                <i class="rect"></i>
+                <span>Rectangle</span>
+            </li>
+            <li ng-click="addElement('RoundRect')">
+                <i class="round-rect"></i>
+                <span>Rounded Rectangle</span>
+            </li>
+            <li ng-click="addElement('Ellipse')">
+                <i class="ellipse"></i>
+                <span>Ellipse</span>
+            </li>
+            <li ng-click="addElement('Circle')">
+                <i class="circle"></i>
+                <span>Circle</span>
+            </li>
+            <li ng-click="addElement('Triangle')">
+                <i class="triangle"></i>
+                <span>Triangle</span>
+            </li>
+            <li ng-click="addElement('Actor')">
+                <i class="actor"></i>
+                <span>Actor</span>
+            </li>
+            <li ng-click="addElement('Text')">
+                <i class="text"></i>
+                <span>Text</span>
+            </li>
         </ul>
         <input id="color" type="color" ng-model="color"/>
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
         <div
              ng-show="editElementObj.visible">
-            <header>Edytuj</header>
+            <header>Edit element</header>
             <ul class="edit">
                 <li ng-show="editElementObj.properties.x || editElementObj.properties.x == ''">
                     X: <input type="text"
@@ -68,15 +89,30 @@
                               ng-change="editElementObj.element.redrawRadius(editElementObj.properties.radiusTL, editElementObj.properties.radiusTR, editElementObj.properties.radiusBR, editElementObj.properties.radiusBL)"/> px
                 </li>
             </ul>
-            <div class="alpha">Alpha {{ editElementObj.properties.alpha }} {{ alpha }}
+            <div class="alpha">Alpha {{ editElementObj.properties.alpha }}
                 <alpha-bar ng-model="editElementObj.properties.alpha" default-value="{{ alpha }}" id="{{ editElementObj.element.id }}"></alpha-bar>
                 <input type="hidden"
                        ng-model="alpha"
                        ng-change="editElementObj.element.setAlpha(editElementObj.properties.alpha)">
             </div>
             <input id="editcolor" type="color"
-                   ng-model="editElementObj.properties.color.style"
-                   ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h, editElementObj.properties.color.style)"/>
+                   ng-model="editElementObj.properties.color"
+                   ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h, editElementObj.properties.color)"/>
+            <select ng-model="editElementObj.properties.font"
+                    ng-show="editElementObj.properties.font"
+                    ng-change="editElementObj.element.setFontSize(editElementObj.properties.font)">
+                <option value="10px Arial">10px</option>
+                <option value="11px Arial">11px</option>
+                <option value="12px Arial">12px</option>
+                <option value="13px Arial">13px</option>
+                <option value="14px Arial">14px</option>
+                <option value="15px Arial">15px</option>
+                <option value="16px Arial">16px</option>
+                <option value="17px Arial">17px</option>
+                <option value="18px Arial">18px</option>
+                <option value="19px Arial">19px</option>
+                <option value="20px Arial">20px</option>
+            </select>
         </div>
     </aside>
     <div class="content-panel">

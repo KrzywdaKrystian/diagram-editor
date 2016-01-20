@@ -1,7 +1,8 @@
 /**
- * TODO Edit - obsługa wszystkich elementów
+ * TODO Frame
  * TODO EditPanel - obsługa kreski
  * TODO Linie pomocnicze
+ * TODO Warstwy
  */
 var app = angular.module('app', [
     'mm.foundation',

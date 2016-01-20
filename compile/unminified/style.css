@@ -3294,7 +3294,7 @@ aside ul {
       border-right: 1px solid #8ba9bd; }
     aside ul li i {
       display: inline-block;
-      margin: 20px 28px; }
+      margin: 20px 28px 0; }
       aside ul li i.rect {
         width: 24px;
         height: 24px;
@@ -3320,7 +3320,7 @@ aside ul {
         height: 18px;
         border-radius: 12px/9px;
         background: #414141;
-        margin: 23px 28px; }
+        margin: 23px 28px 0; }
       aside ul li i.text {
         width: 24px;
         height: 24px;
@@ -3329,6 +3329,12 @@ aside ul {
         width: 24px;
         height: 24px;
         background: url('/example/images/actor.png'); }
+    aside ul li span {
+      text-align: center;
+      display: block;
+      font-size: 9px;
+      line-height: 12px;
+      margin-top: -2px; }
   aside ul.elements li:hover {
     background: #8ba9bd; }
   aside ul.edit::after {
@@ -3347,7 +3353,8 @@ aside ul {
 aside .alpha {
   font-size: 10px;
   text-align: center;
-  margin-top: 10px; }
+  margin-top: 10px;
+  margin-bottom: 15px; }
   aside .alpha .alpha-bar {
     width: 90%;
     height: 2px;
