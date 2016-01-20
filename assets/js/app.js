@@ -1,7 +1,9 @@
 /**
- * TODO EditPanel - obsługa
- * TODO EditPanel - jako dyrektywa
- * TODO ResizeMode - jako dyrektywa
+ * TODO Edit - obsługa paska Alpha
+ * TODO Edit - obsługa koloru elementu
+ * TODO Edit - obsługa wszystkich elementów
+ * TODO EditPanel - obsługa kreski
+ * TODO Linie pomocnicze
  */
 var app = angular.module('app', [
     'mm.foundation',
