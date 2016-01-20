@@ -2,18 +2,20 @@ app.factory('Actor', function(Board, Interaction) {
 
     var self = this;
 
-    this.drawActor = function (x, y, w, h, actor) {
+    this.drawActor = function (x, y, w, h, color, actor) {
+        actor.elementColor = color;
         if(actor.graphics)
             actor.graphics.clear();
 
         actor.x = x;
         actor.y = y;
         actor.w = w;
+        h = w
         actor.h = h;
 
         var stroke = h/25;
         actor.graphics.setStrokeStyle(stroke);
-        actor.graphics.beginStroke(Interaction.getColor());
+        actor.graphics.beginStroke(actor.elementColor);
         actor.graphics.drawCircle(w/2, h/4, w/4);
         actor.graphics.moveTo(w/2, h/2);
         actor.graphics.lineTo(w/2, h*5/6);
@@ -28,12 +30,14 @@ app.factory('Actor', function(Board, Interaction) {
 
     return function() {
         var actor = new createjs.Shape();
-        actor = self.drawActor(50, 50, 50, 50, actor);
+        actor.elementColor = Interaction.getColor();
+        actor = self.drawActor(50, 50, 50, 50, actor.elementColor, actor);
 
         actor.symmetrically = true;
 
-        actor.redraw = function(x, y, w, h) {
-            actor = self.drawActor(x, y, w, h, actor);
+        actor.redraw = function(x, y, w, h, color) {
+            actor = self.drawActor(x, y, w, h, color ? color : actor.elementColor, actor);
+            Board.update();
         };
 
         actor.getX = function(){
@@ -60,7 +64,13 @@ app.factory('Actor', function(Board, Interaction) {
             return actor.h;
         };
 
+        actor.setAlpha = function(x){
+            actor.alpha = x;
+            Board.update();
+        };
+
         Interaction.drag(actor);
+        Interaction.edit(actor);
         Interaction.editPanel(actor);
 
         return actor;

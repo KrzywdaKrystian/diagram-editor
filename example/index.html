@@ -47,6 +47,26 @@
                               ng-model="editElementObj.properties.h"
                               ng-change="editElementObj.element.redraw(editElementObj.properties.x, editElementObj.properties.y, editElementObj.properties.w, editElementObj.properties.h)"/> px
                 </li>
+                <li ng-show="editElementObj.properties.radiusTL || editElementObj.properties.radiusTL == ''">
+                    TL: <input type="text"
+                              ng-model="editElementObj.properties.radiusTL"
+                              ng-change="editElementObj.element.redrawRadius(editElementObj.properties.radiusTL, editElementObj.properties.radiusTR, editElementObj.properties.radiusBR, editElementObj.properties.radiusBL)"/> px
+                </li>
+                <li ng-show="editElementObj.properties.radiusTR || editElementObj.properties.radiusTR == ''">
+                    TR: <input type="text"
+                              ng-model="editElementObj.properties.radiusTR"
+                              ng-change="editElementObj.element.redrawRadius(editElementObj.properties.radiusTL, editElementObj.properties.radiusTR, editElementObj.properties.radiusBR, editElementObj.properties.radiusBL)"/> px
+                </li>
+                <li ng-show="editElementObj.properties.radiusBR || editElementObj.properties.radiusBR == ''">
+                    BR: <input type="text"
+                              ng-model="editElementObj.properties.radiusBR"
+                              ng-change="editElementObj.element.redrawRadius(editElementObj.properties.radiusTL, editElementObj.properties.radiusTR, editElementObj.properties.radiusBR, editElementObj.properties.radiusBL)"/> px
+                </li>
+                <li ng-show="editElementObj.properties.radiusBL || editElementObj.properties.radiusBL == ''">
+                    BL: <input type="text"
+                              ng-model="editElementObj.properties.radiusBL"
+                              ng-change="editElementObj.element.redrawRadius(editElementObj.properties.radiusTL, editElementObj.properties.radiusTR, editElementObj.properties.radiusBR, editElementObj.properties.radiusBL)"/> px
+                </li>
             </ul>
             <div class="alpha">Alpha {{ editElementObj.properties.alpha }} {{ alpha }}
                 <alpha-bar ng-model="editElementObj.properties.alpha" default-value="{{ alpha }}" id="{{ editElementObj.element.id }}"></alpha-bar>

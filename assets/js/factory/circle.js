@@ -2,20 +2,23 @@ app.factory('Circle', function(Board, Interaction) {
 
     var self = this;
 
-    this.drawCircle = function (x, y, w, h, circle) {
+    this.drawCircle = function (x, y, w, h, color, circle) {
         if(circle.graphics)
             circle.graphics.clear();
         circle.x = x;
         circle.y = y;
-        circle.graphics.beginFill(Interaction.getColor()).drawCircle(w/2, w/2, w/2);
+        circle.w = w;
+        circle.graphics.beginFill(color).drawCircle(w/2, w/2, w/2);
         return circle
     };
 
     return function() {
         var circle = new createjs.Shape();
-        circle = self.drawCircle(50, 50, 50, 50, circle);
-        circle.redraw = function(x, y, w, h) {
-            circle = self.drawCircle(x, y, w, h, circle);
+        circle = self.drawCircle(50, 50, 50, 50, Interaction.getColor(), circle);
+
+        circle.redraw = function(x, y, w, h, color) {
+            circle = self.drawCircle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : circle.graphics._fill.style, circle);
+            Board.update();
         };
 
         circle.symmetrically = true;
@@ -44,7 +47,13 @@ app.factory('Circle', function(Board, Interaction) {
             return circle.graphics.command.radius*2;
         };
 
+        circle.setAlpha = function(x){
+            circle.alpha = x;
+            Board.update();
+        };
+
         Interaction.drag(circle);
+        Interaction.edit(circle);
         Interaction.editPanel(circle);
 
         return circle;

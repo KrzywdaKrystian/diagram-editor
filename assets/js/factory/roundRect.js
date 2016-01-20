@@ -2,11 +2,12 @@ app.factory('RoundRect', function(Board, Interaction) {
 
     var self = this;
 
-    this.drawRoundRect = function (x, y, w, h, roundRect) {
+    this.drawRoundRect = function (x, y, w, h, color, roundRect) {
         var radiusTL = 15,
             radiusTR = 15,
             radiusBR = 15,
             radiusBL = 15;
+
         if(roundRect.graphics) {
             if(roundRect.graphics.command) {
                 radiusTL = roundRect.graphics.command.radiusTL;
@@ -16,18 +17,37 @@ app.factory('RoundRect', function(Board, Interaction) {
             }
             roundRect.graphics.clear();
         }
+
         roundRect.x = x;
         roundRect.y = y;
-        roundRect.graphics.beginFill(Interaction.getColor()).drawRoundRect(0, 0, w, h, radiusTL, radiusTR, radiusBR, radiusBL);
+        roundRect.w = w;
+        roundRect.h = h;
+        roundRect.graphics.beginFill(color).drawRoundRect(0, 0, w, h, radiusTL, radiusTR, radiusBR, radiusBL);
         return roundRect
     };
 
     return function() {
         var roundRect = new createjs.Shape();
-        roundRect = self.drawRoundRect(50, 50, 50, 50, roundRect);
+        roundRect = self.drawRoundRect(50, 50, 50, 50, Interaction.getColor(), roundRect);
 
-        roundRect.redraw = function(x, y, w, h) {
-            roundRect = self.drawRoundRect(x, y, w, h, roundRect);
+        roundRect.redraw = function(x, y, w, h, color) {
+            roundRect = self.drawRoundRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : roundRect.graphics._fill.style, roundRect);
+            Board.update();
+        };
+
+        roundRect.redrawRadius = function(radiusTL, radiusTR, radiusBR, radiusBL) {
+            if(roundRect.h/2 >= radiusTL && roundRect.w/2 >= radiusTL)
+                roundRect.graphics.command.radiusTL = radiusTL;
+
+            if(roundRect.h/2 >= radiusTR && roundRect.w/2 >= radiusTR)
+                roundRect.graphics.command.radiusTR = radiusTR;
+
+            if(roundRect.h/2 >= radiusBR && roundRect.w/2 >= radiusBR)
+                roundRect.graphics.command.radiusBR = radiusBR;
+
+            if(roundRect.h/2 >= radiusBL && roundRect.w/2 >= radiusBL)
+                roundRect.graphics.command.radiusBL = radiusBL;
+            Board.update();
         };
 
         roundRect.getX = function(){
@@ -54,7 +74,13 @@ app.factory('RoundRect', function(Board, Interaction) {
             return roundRect.graphics.command.h;
         };
 
+        roundRect.setAlpha = function(x){
+            roundRect.alpha = x;
+            Board.update();
+        };
+
         Interaction.drag(roundRect);
+        Interaction.edit(roundRect);
         Interaction.editPanel(roundRect);
 
         return roundRect;

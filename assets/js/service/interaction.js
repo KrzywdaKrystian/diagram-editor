@@ -14,16 +14,39 @@ app.service('Interaction', function(Board) {
 
             if(element.alpha)
                 edit.alpha = element.alpha;
+
             if(element.x)
                 edit.x = element.x;
+
             if(element.y)
                 edit.y = element.y;
+
             if(element.w)
                 edit.w = element.getWidth();
-            if(element.h)
+
+            if(element.h && !element.symmetrically)
                 edit.h = element.getHeight();
+
             if(element.graphics._fill)
                 edit.color = element.graphics._fill;
+
+            if(element.graphics && element.graphics.command && element.graphics.command.radiusTL)
+                edit.radiusTL = element.graphics.command.radiusTL;
+
+            if(element.graphics && element.graphics.command && element.graphics.command.radiusTR)
+                edit.radiusTR = element.graphics.command.radiusTR;
+
+            if(element.graphics && element.graphics.command && element.graphics.command.radiusBR)
+                edit.radiusBR = element.graphics.command.radiusBR;
+
+            if(element.graphics && element.graphics.command && element.graphics.command.radiusBL)
+                edit.radiusBL = element.graphics.command.radiusBL;
+
+
+            /*radiusTL = roundRect.graphics.command.radiusTL;
+            radiusTR = roundRect.graphics.command.radiusTR;
+            radiusBR = roundRect.graphics.command.radiusBR;
+            radiusBL = roundRect.graphics.command.radiusBL;*/
 
             var appElement = document.querySelector('[ng-app=app]');
             var $scope = angular.element(appElement).scope();
