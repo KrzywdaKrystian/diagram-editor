@@ -13362,11 +13362,35 @@ angular.module('app').directive('validfile', function validFile($http) {
     }
 }); app.factory('RoundRect', function(Board, Interaction) {
 
+    var self = this;
+
+    this.drawRoundRect = function (x, y, w, h, roundRect) {
+        var radiusTL = 15,
+            radiusTR = 15,
+            radiusBR = 15,
+            radiusBL = 15;
+        if(roundRect.graphics) {
+            if(roundRect.graphics.command) {
+                radiusTL = roundRect.graphics.command.radiusTL;
+                radiusTR = roundRect.graphics.command.radiusTR;
+                radiusBR = roundRect.graphics.command.radiusBR;
+                radiusBL = roundRect.graphics.command.radiusBL;
+            }
+            roundRect.graphics.clear();
+        }
+        roundRect.x = x;
+        roundRect.y = y;
+        roundRect.graphics.beginFill(Interaction.getColor()).drawRoundRect(0, 0, w, h, radiusTL, radiusTR, radiusBR, radiusBL);
+        return roundRect
+    };
+
     return function() {
         var roundRect = new createjs.Shape();
-        roundRect.x = 50;
-        roundRect.y = 50;
-        roundRect.graphics.beginFill(Interaction.getColor()).drawRoundRect(0, 0, 50, 50, 15, 15, 15, 15);
+        roundRect = self.drawRoundRect(50, 50, 50, 50, roundRect);
+
+        roundRect.redraw = function(x, y, w, h) {
+            roundRect = self.drawRoundRect(x, y, w, h, roundRect);
+        };
 
         roundRect.getX = function(){
             return roundRect.x;
