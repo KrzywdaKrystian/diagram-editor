@@ -3139,14 +3139,16 @@ body {
   position: relative; }
   .content-panel canvas {
     background: url('/example/images/board_bg.png'); }
-  .content-panel #edit-panel {
+    .content-panel canvas.cursor-crosshair {
+      cursor: crosshair; }
+  .content-panel #edit-panel, .content-panel #edit-line {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 100; }
-    .content-panel #edit-panel .panel-content {
+    .content-panel #edit-panel .panel-content, .content-panel #edit-line .panel-content {
       position: relative; }
-      .content-panel #edit-panel .panel-content:before {
+      .content-panel #edit-panel .panel-content:before, .content-panel #edit-line .panel-content:before {
         content: " ";
         position: absolute;
         left: -4px;
@@ -3156,25 +3158,25 @@ body {
         border-style: solid;
         border-width: 8px 10px 8px 0;
         border-color: transparent #414141 transparent transparent; }
-      .content-panel #edit-panel .panel-content ul {
+      .content-panel #edit-panel .panel-content ul, .content-panel #edit-line .panel-content ul {
         background: #414141;
         color: #fff;
         margin: 0 0 0 6px;
         list-style: none;
         padding: 5px 5px 0 5px; }
-        .content-panel #edit-panel .panel-content ul li i {
+        .content-panel #edit-panel .panel-content ul li i, .content-panel #edit-line .panel-content ul li i {
           width: 24px;
           height: 24px;
           background-size: cover;
           display: inline-block;
           cursor: pointer; }
-          .content-panel #edit-panel .panel-content ul li i.add-line {
+          .content-panel #edit-panel .panel-content ul li i.add-line, .content-panel #edit-line .panel-content ul li i.add-line {
             background-image: url('/example/images/draw_line.png'); }
-          .content-panel #edit-panel .panel-content ul li i.resize {
+          .content-panel #edit-panel .panel-content ul li i.resize, .content-panel #edit-line .panel-content ul li i.resize {
             background-image: url('/example/images/resize.png'); }
-          .content-panel #edit-panel .panel-content ul li i.delete {
+          .content-panel #edit-panel .panel-content ul li i.delete, .content-panel #edit-line .panel-content ul li i.delete {
             background-image: url('/example/images/delete.png'); }
-          .content-panel #edit-panel .panel-content ul li i:hover {
+          .content-panel #edit-panel .panel-content ul li i:hover, .content-panel #edit-line .panel-content ul li i:hover {
             opacity: .6; }
   .content-panel #resize-panel {
     border: 1px dashed #536270;
@@ -3329,12 +3331,52 @@ aside ul {
         width: 24px;
         height: 24px;
         background: url('/example/images/actor.png'); }
+      aside ul li i.line {
+        width: 24px;
+        height: 24px;
+        background: url('/example/images/line.png'); }
     aside ul li span {
       text-align: center;
       display: block;
       font-size: 9px;
       line-height: 12px;
       margin-top: -2px; }
+    aside ul li.lines {
+      position: relative; }
+      aside ul li.lines ul {
+        position: absolute;
+        left: 60px;
+        top: -1px;
+        width: 100px;
+        background: #ececec;
+        z-index: 200;
+        display: none;
+        border-top: 1px solid #8ba9bd;
+        border-right: 1px solid #8ba9bd;
+        border-bottom: 1px solid #8ba9bd; }
+        aside ul li.lines ul li {
+          border-bottom: 1px solid #8ba9bd;
+          width: 100%;
+          float: none;
+          padding: 0;
+          clear: both;
+          height: 28px; }
+          aside ul li.lines ul li:last-child {
+            border-bottom: 0; }
+          aside ul li.lines ul li:nth-child(odd) {
+            border-right: none; }
+          aside ul li.lines ul li i {
+            margin: 0;
+            width: 99px;
+            height: 28px;
+            background-position: center;
+            float: left; }
+            aside ul li.lines ul li i.line-solid {
+              background: url('/example/images/arrow_02.png'); }
+            aside ul li.lines ul li i.line-dashed {
+              background: url('/example/images/arrow_01.png'); }
+      aside ul li.lines:hover ul {
+        display: block; }
   aside ul.elements li:hover {
     background: #8ba9bd; }
   aside ul.edit::after {

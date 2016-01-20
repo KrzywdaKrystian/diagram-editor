@@ -11,8 +11,25 @@ aside {
         &.ellipse { width: 24px; height: 18px; border-radius: 12px / 9px; background: $dark; margin: 23px 28px 0; }
         &.text { width: 24px; height: 24px; background: url('/example/images/text.png'); }
         &.actor { width: 24px; height: 24px; background: url('/example/images/actor.png'); }
+        &.line { width: 24px; height: 24px; background: url('/example/images/line.png'); }
       }
       span { text-align: center; display: block; font-size: 9px; line-height: 12px; margin-top: -2px; }
+      &.lines { position: relative;
+        ul { position: absolute; left: 60px; top: -1px; width: 100px; background: $grey; z-index: 200; display: none;
+          border-top: 1px solid $grey2; border-right: 1px solid $grey2; border-bottom: 1px solid $grey2;
+          li { border-bottom: 1px solid $grey2; width: 100%; float: none; padding: 0; clear: both; height: 28px;
+            &:last-child { border-bottom: 0; }
+            &:nth-child(odd) { border-right: none; }
+            i { margin: 0; width: 99px; height: 28px; background-position: center; float: left;
+              &.line-solid {  background: url('/example/images/arrow_02.png'); }
+              &.line-dashed {  background: url('/example/images/arrow_01.png'); }
+            }
+          }
+        }
+        &:hover {
+          ul { display: block; }
+        }
+      }
     }
     &.elements {
       li {

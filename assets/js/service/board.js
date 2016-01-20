@@ -27,9 +27,21 @@ app.service('Board', function() {
         this.update();
     };
 
+    this.getElement = function(index) {
+        return this.board.children[index];
+    };
+
+    this.count = function() {
+        return this.board.children.length;
+    };
+
     this.removeElement = function(element) {
         this.board.removeChild(element);
         this.update();
+    };
+
+    this.setCursor = function(type) {
+        this.board.cursor = 'text';
     };
 
 });

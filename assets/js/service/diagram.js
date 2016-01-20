@@ -5,10 +5,8 @@ app.service('Diagram', function(Board, $injector) {
         stage.canvas.height = window.innerHeight;
         if(resize){
             window.addEventListener('resize', function(){
-
                 stage.canvas.width = window.innerWidth-217;
                 stage.canvas.height = window.innerHeight;
-
             }, false);
         }
     };

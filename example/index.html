@@ -41,6 +41,18 @@
                 <i class="text"></i>
                 <span>Text</span>
             </li>
+            <li class="lines">
+                <i class="line"></i>
+                <span>Lines</span>
+                <ul>
+                    <li ng-click="drawLine($event, 'Line', 'solid')">
+                        <i class="line-solid"></i>
+                    </li>
+                    <li ng-click="addElement('Text')">
+                        <i class="line-dashed"></i>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <input id="color" type="color" ng-model="color"/>
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
@@ -116,7 +128,7 @@
         </div>
     </aside>
     <div class="content-panel">
-        <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;"></canvas>
+        <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;" ng-class="canvasCursor"></canvas>
         <div id="edit-panel"
              ng-controller="EditPanelController"
              ng-class="{true: 'show', false: 'hide'}[editPanelObj.visible == true]"
@@ -130,6 +142,19 @@
                     <li>
                         <i class="resize" ng-click="resizeElement()"></i>
                     </li>
+                    <li>
+                        <i class="delete" ng-click="deleteElement()"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="edit-line"
+             ng-controller="EditLineController"
+             ng-class="{true: 'show', false: 'hide'}[editLineObj.visible == true]"
+             ng-style="styleEditLine">
+
+            <div class="panel-content">
+                <ul>
                     <li>
                         <i class="delete" ng-click="deleteElement()"></i>
                     </li>

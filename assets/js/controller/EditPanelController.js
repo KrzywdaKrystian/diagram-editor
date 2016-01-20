@@ -1,7 +1,36 @@
-app.controller('EditPanelController', function($scope, $rootScope, Board) {
+app.controller('EditPanelController', function($scope, $rootScope, Board, Line) {
+
+    var board = Board.getBoard();
+
 
     $scope.addLine = function(){
-        console.log('addLine');
+        $rootScope.canvasCursor = 'cursor-crosshair';
+        $rootScope.drawwingLine = true;
+
+        var dragging = true;
+        var element = null;
+
+        var xStart = $scope.editPanelObj.element.getX() + $scope.editPanelObj.element.getCenterX();
+        var yStart = $scope.editPanelObj.element.getY() + $scope.editPanelObj.element.getCenterX();
+
+        if($rootScope.drawwingLine) {
+            Board.addElement(Line(xStart, yStart, xStart, xStart));
+            element = Board.getElement(Board.count()-1);
+        }
+
+        console.log('start');
+        $('canvas').mousedown(function(evt) {
+            dragging = false;
+            $rootScope.drawwingLine = false;
+            $('canvas').unbind('mousemove');
+            $('canvas').unbind('mousedown');
+        });
+
+        $('canvas').mousemove(function(e){
+            if(dragging && $rootScope.drawwingLine) {
+                element.redraw(xStart, yStart, e.pageX-160, e.pageY);
+            }
+        });
     };
 
     $scope.resizeElement = function(){

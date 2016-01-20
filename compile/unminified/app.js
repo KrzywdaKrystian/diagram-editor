@@ -12932,10 +12932,72 @@ var app = angular.module('app', [
 ]).run(function(Board) {
     Board.create();
 });
- app.controller('EditPanelController', function($scope, $rootScope, Board) {
+ app.controller('EditLineController', function($scope, $rootScope, Board) {
+
+    $scope.deleteElement = function(){
+        $scope.editLineObj.visible = false;
+        Board.removeElement($scope.editLineObj.line);
+    };
+
+    $scope.$watch('editLineObj.visible', function(newValue) {
+        if(newValue) {
+
+            var centerY = 0;
+            var centerX = 0;
+
+            if($scope.editLineObj.line.xStart < $scope.editLineObj.line.xEnd) {
+                centerX = ($scope.editLineObj.line.xStart + $scope.editLineObj.line.xEnd)/2
+            }
+            else {
+                centerX = ($scope.editLineObj.line.xEnd + $scope.editLineObj.line.xStart)/2
+            }
+
+            if($scope.editLineObj.line.yStart < $scope.editLineObj.line.yEnd) {
+                centerY = ($scope.editLineObj.line.yStart + $scope.editLineObj.line.yEnd)/2
+            }
+            else {
+                centerY = ($scope.editLineObj.line.yEnd + $scope.editLineObj.line.yStart)/2
+            }
+
+            $scope.styleEditLine = {
+                top: centerY+'px',
+                left: centerX+'px'
+            };
+        }
+    });
+}); app.controller('EditPanelController', function($scope, $rootScope, Board, Line) {
+
+    var board = Board.getBoard();
+
 
     $scope.addLine = function(){
-        console.log('addLine');
+        $rootScope.canvasCursor = 'cursor-crosshair';
+        $rootScope.drawwingLine = true;
+
+        var dragging = true;
+        var element = null;
+
+        var xStart = $scope.editPanelObj.element.getX() + $scope.editPanelObj.element.getCenterX();
+        var yStart = $scope.editPanelObj.element.getY() + $scope.editPanelObj.element.getCenterX();
+
+        if($rootScope.drawwingLine) {
+            Board.addElement(Line(xStart, yStart, xStart, xStart));
+            element = Board.getElement(Board.count()-1);
+        }
+
+        console.log('start');
+        $('canvas').mousedown(function(evt) {
+            dragging = false;
+            $rootScope.drawwingLine = false;
+            $('canvas').unbind('mousemove');
+            $('canvas').unbind('mousedown');
+        });
+
+        $('canvas').mousemove(function(e){
+            if(dragging && $rootScope.drawwingLine) {
+                element.redraw(xStart, yStart, e.pageX-160, e.pageY);
+            }
+        });
     };
 
     $scope.resizeElement = function(){
@@ -12963,14 +13025,21 @@ var app = angular.module('app', [
         }
     });
 
-}); app.controller('MainController', function($scope, $rootScope, Diagram, Board) {
+}); app.controller('MainController', function($scope, $rootScope, Diagram, Board, Line) {
 
     var board = Board.getBoard();
     $scope.alpha = 0;
 
     board.on("stagemousedown", function(evt) {
-        $scope.editPanelObj.visible = false;
-        $scope.editElementObj.visible = false;
+        if($scope.editPanelObj)
+            $scope.editPanelObj.visible = false;
+
+        if($scope.editLineObj)
+            $scope.editLineObj.visible = false;
+
+        if($scope.editElementObj)
+            $scope.editElementObj.visible = false;
+
         $scope.editElementObj.properties = {};
         $rootScope.resizeMode = false;
     });
@@ -12991,7 +13060,43 @@ var app = angular.module('app', [
     $scope.color = '#000000';
 
     $scope.addElement = function(type) {
+        $scope.canvasCursor = '';
         Diagram.addElement(type);
+    };
+
+    $scope.drawLine = function(e, type, solid) {
+        $scope.canvasCursor = 'cursor-crosshair';
+        $rootScope.drawwingLine = true;
+
+        var dragging,
+            xStart,
+            yStart;
+        var element = null;
+
+        $('canvas').mousedown(function(e){
+            xStart = e.pageX-160;
+            yStart = e.pageY;
+            dragging = true;
+            if($rootScope.drawwingLine) {
+                Board.addElement(Line(xStart, yStart, xStart, xStart));
+                element = Board.getElement(Board.count()-1);
+            }
+
+        });
+        $('canvas').mouseup(function(e){
+            dragging = false;
+            $rootScope.drawwingLine = false;
+            $scope.canvasCursor = '';
+            $('canvas').unbind('mousemove');
+            $('canvas').unbind('mouseup');
+            $('canvas').unbind('mousedown');
+        }).mousemove(function(e){
+            if(dragging && $rootScope.drawwingLine) {
+                element.redraw(xStart, yStart, e.pageX-160, e.pageY);
+            }
+        });
+
+
     };
 
     $scope.loadDiagram = function () {
@@ -13001,6 +13106,17 @@ var app = angular.module('app', [
     $scope.saveDiagram = function () {
         Diagram.saveDiagram();
     };
+
+    window.addEventListener("keypress", dealWithKeyboard, false);
+
+    function dealWithKeyboard(e) {
+        if(e.which == 0){
+            $rootScope.drawwingLine = false;
+            console.log('esc');
+            $scope.canvasCursor = '';
+            $scope.$apply();
+        }
+    }
 
 });
  app.controller('ResizeController', function($scope, $rootScope, Board) {
@@ -13496,6 +13612,52 @@ angular.module('app').directive('validfile', function validFile($http) {
 
         return ellipse;
     }
+}); app.factory('Line', function(Board, Interaction) {
+
+    var self = this;
+
+    this.drawLine = function (xStart, yStart, xEnd, yEnd, arrowStart, arrowEnd, color, line) {
+        if(line.graphics)
+            line.graphics.clear();
+
+        line.x = 0;
+        line.y = 0;
+        line.xStart = xStart;
+        line.yStart = yStart;
+        line.xEnd = xEnd;
+        line.yEnd = yEnd;
+        line.color = color;
+
+        line.graphics.setStrokeStyle(2);
+        line.graphics.beginStroke(color);
+        line.graphics.moveTo(xStart,yStart).lineTo(xEnd, yEnd).closePath();
+        line.graphics.endStroke();
+        return line
+    };
+
+    return function(xStart, yStart, xEnd, yEnd) {
+        var line = new createjs.Shape();
+        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, Interaction.getColor(), line);
+
+        line.redraw = function(x, y, w, h, color) {
+            line = self.drawLine(x, y, w, h, false, false, color ? color : line.color, line);
+            Board.update();
+        };
+
+        line.on("dblclick", function(evt) {
+            var appElement = document.querySelector('[ng-app=app]');
+            var $scope = angular.element(appElement).scope();
+            $scope.$apply(function () {
+                $scope.editLineObj = {
+                    visible: true,
+                    line: line
+                }
+            });
+        });
+
+        return line;
+    };
+
 }); app.factory('Rect', function(Board, Interaction) {
 
     var self = this;
@@ -13815,9 +13977,21 @@ angular.module('app').directive('validfile', function validFile($http) {
         this.update();
     };
 
+    this.getElement = function(index) {
+        return this.board.children[index];
+    };
+
+    this.count = function() {
+        return this.board.children.length;
+    };
+
     this.removeElement = function(element) {
         this.board.removeChild(element);
         this.update();
+    };
+
+    this.setCursor = function(type) {
+        this.board.cursor = 'text';
     };
 
 }); app.service('Diagram', function(Board, $injector) {
@@ -13827,10 +14001,8 @@ angular.module('app').directive('validfile', function validFile($http) {
         stage.canvas.height = window.innerHeight;
         if(resize){
             window.addEventListener('resize', function(){
-
                 stage.canvas.width = window.innerWidth-217;
                 stage.canvas.height = window.innerHeight;
-
             }, false);
         }
     };
@@ -13847,79 +14019,86 @@ angular.module('app').directive('validfile', function validFile($http) {
             alert(err);
         }
     };
-}); app.service('Interaction', function(Board) {
+}); app.service('Interaction', function(Board, $rootScope) {
 
     this.drag = function(element){
         element.on("pressmove",function(evt) {
-            evt.currentTarget.x = evt.stageX-element.getCenterX();
-            evt.currentTarget.y = evt.stageY-element.getCenterY();
-            Board.update();
+            if(!$rootScope.drawwingLine) {
+                evt.currentTarget.x = evt.stageX-element.getCenterX();
+                evt.currentTarget.y = evt.stageY-element.getCenterY();
+                Board.update();
+            }
         });
     };
 
     this.edit = function(element) {
         element.on("click", function(evt) {
-            var edit = {};
-            console.log('edit');
+            if(!$rootScope.drawwingLine) {
 
-            if(element.alpha)
-                edit.alpha = element.alpha;
+                var edit = {};
+                console.log('edit');
 
-            if(element.x)
-                edit.x = element.x;
+                if (element.alpha)
+                    edit.alpha = element.alpha;
 
-            if(element.y)
-                edit.y = element.y;
+                if (element.x)
+                    edit.x = element.x;
 
-            if(element.w)
-                edit.w = element.getWidth();
+                if (element.y)
+                    edit.y = element.y;
 
-            if(element.h && !element.symmetrically)
-                edit.h = element.getHeight();
+                if (element.w)
+                    edit.w = element.getWidth();
 
-            if(element.graphics && element.graphics._fill)
-                edit.color = element.graphics._fill;
+                if (element.h && !element.symmetrically)
+                    edit.h = element.getHeight();
 
-            else if(element.color)
-                edit.color = element.color;
+                if (element.graphics && element.graphics._fill)
+                    edit.color = element.graphics._fill.style;
 
-            if(element.graphics && element.graphics.command && element.graphics.command.radiusTL)
-                edit.radiusTL = element.graphics.command.radiusTL;
+                else if (element.color)
+                    edit.color = element.color;
 
-            if(element.graphics && element.graphics.command && element.graphics.command.radiusTR)
-                edit.radiusTR = element.graphics.command.radiusTR;
+                if (element.graphics && element.graphics.command && element.graphics.command.radiusTL)
+                    edit.radiusTL = element.graphics.command.radiusTL;
 
-            if(element.graphics && element.graphics.command && element.graphics.command.radiusBR)
-                edit.radiusBR = element.graphics.command.radiusBR;
+                if (element.graphics && element.graphics.command && element.graphics.command.radiusTR)
+                    edit.radiusTR = element.graphics.command.radiusTR;
 
-            if(element.graphics && element.graphics.command && element.graphics.command.radiusBL)
-                edit.radiusBL = element.graphics.command.radiusBL;
+                if (element.graphics && element.graphics.command && element.graphics.command.radiusBR)
+                    edit.radiusBR = element.graphics.command.radiusBR;
 
-            if(element.font)
-                edit.font = element.font;
+                if (element.graphics && element.graphics.command && element.graphics.command.radiusBL)
+                    edit.radiusBL = element.graphics.command.radiusBL;
 
-            var appElement = document.querySelector('[ng-app=app]');
-            var $scope = angular.element(appElement).scope();
-            $scope.$apply(function() {
-                $scope.editElementObj = {
-                    visible: true,
-                    properties: edit,
-                    element: element
-                };
-            });
+                if (element.font)
+                    edit.font = element.font;
+
+                var appElement = document.querySelector('[ng-app=app]');
+                var $scope = angular.element(appElement).scope();
+                $scope.$apply(function () {
+                    $scope.editElementObj = {
+                        visible: true,
+                        properties: edit,
+                        element: element
+                    };
+                });
+            }
         });
     };
 
     this.editPanel = function(element) {
         element.on("dblclick", function(evt) {
-            var appElement = document.querySelector('[ng-app=app]');
-            var $scope = angular.element(appElement).scope();
-            $scope.$apply(function() {
-                $scope.editPanelObj = {
-                    visible: true,
-                    element: element
-                }
-            });
+            if(!$rootScope.drawwingLine) {
+                var appElement = document.querySelector('[ng-app=app]');
+                var $scope = angular.element(appElement).scope();
+                $scope.$apply(function () {
+                    $scope.editPanelObj = {
+                        visible: true,
+                        element: element
+                    }
+                });
+            }
         });
     };
 
