@@ -61,7 +61,7 @@
         <input id="color" type="color" ng-model="color"/>
         <input type="file" name="file" id="load-diagram" ng-model="fileForm" validfile>
         <div
-             ng-show="editElementObj.visible">
+             ng-show="editElementObj.visible && !resizeMode">
             <header>Edit element</header>
             <ul class="edit">
                 <li ng-show="editElementObj.properties.x || editElementObj.properties.x == ''">

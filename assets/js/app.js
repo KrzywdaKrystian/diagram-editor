@@ -1,4 +1,6 @@
 /**
+ * TODO drag line
+ * TODO resize line
  * TODO Frame
  * TODO save board
  * TODO load board
