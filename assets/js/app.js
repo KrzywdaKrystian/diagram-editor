@@ -1,8 +1,9 @@
 /**
  * TODO Frame
- * TODO EditPanel - obsługa kreski
- * TODO Linie pomocnicze
- * TODO Warstwy
+ * TODO Dashed Line
+ * TODO save board
+ * TODO load board
+ * TODO List elements (settings: show/hide, delete, up/down)
  */
 var app = angular.module('app', [
     'mm.foundation',
