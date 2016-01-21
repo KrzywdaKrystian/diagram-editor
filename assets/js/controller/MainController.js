@@ -1,5 +1,10 @@
 app.controller('MainController', function($scope, $rootScope, Diagram, Board, Line) {
 
+    setInterval(function(){
+        $scope.loaded = true;
+        $scope.$apply();
+    }, 3000);
+
     var board = Board.getBoard();
     $scope.alpha = 0;
 
