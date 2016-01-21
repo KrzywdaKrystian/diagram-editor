@@ -1,5 +1,13 @@
 app.controller('EditLineController', function($scope, $rootScope, Board) {
 
+    $scope.arrowLeft = function() {
+        $scope.editLineObj.line.addStartArrow();
+    };
+
+    $scope.arrowRight = function() {
+        $scope.editLineObj.line.addEndArrow();
+    };
+
     $scope.deleteElement = function(){
         $scope.editLineObj.visible = false;
         Board.removeElement($scope.editLineObj.line);

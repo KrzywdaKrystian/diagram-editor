@@ -19,7 +19,7 @@ app.factory('Text', function($modal, Board, Interaction){
         text = self.drawText(50, 50, null, null, Interaction.getColor(), text);
 
         text.redraw = function(x, y, w, h, color) {
-            text = self.drawText(x, y, null, null, color ? color : text.color, text);
+            text = self.drawText(parseInt(x), parseInt(y), null, null, color ? color : text.color, text);
             Board.update();
         };
 

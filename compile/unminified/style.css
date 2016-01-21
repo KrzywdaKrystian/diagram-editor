@@ -3176,6 +3176,10 @@ body {
             background-image: url('/example/images/resize.png'); }
           .content-panel #edit-panel .panel-content ul li i.delete, .content-panel #edit-line .panel-content ul li i.delete {
             background-image: url('/example/images/delete.png'); }
+          .content-panel #edit-panel .panel-content ul li i.arrow-left, .content-panel #edit-line .panel-content ul li i.arrow-left {
+            background-image: url('/example/images/left.png'); }
+          .content-panel #edit-panel .panel-content ul li i.arrow-right, .content-panel #edit-line .panel-content ul li i.arrow-right {
+            background-image: url('/example/images/right.png'); }
           .content-panel #edit-panel .panel-content ul li i:hover, .content-panel #edit-line .panel-content ul li i:hover {
             opacity: .6; }
   .content-panel #resize-panel {

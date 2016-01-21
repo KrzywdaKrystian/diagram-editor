@@ -14,6 +14,8 @@
             &.add-line { background-image: url('/example/images/draw_line.png'); }
             &.resize { background-image: url('/example/images/resize.png'); }
             &.delete { background-image: url('/example/images/delete.png'); }
+            &.arrow-left { background-image: url('/example/images/left.png'); }
+            &.arrow-right { background-image: url('/example/images/right.png'); }
             &:hover { opacity: .6; }
           }
         }

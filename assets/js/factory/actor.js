@@ -36,7 +36,7 @@ app.factory('Actor', function(Board, Interaction) {
         actor.symmetrically = true;
 
         actor.redraw = function(x, y, w, h, color) {
-            actor = self.drawActor(x, y, w, h, color ? color : actor.elementColor, actor);
+            actor = self.drawActor(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : actor.elementColor, actor);
             Board.update();
         };
 
