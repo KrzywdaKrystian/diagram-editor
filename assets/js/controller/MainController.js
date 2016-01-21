@@ -37,7 +37,7 @@ app.controller('MainController', function($scope, $rootScope, Diagram, Board, Li
         Diagram.addElement(type);
     };
 
-    $scope.drawLine = function(e, type, solid) {
+    $scope.drawLine = function(e, type) {
         $scope.canvasCursor = 'cursor-crosshair';
         $rootScope.drawwingLine = true;
 
@@ -51,7 +51,7 @@ app.controller('MainController', function($scope, $rootScope, Diagram, Board, Li
             yStart = e.pageY;
             dragging = true;
             if($rootScope.drawwingLine) {
-                Board.addElement(Line(xStart, yStart, xStart, xStart));
+                Board.addElement(Line(xStart, yStart, xStart, xStart, type !== 'solid'));
                 element = Board.getElement(Board.count()-1);
             }
 
@@ -65,7 +65,7 @@ app.controller('MainController', function($scope, $rootScope, Diagram, Board, Li
             $('canvas').unbind('mousedown');
         }).mousemove(function(e){
             if(dragging && $rootScope.drawwingLine) {
-                element.redraw(xStart, yStart, e.pageX-160, e.pageY);
+                element.redraw(xStart, yStart, e.pageX-160, e.pageY, type !== 'solid');
             }
         });
 

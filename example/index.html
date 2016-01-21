@@ -45,10 +45,10 @@
                 <i class="line"></i>
                 <span>Lines</span>
                 <ul>
-                    <li ng-click="drawLine($event, 'Line', 'solid')">
+                    <li ng-click="drawLine($event, 'solid')">
                         <i class="line-solid"></i>
                     </li>
-                    <li ng-click="addElement('Text')">
+                    <li ng-click="drawLine($event, 'dashed')">
                         <i class="line-dashed"></i>
                     </li>
                 </ul>
@@ -164,6 +164,9 @@
                     </li>
                     <li>
                         <i class="arrow-right" ng-click="arrowRight()"></i>
+                    </li>
+                    <li>
+                        <i class="line-type" ng-click="changeType()"></i>
                     </li>
                     <li>
                         <i class="delete" ng-click="deleteElement()"></i>

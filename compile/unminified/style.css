@@ -3180,6 +3180,8 @@ body {
             background-image: url('/example/images/left.png'); }
           .content-panel #edit-panel .panel-content ul li i.arrow-right, .content-panel #edit-line .panel-content ul li i.arrow-right {
             background-image: url('/example/images/right.png'); }
+          .content-panel #edit-panel .panel-content ul li i.line-type, .content-panel #edit-line .panel-content ul li i.line-type {
+            background-image: url('/example/images/line_type.png'); }
           .content-panel #edit-panel .panel-content ul li i:hover, .content-panel #edit-line .panel-content ul li i:hover {
             opacity: .6; }
   .content-panel #resize-panel {

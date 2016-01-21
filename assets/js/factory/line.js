@@ -116,13 +116,13 @@ app.factory('Line', function(Board, Interaction) {
         return this;
     };
 
-    return function(xStart, yStart, xEnd, yEnd) {
+    return function(xStart, yStart, xEnd, yEnd, dashed) {
         var line = new createjs.Container();
         //var line = new createjs.Shape();
-        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, Interaction.getColor(), false, line);
+        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, Interaction.getColor(), dashed, line);
 
-        line.redraw = function(x, y, w, h, color) {
-            line = self.drawLine(x, y, w, h, false, false, color ? color : line.color, line.dashed, line);
+        line.redraw = function(x, y, w, h, color, dashed) {
+            line = self.drawLine(x, y, w, h, false, false, color ? color : line.color, dashed ? dashed : line.dashed, line);
             Board.update();
         };
 
@@ -133,6 +133,11 @@ app.factory('Line', function(Board, Interaction) {
 
         line.addEndArrow = function () {
             line = self.drawLine(parseInt(line.xStart), parseInt(line.yStart), parseInt(line.xEnd), parseInt(line.yEnd), line.arrowStart, line.arrowEnd ? false : true, line.color, line.dashed, line);
+            Board.update();
+        };
+
+        line.changeType = function () {
+            line = self.drawLine(parseInt(line.xStart), parseInt(line.yStart), parseInt(line.xEnd), parseInt(line.yEnd), line.arrowStart, line.arrowEnd, line.color, line.dashed ? false : true, line);
             Board.update();
         };
 

@@ -16,6 +16,7 @@
             &.delete { background-image: url('/example/images/delete.png'); }
             &.arrow-left { background-image: url('/example/images/left.png'); }
             &.arrow-right { background-image: url('/example/images/right.png'); }
+            &.line-type { background-image: url('/example/images/line_type.png'); }
             &:hover { opacity: .6; }
           }
         }

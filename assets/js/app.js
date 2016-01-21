@@ -1,6 +1,5 @@
 /**
  * TODO Frame
- * TODO Dashed Line
  * TODO save board
  * TODO load board
  * TODO List elements (settings: show/hide, delete, up/down)

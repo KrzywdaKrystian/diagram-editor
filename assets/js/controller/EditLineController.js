@@ -8,6 +8,10 @@ app.controller('EditLineController', function($scope, $rootScope, Board) {
         $scope.editLineObj.line.addEndArrow();
     };
 
+    $scope.changeType = function() {
+        $scope.editLineObj.line.changeType();
+    };
+
     $scope.deleteElement = function(){
         $scope.editLineObj.visible = false;
         Board.removeElement($scope.editLineObj.line);
