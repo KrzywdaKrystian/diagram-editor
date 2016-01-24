@@ -1,5 +1,5 @@
 aside {
-  header { width: 160px; background: $greyDark; padding: 5px; font-size: 15px; color: $white; }
+  header { width: 160px; background: $main; padding: 5px; font-size: 15px; color: $white; }
   ul { list-style: none; width: 100%; margin: 0; padding: 0;
     li { cursor: pointer; float: left; width: 50%; height: 0; padding-bottom: 40%; border-bottom: 1px solid $grey2; @include transition(all .3s); position: relative;
       &:nth-child(odd) { border-right: 1px solid $grey2; }

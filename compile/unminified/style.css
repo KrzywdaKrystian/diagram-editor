@@ -3157,7 +3157,7 @@ body {
     flex: 1;
     max-width: 160px;
     width: 160px;
-    background: #ececec; }
+    background: #edebdd; }
   .flex .content-panel {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
@@ -3310,7 +3310,7 @@ body {
 
 aside header {
   width: 160px;
-  background: #536270;
+  background: #706d5d;
   padding: 5px;
   font-size: 15px;
   color: #ffffff; }
@@ -3325,13 +3325,13 @@ aside ul {
     width: 50%;
     height: 0;
     padding-bottom: 40%;
-    border-bottom: 1px solid #8ba9bd;
+    border-bottom: 1px solid #d9d3b4;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     transition: all .3s;
     position: relative; }
     aside ul li:nth-child(odd) {
-      border-right: 1px solid #8ba9bd; }
+      border-right: 1px solid #d9d3b4; }
     aside ul li i {
       display: inline-block;
       margin: 20px 28px 0; }
@@ -3393,11 +3393,11 @@ aside ul {
         background: #ececec;
         z-index: 200;
         display: none;
-        border-top: 1px solid #8ba9bd;
-        border-right: 1px solid #8ba9bd;
-        border-bottom: 1px solid #8ba9bd; }
+        border-top: 1px solid #d9d3b4;
+        border-right: 1px solid #d9d3b4;
+        border-bottom: 1px solid #d9d3b4; }
         aside ul li.lines ul li {
-          border-bottom: 1px solid #8ba9bd;
+          border-bottom: 1px solid #d9d3b4;
           width: 100%;
           float: none;
           padding: 0;
@@ -3420,7 +3420,7 @@ aside ul {
       aside ul li.lines:hover ul {
         display: block; }
   aside ul.elements li:hover {
-    background: #8ba9bd; }
+    background: #d9d3b4; }
   aside ul.edit::after {
     clear: both;
     content: "";
