@@ -6,6 +6,8 @@ app.factory('Line', function(Board, Interaction) {
         container.removeAllChildren();
         container.arrowStart = false;
         container.arrowEnd = false;
+        container.elementName = 'Line';
+        container.elementType = 'line';
 
         //distance and angle
         var angle = self.angle({x: xStart, y: yStart}, {x: xEnd, y: yEnd});
@@ -22,6 +24,7 @@ app.factory('Line', function(Board, Interaction) {
         line.graphics.setStrokeStyle(2);
         line.graphics.beginStroke(color);
         if(dashed){
+            container.elementName = 'Line (dashed)';
             var detlaX = xEnd-xStart;
             var detlaY = yEnd-yStart;
             var dashLength = 10;

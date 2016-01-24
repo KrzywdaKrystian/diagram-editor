@@ -24,6 +24,8 @@ app.factory("Triangle", function(Board, Interaction) {
     return function() {
         var triangle = new createjs.Shape();
         triangle = self.drawTriangle(50, 50, 50, 50, Interaction.getColor(), triangle);
+        triangle.elementName = 'Triangle';
+        triangle.elementType = 'triangle';
 
         triangle.redraw = function(x, y, w, h, color) {
             triangle = self.drawTriangle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : triangle.graphics._fill.style, triangle);

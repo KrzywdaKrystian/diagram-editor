@@ -17,6 +17,8 @@ app.factory('Rect', function(Board, Interaction) {
     return function() {
         var rect = new createjs.Shape();
         rect = self.drawRect(50, 50, 50, 50, Interaction.getColor(), rect);
+        rect.elementName = 'Rectangle';
+        rect.elementType = 'rect';
 
         rect.redraw = function(x, y, w, h, color) {
             rect = self.drawRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : rect.graphics._fill.style, rect);

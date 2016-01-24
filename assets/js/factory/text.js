@@ -17,6 +17,8 @@ app.factory('Text', function($modal, Board, Interaction){
     return function() {
         var text = new createjs.Text(window.prompt("Text:",""), "20px Arial", "#000000");
         text = self.drawText(50, 50, null, null, Interaction.getColor(), text);
+        text.elementName = 'Text';
+        text.elementType = 'text';
 
         text.redraw = function(x, y, w, h, color) {
             text = self.drawText(parseInt(x), parseInt(y), null, null, color ? color : text.color, text);

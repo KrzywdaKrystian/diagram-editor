@@ -29,6 +29,8 @@ app.factory('RoundRect', function(Board, Interaction) {
     return function() {
         var roundRect = new createjs.Shape();
         roundRect = self.drawRoundRect(50, 50, 50, 50, Interaction.getColor(), roundRect);
+        roundRect.elementName = 'Rounded Rectangle';
+        roundRect.elementType = 'round-rect';
 
         roundRect.redraw = function(x, y, w, h, color) {
             roundRect = self.drawRoundRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : roundRect.graphics._fill.style, roundRect);

@@ -17,6 +17,8 @@ app.factory('Ellipse', function(Board, Interaction) {
     return function() {
         var ellipse = new createjs.Shape();
         ellipse = self.drawEllipse(50, 50, 50, 25, Interaction.getColor(), ellipse);
+        ellipse.elementName = 'Ellipse';
+        ellipse.elementType = 'ellipse';
 
         ellipse.redraw = function(x, y, w, h, color) {
             ellipse = self.drawEllipse(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : ellipse.graphics._fill.style, ellipse);

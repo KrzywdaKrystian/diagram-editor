@@ -137,6 +137,23 @@
     </aside>
     <div class="content-panel">
         <canvas id="board" ng-click="ClickOnCanvas()" oncontextmenu="return false;" ng-class="canvasCursor"></canvas>
+        <div id="layers" ng-class="{true: 'open'}[layersOpen == true]" ng-controller="LayerController">
+            <div ng-click="layersOpen = layersOpen ? false : true">Warstwy</div>
+            <ul>
+                <li ng-repeat="layer in layers">
+                    <div class="icon-type">
+                        <div class="type {{ layer.elementType }}"></div>
+                    </div>
+                    <div class="name">
+                        {{ layer.elementName }}
+                    </div>
+                    <div class="actions">
+                        <i class="visible"></i>
+                        <i class="remove"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
         <div id="edit-panel"
              ng-controller="EditPanelController"
              ng-class="{true: 'show', false: 'hide'}[editPanelObj.visible == true]"

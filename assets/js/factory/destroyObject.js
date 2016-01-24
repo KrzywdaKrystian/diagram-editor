@@ -28,6 +28,8 @@ app.factory('DestroyObject', function(Board, Interaction) {
         var destroyObject = new createjs.Shape();
         destroyObject.elementColor = Interaction.getColor();
         destroyObject = self.drawDestroyObject(50, 50, 50, 50, destroyObject.elementColor, destroyObject);
+        destroyObject.elementName = 'Destroy Object';
+        destroyObject.elementType = 'destroy';
 
         destroyObject.symmetrically = true;
 

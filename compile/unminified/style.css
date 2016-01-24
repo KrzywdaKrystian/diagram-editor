@@ -3106,6 +3106,8 @@ th.hide-for-touch {
 body {
   font-family: Lato, Arial, Helvetica, Roboto, sans-serif;
   overflow: hidden; }
+  body > .flex {
+    overflow: hidden; }
 
 .splash {
   position: fixed;
@@ -3307,6 +3309,126 @@ body {
       cursor: pointer; }
       .content-panel .file-manger .save-file:hover {
         opacity: 0.85; }
+  .content-panel #layers {
+    background: #edebdd;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    max-height: 33px;
+    overflow: hidden;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+    width: 226px; }
+    .content-panel #layers.open {
+      max-height: 80%;
+      overflow: auto; }
+    .content-panel #layers > div {
+      background: #706d5d;
+      padding: 5px;
+      font-size: 15px;
+      color: #ffffff;
+      cursor: pointer;
+      width: 100%; }
+    .content-panel #layers ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden; }
+      .content-panel #layers ul li {
+        padding: 4px;
+        border-bottom: 1px solid #d9d3b4;
+        border-left: 1px solid #d9d3b4; }
+        .content-panel #layers ul li::after {
+          clear: both;
+          content: "";
+          display: table; }
+        .content-panel #layers ul li .icon-type {
+          float: left;
+          width: 24px; }
+          .content-panel #layers ul li .icon-type .type.rect {
+            width: 16px;
+            height: 16px;
+            background: #414141; }
+          .content-panel #layers ul li .icon-type .type.round-rect {
+            width: 16px;
+            height: 16px;
+            background: #414141;
+            border-radius: 6px; }
+          .content-panel #layers ul li .icon-type .type.triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 8px 16px 8px;
+            border-color: transparent transparent #414141; }
+          .content-panel #layers ul li .icon-type .type.circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 24px;
+            background: #414141; }
+          .content-panel #layers ul li .icon-type .type.ellipse {
+            width: 16px;
+            height: 12px;
+            border-radius: 8px/6px;
+            background: #414141; }
+          .content-panel #layers ul li .icon-type .type.text {
+            width: 16px;
+            height: 16px;
+            background: url('/example/images/text.png');
+            background-size: cover; }
+          .content-panel #layers ul li .icon-type .type.actor {
+            width: 16px;
+            height: 16px;
+            background: url('/example/images/actor.png');
+            background-size: cover; }
+          .content-panel #layers ul li .icon-type .type.line {
+            width: 16px;
+            height: 16px;
+            background: url('/example/images/line.png');
+            background-size: cover; }
+          .content-panel #layers ul li .icon-type .type.destroy {
+            width: 16px;
+            height: 16px;
+            background: url('/example/images/destroy.png');
+            background-size: cover; }
+        .content-panel #layers ul li .name {
+          float: left;
+          width: 140px;
+          font-size: 0.75rem;
+          line-height: 16px;
+          white-space: nowrap;
+          overflow: hidden; }
+        .content-panel #layers ul li .actions {
+          float: left;
+          width: 36px;
+          padding-top: 2px; }
+          .content-panel #layers ul li .actions .visible {
+            width: 12px;
+            height: 12px;
+            background: url('/example/images/visibility1.png') no-repeat;
+            float: left;
+            display: block;
+            cursor: pointer; }
+          .content-panel #layers ul li .actions .visible-hide {
+            width: 12px;
+            height: 12px;
+            background: url('/example/images/visibility2.png') no-repeat;
+            float: left;
+            display: block;
+            cursor: pointer; }
+          .content-panel #layers ul li .actions .remove {
+            width: 12px;
+            height: 12px;
+            background: url('/example/images/delete85.png') no-repeat;
+            float: left;
+            display: block;
+            margin: 0 6px;
+            cursor: pointer; }
+          .content-panel #layers ul li .actions i:hover {
+            cursor: pointer; }
+        .content-panel #layers ul li:hover {
+          background: #d9d3b4; }
 
 aside header {
   width: 160px;

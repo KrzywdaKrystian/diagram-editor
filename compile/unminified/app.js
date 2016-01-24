@@ -13039,6 +13039,13 @@ var app = angular.module('app', [
         }
     });
 
+}); app.controller('LayerController', function($scope, $rootScope, Board) {
+
+    $scope.layers = [];
+
+    $rootScope.boardUpdate = function() {
+        $scope.layers = Board.getBoardElements();
+    };
 }); app.controller('MainController', function($scope, $rootScope, Diagram, Board, Line) {
 
     setInterval(function(){
@@ -13470,6 +13477,8 @@ angular.module('app').directive('validfile', function validFile($http) {
         actor = self.drawActor(50, 50, 50, 50, actor.elementColor, actor);
 
         actor.symmetrically = true;
+        actor.elementName = 'Actor';
+        actor.elementType = 'actor';
 
         actor.redraw = function(x, y, w, h, color) {
             actor = self.drawActor(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : actor.elementColor, actor);
@@ -13528,6 +13537,8 @@ angular.module('app').directive('validfile', function validFile($http) {
     return function() {
         var circle = new createjs.Shape();
         circle = self.drawCircle(50, 50, 50, 50, Interaction.getColor(), circle);
+        circle.elementName = 'Circle';
+        circle.elementType = 'circle';
 
         circle.redraw = function(x, y, w, h, color) {
             circle = self.drawCircle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : circle.graphics._fill.style, circle);
@@ -13601,6 +13612,8 @@ angular.module('app').directive('validfile', function validFile($http) {
         var destroyObject = new createjs.Shape();
         destroyObject.elementColor = Interaction.getColor();
         destroyObject = self.drawDestroyObject(50, 50, 50, 50, destroyObject.elementColor, destroyObject);
+        destroyObject.elementName = 'Destroy Object';
+        destroyObject.elementType = 'destroy';
 
         destroyObject.symmetrically = true;
 
@@ -13663,6 +13676,8 @@ angular.module('app').directive('validfile', function validFile($http) {
     return function() {
         var ellipse = new createjs.Shape();
         ellipse = self.drawEllipse(50, 50, 50, 25, Interaction.getColor(), ellipse);
+        ellipse.elementName = 'Ellipse';
+        ellipse.elementType = 'ellipse';
 
         ellipse.redraw = function(x, y, w, h, color) {
             ellipse = self.drawEllipse(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : ellipse.graphics._fill.style, ellipse);
@@ -13712,6 +13727,8 @@ angular.module('app').directive('validfile', function validFile($http) {
         container.removeAllChildren();
         container.arrowStart = false;
         container.arrowEnd = false;
+        container.elementName = 'Line';
+        container.elementType = 'line';
 
         //distance and angle
         var angle = self.angle({x: xStart, y: yStart}, {x: xEnd, y: yEnd});
@@ -13728,6 +13745,7 @@ angular.module('app').directive('validfile', function validFile($http) {
         line.graphics.setStrokeStyle(2);
         line.graphics.beginStroke(color);
         if(dashed){
+            container.elementName = 'Line (dashed)';
             var detlaX = xEnd-xStart;
             var detlaY = yEnd-yStart;
             var dashLength = 10;
@@ -13880,6 +13898,8 @@ angular.module('app').directive('validfile', function validFile($http) {
     return function() {
         var rect = new createjs.Shape();
         rect = self.drawRect(50, 50, 50, 50, Interaction.getColor(), rect);
+        rect.elementName = 'Rectangle';
+        rect.elementType = 'rect';
 
         rect.redraw = function(x, y, w, h, color) {
             rect = self.drawRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : rect.graphics._fill.style, rect);
@@ -13952,6 +13972,8 @@ angular.module('app').directive('validfile', function validFile($http) {
     return function() {
         var roundRect = new createjs.Shape();
         roundRect = self.drawRoundRect(50, 50, 50, 50, Interaction.getColor(), roundRect);
+        roundRect.elementName = 'Rounded Rectangle';
+        roundRect.elementType = 'round-rect';
 
         roundRect.redraw = function(x, y, w, h, color) {
             roundRect = self.drawRoundRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : roundRect.graphics._fill.style, roundRect);
@@ -14027,6 +14049,8 @@ angular.module('app').directive('validfile', function validFile($http) {
     return function() {
         var text = new createjs.Text(window.prompt("Text:",""), "20px Arial", "#000000");
         text = self.drawText(50, 50, null, null, Interaction.getColor(), text);
+        text.elementName = 'Text';
+        text.elementType = 'text';
 
         text.redraw = function(x, y, w, h, color) {
             text = self.drawText(parseInt(x), parseInt(y), null, null, color ? color : text.color, text);
@@ -14109,6 +14133,8 @@ angular.module('app').directive('validfile', function validFile($http) {
     return function() {
         var triangle = new createjs.Shape();
         triangle = self.drawTriangle(50, 50, 50, 50, Interaction.getColor(), triangle);
+        triangle.elementName = 'Triangle';
+        triangle.elementType = 'triangle';
 
         triangle.redraw = function(x, y, w, h, color) {
             triangle = self.drawTriangle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : triangle.graphics._fill.style, triangle);
@@ -14151,7 +14177,7 @@ angular.module('app').directive('validfile', function validFile($http) {
         return triangle;
     };
 
-}); app.service('Board', function() {
+}); app.service('Board', function($rootScope) {
 
     this.board = null;
 
@@ -14163,6 +14189,7 @@ angular.module('app').directive('validfile', function validFile($http) {
     };
 
     this.update = function () {
+        $rootScope.boardUpdate();
         this.board.update();
     };
 
@@ -14171,7 +14198,6 @@ angular.module('app').directive('validfile', function validFile($http) {
     };
 
     this.getBoardElements = function () {
-        console.log(this.board.children);
         return this.board.children;
     };
 

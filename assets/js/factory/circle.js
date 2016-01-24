@@ -15,6 +15,8 @@ app.factory('Circle', function(Board, Interaction) {
     return function() {
         var circle = new createjs.Shape();
         circle = self.drawCircle(50, 50, 50, 50, Interaction.getColor(), circle);
+        circle.elementName = 'Circle';
+        circle.elementType = 'circle';
 
         circle.redraw = function(x, y, w, h, color) {
             circle = self.drawCircle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : circle.graphics._fill.style, circle);

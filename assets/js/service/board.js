@@ -1,4 +1,4 @@
-app.service('Board', function() {
+app.service('Board', function($rootScope) {
 
     this.board = null;
 
@@ -10,6 +10,7 @@ app.service('Board', function() {
     };
 
     this.update = function () {
+        $rootScope.boardUpdate();
         this.board.update();
     };
 
@@ -18,7 +19,6 @@ app.service('Board', function() {
     };
 
     this.getBoardElements = function () {
-        console.log(this.board.children);
         return this.board.children;
     };
 
