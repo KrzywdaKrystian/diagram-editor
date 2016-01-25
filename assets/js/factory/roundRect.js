@@ -26,11 +26,11 @@ app.factory('RoundRect', function(Board, Interaction) {
         return roundRect
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var roundRect = new createjs.Shape();
-        roundRect = self.drawRoundRect(50, 50, 50, 50, Interaction.getColor(), roundRect);
+        roundRect = self.drawRoundRect(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, color ? color: Interaction.getColor(), roundRect);
         roundRect.elementName = 'Rounded Rectangle';
-        roundRect.elementType = 'round-rect';
+        roundRect.elementType = 'RoundRect';
 
         roundRect.redraw = function(x, y, w, h, color) {
             roundRect = self.drawRoundRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : roundRect.graphics._fill.style, roundRect);
@@ -80,6 +80,23 @@ app.factory('RoundRect', function(Board, Interaction) {
             roundRect.alpha = x;
             Board.update();
         };
+
+        roundRect.setVisible = function(visible){
+            roundRect.visible = visible;
+            Board.update();
+        };
+
+        roundRect.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            roundRect.setAlpha(alpha);
+        }
+
+        if(visible) {
+            roundRect.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(roundRect);
         Interaction.edit(roundRect);

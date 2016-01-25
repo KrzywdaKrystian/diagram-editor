@@ -13046,6 +13046,15 @@ var app = angular.module('app', [
     $rootScope.boardUpdate = function() {
         $scope.layers = Board.getBoardElements();
     };
+
+    $scope.setVisible = function(index, val) {
+        Board.setVisible(index, val);
+    };
+
+    $scope.remove = function(element) {
+        Board.removeElement(element);
+    };
+
 }); app.controller('MainController', function($scope, $rootScope, Diagram, Board, Line) {
 
     setInterval(function(){
@@ -13172,7 +13181,7 @@ var app = angular.module('app', [
 
 
                 if(e.pageX-160 > 0 && $rootScope.resizeing) {
-                    if(direction === 'w' && startX-e.pageX+startWidth > 20) {
+                    if(direction === 'w' && startX-e.pageX+startWidth > 5) {
                         width = startX-e.pageX+startWidth;
                         left = e.pageX-160;
                         $('.draggable').css({
@@ -13190,7 +13199,7 @@ var app = angular.module('app', [
                             $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
-                    else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
+                    else if(direction === 'e' && e.pageX-startX+startWidth > 5) {
                         width = e.pageX-startX+startWidth;
                         left = startX-startWidth-160;
                         $('.draggable').css({
@@ -13208,7 +13217,7 @@ var app = angular.module('app', [
                             $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
-                    else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
+                    else if(direction === 'n' && startY-e.pageY+startHeight > 5) {
                         height = startY-e.pageY+startHeight;
                         top = e.pageY;
                         $('.draggable').css({
@@ -13226,7 +13235,7 @@ var app = angular.module('app', [
                             $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, $scope.editPanelObj.element.getWidth(), height);
                         }
                     }
-                    else if(direction === 's' && e.pageY-startY+startHeight > 20) {
+                    else if(direction === 's' && e.pageY-startY+startHeight > 5) {
                         height = e.pageY-startY+startHeight;
                         top = startY-startHeight;
                         $('.draggable').css({
@@ -13402,7 +13411,7 @@ var app = angular.module('app', [
         }
     };
 }); //pozmieniac
-angular.module('app').directive('validfile', function validFile($http) {
+angular.module('app').directive('validfile', function validFile($http, Board, Diagram) {
 
     var validFormats = ['json'];
     return {
@@ -13422,9 +13431,13 @@ angular.module('app').directive('validfile', function validFile($http) {
                             $http.get(loadEvent.target.result).success(function(response) {
                                 return response.data;
                             }).success(function (data) {
-                                var diagram = new Diagram();
-                                diagram.clearDiagram();
-                                diagram.loadDiagram(data);
+                                Board.removeAllElements();
+                                angular.forEach(data, function(value, key) {
+                                    console.log(value);
+                                    Diagram.addElement(value.type, value);
+                                });
+                                console.log(Board.getBoardElements());
+
                             }).error(function () {
                                 alert('Wystąpił błąd')
                             });
@@ -13471,14 +13484,14 @@ angular.module('app').directive('validfile', function validFile($http) {
         return actor
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var actor = new createjs.Shape();
-        actor.elementColor = Interaction.getColor();
-        actor = self.drawActor(50, 50, 50, 50, actor.elementColor, actor);
+        actor.elementColor = color ? color : Interaction.getColor();
+        actor = self.drawActor(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, actor.elementColor, actor);
 
         actor.symmetrically = true;
         actor.elementName = 'Actor';
-        actor.elementType = 'actor';
+        actor.elementType = 'Actor';
 
         actor.redraw = function(x, y, w, h, color) {
             actor = self.drawActor(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : actor.elementColor, actor);
@@ -13514,6 +13527,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        actor.setVisible = function(visible){
+            actor.visible = visible;
+            Board.update();
+        };
+
+        actor.getColor = function() {
+            return this.elementColor;
+        };
+
+        if(alpha) {
+            actor.setAlpha(alpha);
+        }
+
+        if(visible) {
+            actor.setVisible(visible === 'yes');
+        }
+
         Interaction.drag(actor);
         Interaction.edit(actor);
         Interaction.editPanel(actor);
@@ -13534,11 +13564,11 @@ angular.module('app').directive('validfile', function validFile($http) {
         return circle
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var circle = new createjs.Shape();
-        circle = self.drawCircle(50, 50, 50, 50, Interaction.getColor(), circle);
+        circle = self.drawCircle(x ? x : 50, y ? y : 50, w ? w: 50, h ? h :50, color ? color : Interaction.getColor(), circle);
         circle.elementName = 'Circle';
-        circle.elementType = 'circle';
+        circle.elementType = 'Circle';
 
         circle.redraw = function(x, y, w, h, color) {
             circle = self.drawCircle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : circle.graphics._fill.style, circle);
@@ -13576,6 +13606,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        circle.setVisible = function(visible){
+            circle.visible = visible;
+            Board.update();
+        };
+
+        circle.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            circle.setAlpha(alpha);
+        }
+
+        if(visible) {
+            circle.setVisible(visible === 'yes');
+        }
+
         Interaction.drag(circle);
         Interaction.edit(circle);
         Interaction.editPanel(circle);
@@ -13608,12 +13655,12 @@ angular.module('app').directive('validfile', function validFile($http) {
         return destroyObject
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var destroyObject = new createjs.Shape();
-        destroyObject.elementColor = Interaction.getColor();
-        destroyObject = self.drawDestroyObject(50, 50, 50, 50, destroyObject.elementColor, destroyObject);
+        destroyObject.elementColor = color ? color : Interaction.getColor();
+        destroyObject = self.drawDestroyObject(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, destroyObject.elementColor, destroyObject);
         destroyObject.elementName = 'Destroy Object';
-        destroyObject.elementType = 'destroy';
+        destroyObject.elementType = 'DestroyObject';
 
         destroyObject.symmetrically = true;
 
@@ -13651,6 +13698,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        destroyObject.setVisible = function(visible){
+            destroyObject.visible = visible;
+            Board.update();
+        };
+
+        destroyObject.getColor = function() {
+            return this.elementColor;
+        };
+
+        if(alpha) {
+            destroyObject.setAlpha(alpha);
+        }
+
+        if(visible) {
+            destroyObject.setVisible(visible === 'yes');
+        }
+
         Interaction.drag(destroyObject);
         Interaction.edit(destroyObject);
         Interaction.editPanel(destroyObject);
@@ -13673,11 +13737,11 @@ angular.module('app').directive('validfile', function validFile($http) {
         return ellipse;
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var ellipse = new createjs.Shape();
-        ellipse = self.drawEllipse(50, 50, 50, 25, Interaction.getColor(), ellipse);
+        ellipse = self.drawEllipse(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :25, color ? color: Interaction.getColor(), ellipse);
         ellipse.elementName = 'Ellipse';
-        ellipse.elementType = 'ellipse';
+        ellipse.elementType = 'Ellipse';
 
         ellipse.redraw = function(x, y, w, h, color) {
             ellipse = self.drawEllipse(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : ellipse.graphics._fill.style, ellipse);
@@ -13713,6 +13777,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        ellipse.setVisible = function(visible){
+            ellipse.visible = visible;
+            Board.update();
+        };
+
+        ellipse.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            ellipse.setAlpha(alpha);
+        }
+
+        if(visible) {
+            ellipse.setVisible(visible === 'yes');
+        }
+
         Interaction.drag(ellipse);
         Interaction.edit(ellipse);
         Interaction.editPanel(ellipse);
@@ -13728,7 +13809,7 @@ angular.module('app').directive('validfile', function validFile($http) {
         container.arrowStart = false;
         container.arrowEnd = false;
         container.elementName = 'Line';
-        container.elementType = 'line';
+        container.elementType = 'Line';
 
         //distance and angle
         var angle = self.angle({x: xStart, y: yStart}, {x: xEnd, y: yEnd});
@@ -13840,10 +13921,10 @@ angular.module('app').directive('validfile', function validFile($http) {
         return this;
     };
 
-    return function(xStart, yStart, xEnd, yEnd, dashed) {
+    return function(xStart, yStart, xEnd, yEnd, dashed, color, alpha, visible, arrowStart, arrowEnd) {
         var line = new createjs.Container();
         //var line = new createjs.Shape();
-        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, Interaction.getColor(), dashed, line);
+        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, color ? color : Interaction.getColor(), dashed, line);
 
         line.redraw = function(x, y, w, h, color, dashed) {
             line = self.drawLine(x, y, w, h, false, false, color ? color : line.color, dashed ? dashed : line.dashed, line);
@@ -13864,6 +13945,44 @@ angular.module('app').directive('validfile', function validFile($http) {
             line = self.drawLine(parseInt(line.xStart), parseInt(line.yStart), parseInt(line.xEnd), parseInt(line.yEnd), line.arrowStart, line.arrowEnd, line.color, line.dashed ? false : true, line);
             Board.update();
         };
+
+        if(arrowStart) {
+            line.addStartArrow();
+        }
+
+        if(arrowEnd) {
+            line.addEndArrow();
+        }
+
+        line.getX = function(){
+            return line.x;
+        };
+
+        line.getY = function(){
+            return line.y;
+        };
+
+        line.setAlpha = function(x){
+            line.alpha = x;
+            Board.update();
+        };
+
+        line.setVisible = function(visible){
+            line.visible = visible;
+            Board.update();
+        };
+
+        line.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            line.setAlpha(alpha);
+        }
+
+        if(visible) {
+            line.setVisible(visible === 'yes');
+        }
 
         line.on("dblclick", function(evt) {
             var appElement = document.querySelector('[ng-app=app]');
@@ -13895,11 +14014,11 @@ angular.module('app').directive('validfile', function validFile($http) {
         return rect
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var rect = new createjs.Shape();
-        rect = self.drawRect(50, 50, 50, 50, Interaction.getColor(), rect);
+        rect = self.drawRect(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, color ? color: Interaction.getColor(), rect);
         rect.elementName = 'Rectangle';
-        rect.elementType = 'rect';
+        rect.elementType = 'Rect';
 
         rect.redraw = function(x, y, w, h, color) {
             rect = self.drawRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : rect.graphics._fill.style, rect);
@@ -13935,6 +14054,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        rect.setVisible = function(visible){
+            rect.visible = visible;
+            Board.update();
+        };
+
+        rect.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            rect.setAlpha(alpha);
+        }
+
+        if(visible) {
+            rect.setVisible(visible === 'yes');
+        }
+
         Interaction.drag(rect);
         Interaction.edit(rect);
         Interaction.editPanel(rect);
@@ -13969,11 +14105,11 @@ angular.module('app').directive('validfile', function validFile($http) {
         return roundRect
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var roundRect = new createjs.Shape();
-        roundRect = self.drawRoundRect(50, 50, 50, 50, Interaction.getColor(), roundRect);
+        roundRect = self.drawRoundRect(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, color ? color: Interaction.getColor(), roundRect);
         roundRect.elementName = 'Rounded Rectangle';
-        roundRect.elementType = 'round-rect';
+        roundRect.elementType = 'RoundRect';
 
         roundRect.redraw = function(x, y, w, h, color) {
             roundRect = self.drawRoundRect(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : roundRect.graphics._fill.style, roundRect);
@@ -14024,6 +14160,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        roundRect.setVisible = function(visible){
+            roundRect.visible = visible;
+            Board.update();
+        };
+
+        roundRect.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            roundRect.setAlpha(alpha);
+        }
+
+        if(visible) {
+            roundRect.setVisible(visible === 'yes');
+        }
+
         Interaction.drag(roundRect);
         Interaction.edit(roundRect);
         Interaction.editPanel(roundRect);
@@ -14042,15 +14195,15 @@ angular.module('app').directive('validfile', function validFile($http) {
         return text
     };
 
-    this.prompt = function(textElement) {
+    this.prompt = function() {
         return window.prompt("Text:","");
     };
 
-    return function() {
-        var text = new createjs.Text(window.prompt("Text:",""), "20px Arial", "#000000");
-        text = self.drawText(50, 50, null, null, Interaction.getColor(), text);
+    return function(x, y, w, h, color, alpha, visible, value) {
+        var text = new createjs.Text(value ? value : window.prompt("Text:",""), "20px Arial", "#000000");
+        text = self.drawText(x ? x : 50, y ? y : 50, null, null, color ? color : Interaction.getColor(), text);
         text.elementName = 'Text';
-        text.elementType = 'text';
+        text.elementType = 'Text';
 
         text.redraw = function(x, y, w, h, color) {
             text = self.drawText(parseInt(x), parseInt(y), null, null, color ? color : text.color, text);
@@ -14096,6 +14249,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             Board.update();
         };
 
+        text.setVisible = function(visible){
+            text.visible = visible;
+            Board.update();
+        };
+
+        text.getColor = function() {
+            return this.color;
+        };
+
+        if(alpha) {
+            text.setAlpha(alpha);
+        }
+
+        if(visible) {
+            text.setVisible(visible === 'yes');
+        }
+
         text.on("dblclick", function(evt) {
             text.text = window.prompt("Text:",text.text);
             Board.update();
@@ -14130,11 +14300,11 @@ angular.module('app').directive('validfile', function validFile($http) {
         return triangle
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var triangle = new createjs.Shape();
-        triangle = self.drawTriangle(50, 50, 50, 50, Interaction.getColor(), triangle);
+        triangle = self.drawTriangle(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, color ? color: Interaction.getColor(), triangle);
         triangle.elementName = 'Triangle';
-        triangle.elementType = 'triangle';
+        triangle.elementType = 'Triangle';
 
         triangle.redraw = function(x, y, w, h, color) {
             triangle = self.drawTriangle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : triangle.graphics._fill.style, triangle);
@@ -14169,6 +14339,23 @@ angular.module('app').directive('validfile', function validFile($http) {
             triangle.alpha = x;
             Board.update();
         };
+
+        triangle.setVisible = function(visible){
+            triangle.visible = visible;
+            Board.update();
+        };
+
+        triangle.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            triangle.setAlpha(alpha);
+        }
+
+        if(visible) {
+            triangle.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(triangle);
         Interaction.edit(triangle);
@@ -14219,8 +14406,14 @@ angular.module('app').directive('validfile', function validFile($http) {
         this.update();
     };
 
-    this.setCursor = function(type) {
-        this.board.cursor = 'text';
+    this.removeAllElements = function() {
+        this.board.removeAllChildren();
+        this.update();
+    };
+
+    this.setVisible = function(index, val) {
+        this.board.children[index].visible = val;
+        this.update();
     };
 
 }); app.service('Diagram', function(Board, $injector) {
@@ -14237,12 +14430,106 @@ angular.module('app').directive('validfile', function validFile($http) {
     };
 
     this.saveDiagram = function () {
-        Board.getBoardElements();
+        var elements = Board.getBoardElements();
+        console.log(elements);
+        var data = [];
+        angular.forEach(elements, function(value, key) {
+            if(value.elementType === 'Line') {
+                this.push({
+                    alpha: value.alpha,
+                    visible: value.visible ? 'yes' : 'no',
+                    type: value.elementType,
+                    xStart: value.xStart,
+                    yStart: value.yStart,
+                    xEnd: value.xEnd,
+                    yEnd: value.yEnd,
+                    dashed: value.dashed,
+                    color: value.color,
+                    arrowStart: value.arrowStart,
+                    arrowEnd: value.arrowEnd
+                });
+            }
+            else if(value.elementType === 'Text') {
+                this.push({
+                    alpha: value.alpha,
+                    visible: value.visible ? 'yes' : 'no',
+                    type: value.elementType,
+                    x: value.getX(),
+                    y: value.getY(),
+                    color: value.getColor(),
+                    text: value.text,
+                    font: value.font
+                });
+            }
+            else {
+                this.push({
+                    alpha: value.alpha,
+                    visible: value.visible ? 'yes' : 'no',
+                    type: value.elementType,
+                    x: value.getX(),
+                    y: value.getY(),
+                    w: value.getWidth(),
+                    h: value.getHeight(),
+                    color: value.getColor()
+                });
+            }
+
+            if(elements.length === key+1) {
+                var filename = window.prompt("Filename:","download.json");
+
+                if (typeof data === 'object') {
+                    console.log(data);
+                    data = JSON.stringify(data, undefined, 2);
+                }
+
+                var blob = new Blob([data], {type: 'text/json'}),
+                    e = document.createEvent('MouseEvents'),
+                    a = document.createElement('a');
+
+                a.download = filename;
+                a.href = window.URL.createObjectURL(blob);
+                a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+                e.initMouseEvent('click', true, false, window,
+                    0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                a.dispatchEvent(e);
+            }
+        }, data);
     };
 
-    this.addElement = function (type) {
+    this.addElement = function (type, params) {
         try {
-            Board.addElement($injector.get(type)());
+            if(params) {
+                if(params.type === 'Line') {
+                    Board.addElement($injector.get(type)(
+                        params.xStart,
+                        params.yStart,
+                        params.xEnd,
+                        params.yEnd,
+                        params.dashed,
+                        params.color,
+                        params.alpha,
+                        params.visible,
+                        params.arrowStart,
+                        params.arrowEnd
+                    ));
+                }
+                else {
+                    Board.addElement($injector.get(type)(
+                        params.x,
+                        params.y,
+                        params.w,
+                        params.h,
+                        params.color,
+                        params.alpha,
+                        params.visible,
+                        params.text ? params.text : null,
+                        params.font ? params.font : null
+                    ));
+                }
+            }
+            else {
+                Board.addElement($injector.get(type)());
+            }
         }
         catch(err) {
             alert(err);

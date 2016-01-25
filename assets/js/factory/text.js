@@ -10,15 +10,15 @@ app.factory('Text', function($modal, Board, Interaction){
         return text
     };
 
-    this.prompt = function(textElement) {
+    this.prompt = function() {
         return window.prompt("Text:","");
     };
 
-    return function() {
-        var text = new createjs.Text(window.prompt("Text:",""), "20px Arial", "#000000");
-        text = self.drawText(50, 50, null, null, Interaction.getColor(), text);
+    return function(x, y, w, h, color, alpha, visible, value) {
+        var text = new createjs.Text(value ? value : window.prompt("Text:",""), "20px Arial", "#000000");
+        text = self.drawText(x ? x : 50, y ? y : 50, null, null, color ? color : Interaction.getColor(), text);
         text.elementName = 'Text';
-        text.elementType = 'text';
+        text.elementType = 'Text';
 
         text.redraw = function(x, y, w, h, color) {
             text = self.drawText(parseInt(x), parseInt(y), null, null, color ? color : text.color, text);
@@ -63,6 +63,23 @@ app.factory('Text', function($modal, Board, Interaction){
             text.alpha = x;
             Board.update();
         };
+
+        text.setVisible = function(visible){
+            text.visible = visible;
+            Board.update();
+        };
+
+        text.getColor = function() {
+            return this.color;
+        };
+
+        if(alpha) {
+            text.setAlpha(alpha);
+        }
+
+        if(visible) {
+            text.setVisible(visible === 'yes');
+        }
 
         text.on("dblclick", function(evt) {
             text.text = window.prompt("Text:",text.text);

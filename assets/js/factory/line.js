@@ -7,7 +7,7 @@ app.factory('Line', function(Board, Interaction) {
         container.arrowStart = false;
         container.arrowEnd = false;
         container.elementName = 'Line';
-        container.elementType = 'line';
+        container.elementType = 'Line';
 
         //distance and angle
         var angle = self.angle({x: xStart, y: yStart}, {x: xEnd, y: yEnd});
@@ -119,10 +119,10 @@ app.factory('Line', function(Board, Interaction) {
         return this;
     };
 
-    return function(xStart, yStart, xEnd, yEnd, dashed) {
+    return function(xStart, yStart, xEnd, yEnd, dashed, color, alpha, visible, arrowStart, arrowEnd) {
         var line = new createjs.Container();
         //var line = new createjs.Shape();
-        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, Interaction.getColor(), dashed, line);
+        line = self.drawLine(xStart, yStart, xEnd, yEnd, false, false, color ? color : Interaction.getColor(), dashed, line);
 
         line.redraw = function(x, y, w, h, color, dashed) {
             line = self.drawLine(x, y, w, h, false, false, color ? color : line.color, dashed ? dashed : line.dashed, line);
@@ -143,6 +143,44 @@ app.factory('Line', function(Board, Interaction) {
             line = self.drawLine(parseInt(line.xStart), parseInt(line.yStart), parseInt(line.xEnd), parseInt(line.yEnd), line.arrowStart, line.arrowEnd, line.color, line.dashed ? false : true, line);
             Board.update();
         };
+
+        if(arrowStart) {
+            line.addStartArrow();
+        }
+
+        if(arrowEnd) {
+            line.addEndArrow();
+        }
+
+        line.getX = function(){
+            return line.x;
+        };
+
+        line.getY = function(){
+            return line.y;
+        };
+
+        line.setAlpha = function(x){
+            line.alpha = x;
+            Board.update();
+        };
+
+        line.setVisible = function(visible){
+            line.visible = visible;
+            Board.update();
+        };
+
+        line.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            line.setAlpha(alpha);
+        }
+
+        if(visible) {
+            line.setVisible(visible === 'yes');
+        }
 
         line.on("dblclick", function(evt) {
             var appElement = document.querySelector('[ng-app=app]');

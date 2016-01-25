@@ -25,7 +25,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
 
 
                 if(e.pageX-160 > 0 && $rootScope.resizeing) {
-                    if(direction === 'w' && startX-e.pageX+startWidth > 20) {
+                    if(direction === 'w' && startX-e.pageX+startWidth > 5) {
                         width = startX-e.pageX+startWidth;
                         left = e.pageX-160;
                         $('.draggable').css({
@@ -43,7 +43,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
-                    else if(direction === 'e' && e.pageX-startX+startWidth > 20) {
+                    else if(direction === 'e' && e.pageX-startX+startWidth > 5) {
                         width = e.pageX-startX+startWidth;
                         left = startX-startWidth-160;
                         $('.draggable').css({
@@ -61,7 +61,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             $scope.editPanelObj.element.redraw(left, $scope.editPanelObj.element.y, width, $scope.editPanelObj.element.getHeight());
                         }
                     }
-                    else if(direction === 'n' && startY-e.pageY+startHeight > 20) {
+                    else if(direction === 'n' && startY-e.pageY+startHeight > 5) {
                         height = startY-e.pageY+startHeight;
                         top = e.pageY;
                         $('.draggable').css({
@@ -79,7 +79,7 @@ app.controller('ResizeController', function($scope, $rootScope, Board) {
                             $scope.editPanelObj.element.redraw($scope.editPanelObj.element.x, top, $scope.editPanelObj.element.getWidth(), height);
                         }
                     }
-                    else if(direction === 's' && e.pageY-startY+startHeight > 20) {
+                    else if(direction === 's' && e.pageY-startY+startHeight > 5) {
                         height = e.pageY-startY+startHeight;
                         top = startY-startHeight;
                         $('.draggable').css({

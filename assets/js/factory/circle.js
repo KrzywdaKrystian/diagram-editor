@@ -12,11 +12,11 @@ app.factory('Circle', function(Board, Interaction) {
         return circle
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var circle = new createjs.Shape();
-        circle = self.drawCircle(50, 50, 50, 50, Interaction.getColor(), circle);
+        circle = self.drawCircle(x ? x : 50, y ? y : 50, w ? w: 50, h ? h :50, color ? color : Interaction.getColor(), circle);
         circle.elementName = 'Circle';
-        circle.elementType = 'circle';
+        circle.elementType = 'Circle';
 
         circle.redraw = function(x, y, w, h, color) {
             circle = self.drawCircle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : circle.graphics._fill.style, circle);
@@ -53,6 +53,23 @@ app.factory('Circle', function(Board, Interaction) {
             circle.alpha = x;
             Board.update();
         };
+
+        circle.setVisible = function(visible){
+            circle.visible = visible;
+            Board.update();
+        };
+
+        circle.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            circle.setAlpha(alpha);
+        }
+
+        if(visible) {
+            circle.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(circle);
         Interaction.edit(circle);

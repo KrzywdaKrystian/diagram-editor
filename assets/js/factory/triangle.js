@@ -21,11 +21,11 @@ app.factory("Triangle", function(Board, Interaction) {
         return triangle
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var triangle = new createjs.Shape();
-        triangle = self.drawTriangle(50, 50, 50, 50, Interaction.getColor(), triangle);
+        triangle = self.drawTriangle(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, color ? color: Interaction.getColor(), triangle);
         triangle.elementName = 'Triangle';
-        triangle.elementType = 'triangle';
+        triangle.elementType = 'Triangle';
 
         triangle.redraw = function(x, y, w, h, color) {
             triangle = self.drawTriangle(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : triangle.graphics._fill.style, triangle);
@@ -60,6 +60,23 @@ app.factory("Triangle", function(Board, Interaction) {
             triangle.alpha = x;
             Board.update();
         };
+
+        triangle.setVisible = function(visible){
+            triangle.visible = visible;
+            Board.update();
+        };
+
+        triangle.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            triangle.setAlpha(alpha);
+        }
+
+        if(visible) {
+            triangle.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(triangle);
         Interaction.edit(triangle);

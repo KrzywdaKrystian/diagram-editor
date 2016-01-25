@@ -140,16 +140,17 @@
         <div id="layers" ng-class="{true: 'open'}[layersOpen == true]" ng-controller="LayerController">
             <div ng-click="layersOpen = layersOpen ? false : true">Warstwy</div>
             <ul>
-                <li ng-repeat="layer in layers">
+                <li ng-repeat="element in layers">
                     <div class="icon-type">
-                        <div class="type {{ layer.elementType }}"></div>
+                        <div class="type {{ element.elementType }}"></div>
                     </div>
                     <div class="name">
-                        {{ layer.elementName }}
+                        {{ element.elementName }}
                     </div>
                     <div class="actions">
-                        <i class="visible"></i>
-                        <i class="remove"></i>
+                        <i class="visible" ng-show="element.visible" ng-click="setVisible($index, false)"></i>
+                        <i class="visible-hide" ng-show="!element.visible" ng-click="setVisible($index, true)"></i>
+                        <i class="remove" ng-click="remove(element)"></i>
                     </div>
                 </li>
             </ul>

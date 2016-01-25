@@ -24,12 +24,12 @@ app.factory('DestroyObject', function(Board, Interaction) {
         return destroyObject
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var destroyObject = new createjs.Shape();
-        destroyObject.elementColor = Interaction.getColor();
-        destroyObject = self.drawDestroyObject(50, 50, 50, 50, destroyObject.elementColor, destroyObject);
+        destroyObject.elementColor = color ? color : Interaction.getColor();
+        destroyObject = self.drawDestroyObject(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, destroyObject.elementColor, destroyObject);
         destroyObject.elementName = 'Destroy Object';
-        destroyObject.elementType = 'destroy';
+        destroyObject.elementType = 'DestroyObject';
 
         destroyObject.symmetrically = true;
 
@@ -66,6 +66,23 @@ app.factory('DestroyObject', function(Board, Interaction) {
             destroyObject.alpha = x;
             Board.update();
         };
+
+        destroyObject.setVisible = function(visible){
+            destroyObject.visible = visible;
+            Board.update();
+        };
+
+        destroyObject.getColor = function() {
+            return this.elementColor;
+        };
+
+        if(alpha) {
+            destroyObject.setAlpha(alpha);
+        }
+
+        if(visible) {
+            destroyObject.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(destroyObject);
         Interaction.edit(destroyObject);

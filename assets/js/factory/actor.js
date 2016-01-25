@@ -28,14 +28,14 @@ app.factory('Actor', function(Board, Interaction) {
         return actor
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var actor = new createjs.Shape();
-        actor.elementColor = Interaction.getColor();
-        actor = self.drawActor(50, 50, 50, 50, actor.elementColor, actor);
+        actor.elementColor = color ? color : Interaction.getColor();
+        actor = self.drawActor(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :50, actor.elementColor, actor);
 
         actor.symmetrically = true;
         actor.elementName = 'Actor';
-        actor.elementType = 'actor';
+        actor.elementType = 'Actor';
 
         actor.redraw = function(x, y, w, h, color) {
             actor = self.drawActor(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : actor.elementColor, actor);
@@ -70,6 +70,23 @@ app.factory('Actor', function(Board, Interaction) {
             actor.alpha = x;
             Board.update();
         };
+
+        actor.setVisible = function(visible){
+            actor.visible = visible;
+            Board.update();
+        };
+
+        actor.getColor = function() {
+            return this.elementColor;
+        };
+
+        if(alpha) {
+            actor.setAlpha(alpha);
+        }
+
+        if(visible) {
+            actor.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(actor);
         Interaction.edit(actor);

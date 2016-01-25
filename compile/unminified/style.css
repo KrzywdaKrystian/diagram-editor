@@ -3347,47 +3347,47 @@ body {
         .content-panel #layers ul li .icon-type {
           float: left;
           width: 24px; }
-          .content-panel #layers ul li .icon-type .type.rect {
+          .content-panel #layers ul li .icon-type .type.Rect {
             width: 16px;
             height: 16px;
             background: #414141; }
-          .content-panel #layers ul li .icon-type .type.round-rect {
+          .content-panel #layers ul li .icon-type .type.RoundRect {
             width: 16px;
             height: 16px;
             background: #414141;
             border-radius: 6px; }
-          .content-panel #layers ul li .icon-type .type.triangle {
+          .content-panel #layers ul li .icon-type .type.Triangle {
             width: 0;
             height: 0;
             border-style: solid;
             border-width: 0 8px 16px 8px;
             border-color: transparent transparent #414141; }
-          .content-panel #layers ul li .icon-type .type.circle {
+          .content-panel #layers ul li .icon-type .type.Circle {
             width: 16px;
             height: 16px;
             border-radius: 24px;
             background: #414141; }
-          .content-panel #layers ul li .icon-type .type.ellipse {
+          .content-panel #layers ul li .icon-type .type.Ellipse {
             width: 16px;
             height: 12px;
             border-radius: 8px/6px;
             background: #414141; }
-          .content-panel #layers ul li .icon-type .type.text {
+          .content-panel #layers ul li .icon-type .type.Text {
             width: 16px;
             height: 16px;
             background: url('/example/images/text.png');
             background-size: cover; }
-          .content-panel #layers ul li .icon-type .type.actor {
+          .content-panel #layers ul li .icon-type .type.Actor {
             width: 16px;
             height: 16px;
             background: url('/example/images/actor.png');
             background-size: cover; }
-          .content-panel #layers ul li .icon-type .type.line {
+          .content-panel #layers ul li .icon-type .type.Line {
             width: 16px;
             height: 16px;
             background: url('/example/images/line.png');
             background-size: cover; }
-          .content-panel #layers ul li .icon-type .type.destroy {
+          .content-panel #layers ul li .icon-type .type.DestroyObject {
             width: 16px;
             height: 16px;
             background: url('/example/images/destroy.png');
@@ -3425,8 +3425,10 @@ body {
             display: block;
             margin: 0 6px;
             cursor: pointer; }
-          .content-panel #layers ul li .actions i:hover {
+          .content-panel #layers ul li .actions i {
             cursor: pointer; }
+            .content-panel #layers ul li .actions i:hover {
+              opacity: .8; }
         .content-panel #layers ul li:hover {
           background: #d9d3b4; }
 

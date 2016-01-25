@@ -14,11 +14,11 @@ app.factory('Ellipse', function(Board, Interaction) {
         return ellipse;
     };
 
-    return function() {
+    return function(x, y, w, h, color, alpha, visible) {
         var ellipse = new createjs.Shape();
-        ellipse = self.drawEllipse(50, 50, 50, 25, Interaction.getColor(), ellipse);
+        ellipse = self.drawEllipse(x ? x : 50, y ? y : 50, w ? w : 50, h ? h :25, color ? color: Interaction.getColor(), ellipse);
         ellipse.elementName = 'Ellipse';
-        ellipse.elementType = 'ellipse';
+        ellipse.elementType = 'Ellipse';
 
         ellipse.redraw = function(x, y, w, h, color) {
             ellipse = self.drawEllipse(parseInt(x), parseInt(y), parseInt(w), parseInt(h), color ? color : ellipse.graphics._fill.style, ellipse);
@@ -53,6 +53,23 @@ app.factory('Ellipse', function(Board, Interaction) {
             ellipse.alpha = x;
             Board.update();
         };
+
+        ellipse.setVisible = function(visible){
+            ellipse.visible = visible;
+            Board.update();
+        };
+
+        ellipse.getColor = function() {
+            return this.graphics._fill.style;
+        };
+
+        if(alpha) {
+            ellipse.setAlpha(alpha);
+        }
+
+        if(visible) {
+            ellipse.setVisible(visible === 'yes');
+        }
 
         Interaction.drag(ellipse);
         Interaction.edit(ellipse);

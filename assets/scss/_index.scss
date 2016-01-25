@@ -62,15 +62,15 @@
       li { @include clearfix(); padding: 4px; border-bottom: 1px solid $grey2; border-left: 1px solid $grey2;
         .icon-type { float: left; width: 24px;
           .type {
-            &.rect { width: 16px; height: 16px; background: $dark; }
-            &.round-rect { width: 16px; height: 16px; background: $dark; border-radius: 6px; }
-            &.triangle { width: 0; height: 0; border-style: solid; border-width: 0 8px 16px 8px;; border-color: transparent transparent $dark; }
-            &.circle { width: 16px; height: 16px; border-radius: 24px; background: $dark; }
-            &.ellipse { width: 16px; height: 12px; border-radius: 8px / 6px; background: $dark; }
-            &.text { width: 16px; height: 16px; background: url('/example/images/text.png'); background-size: cover;  }
-            &.actor { width: 16px; height: 16px; background: url('/example/images/actor.png'); background-size: cover;  }
-            &.line { width: 16px; height: 16px; background: url('/example/images/line.png'); background-size: cover; }
-            &.destroy { width: 16px; height: 16px; background: url('/example/images/destroy.png'); background-size: cover; }
+            &.Rect { width: 16px; height: 16px; background: $dark; }
+            &.RoundRect { width: 16px; height: 16px; background: $dark; border-radius: 6px; }
+            &.Triangle { width: 0; height: 0; border-style: solid; border-width: 0 8px 16px 8px;; border-color: transparent transparent $dark; }
+            &.Circle { width: 16px; height: 16px; border-radius: 24px; background: $dark; }
+            &.Ellipse { width: 16px; height: 12px; border-radius: 8px / 6px; background: $dark; }
+            &.Text { width: 16px; height: 16px; background: url('/example/images/text.png'); background-size: cover;  }
+            &.Actor { width: 16px; height: 16px; background: url('/example/images/actor.png'); background-size: cover;  }
+            &.Line { width: 16px; height: 16px; background: url('/example/images/line.png'); background-size: cover; }
+            &.DestroyObject { width: 16px; height: 16px; background: url('/example/images/destroy.png'); background-size: cover; }
           }
         }
         .name { float: left; width: 140px; font-size: rem-calc(12); line-height: 16px; white-space: nowrap; overflow: hidden; }
@@ -78,8 +78,8 @@
           .visible { width: 12px; height: 12px; background: url('/example/images/visibility1.png') no-repeat; float: left; display: block;  cursor: pointer; }
           .visible-hide { width: 12px; height: 12px; background: url('/example/images/visibility2.png') no-repeat; float: left; display: block; cursor: pointer; }
           .remove { width: 12px; height: 12px; background: url('/example/images/delete85.png') no-repeat; float: left; display: block; margin: 0 6px; cursor: pointer; }
-          i {
-            &:hover { cursor: pointer; }
+          i {cursor: pointer;
+            &:hover { opacity: .8; }
           }
         }
         &:hover { background: $grey2;  }

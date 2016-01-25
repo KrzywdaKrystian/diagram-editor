@@ -40,8 +40,14 @@ app.service('Board', function($rootScope) {
         this.update();
     };
 
-    this.setCursor = function(type) {
-        this.board.cursor = 'text';
+    this.removeAllElements = function() {
+        this.board.removeAllChildren();
+        this.update();
+    };
+
+    this.setVisible = function(index, val) {
+        this.board.children[index].visible = val;
+        this.update();
     };
 
 });

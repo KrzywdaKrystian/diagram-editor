@@ -1,5 +1,5 @@
 //pozmieniac
-angular.module('app').directive('validfile', function validFile($http) {
+angular.module('app').directive('validfile', function validFile($http, Board, Diagram) {
 
     var validFormats = ['json'];
     return {
@@ -19,9 +19,13 @@ angular.module('app').directive('validfile', function validFile($http) {
                             $http.get(loadEvent.target.result).success(function(response) {
                                 return response.data;
                             }).success(function (data) {
-                                var diagram = new Diagram();
-                                diagram.clearDiagram();
-                                diagram.loadDiagram(data);
+                                Board.removeAllElements();
+                                angular.forEach(data, function(value, key) {
+                                    console.log(value);
+                                    Diagram.addElement(value.type, value);
+                                });
+                                console.log(Board.getBoardElements());
+
                             }).error(function () {
                                 alert('Wystąpił błąd')
                             });
