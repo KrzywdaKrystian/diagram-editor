@@ -14,7 +14,7 @@ app.factory('Text', function($modal, Board, Interaction){
         return window.prompt("Text:","");
     };
 
-    return function(x, y, w, h, color, alpha, visible, value) {
+    return function(x, y, w, h, color, alpha, visible, value, font) {
         var text = new createjs.Text(value ? value : window.prompt("Text:",""), "20px Arial", "#000000");
         text = self.drawText(x ? x : 50, y ? y : 50, null, null, color ? color : Interaction.getColor(), text);
         text.elementName = 'Text';
@@ -79,6 +79,11 @@ app.factory('Text', function($modal, Board, Interaction){
 
         if(visible) {
             text.setVisible(visible === 'yes');
+        }
+
+        if(font) {
+            console.log(font);
+            text.setFontSize(font);
         }
 
         text.on("dblclick", function(evt) {

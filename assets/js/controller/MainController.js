@@ -3,7 +3,7 @@ app.controller('MainController', function($scope, $rootScope, Diagram, Board, Li
     setInterval(function(){
         $scope.loaded = true;
         $scope.$apply();
-    }, 3000);
+    }, 10000);
 
     var board = Board.getBoard();
     $scope.alpha = 0;

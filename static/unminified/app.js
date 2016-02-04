@@ -13060,7 +13060,7 @@ var app = angular.module('app', [
     setInterval(function(){
         $scope.loaded = true;
         $scope.$apply();
-    }, 3000);
+    }, 10000);
 
     var board = Board.getBoard();
     $scope.alpha = 0;
@@ -14199,7 +14199,7 @@ angular.module('app').directive('validfile', function validFile($http, Board, Di
         return window.prompt("Text:","");
     };
 
-    return function(x, y, w, h, color, alpha, visible, value) {
+    return function(x, y, w, h, color, alpha, visible, value, font) {
         var text = new createjs.Text(value ? value : window.prompt("Text:",""), "20px Arial", "#000000");
         text = self.drawText(x ? x : 50, y ? y : 50, null, null, color ? color : Interaction.getColor(), text);
         text.elementName = 'Text';
@@ -14264,6 +14264,11 @@ angular.module('app').directive('validfile', function validFile($http, Board, Di
 
         if(visible) {
             text.setVisible(visible === 'yes');
+        }
+
+        if(font) {
+            console.log(font);
+            text.setFontSize(font);
         }
 
         text.on("dblclick", function(evt) {
